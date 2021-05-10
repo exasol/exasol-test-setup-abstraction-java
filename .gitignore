@@ -1,5 +1,6 @@
 /target/
 pom.xml.versionsBackup
+setEnv.sh
 
 # Eclipse and Maven
 .classpath
