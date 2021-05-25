@@ -59,6 +59,7 @@ public class SshPortForwarding implements AutoCloseable {
          * 
          * @param ssh {@link JSch} ssh client
          * @return ssh sessions with configured auth
+         * @throws JSchException if configuring went wrong
          */
         public Session configSshAuth(JSch ssh) throws JSchException;
     }
