@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.sql.*;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -80,8 +81,12 @@ public abstract class ExasolTestSetupTestBase {
                     "  return 1" + //
                     "\n/\n";
             this.statement.executeUpdate(pingUdf);
+            final IllegalStateException exception = dummySocketServer.getException();
+            if (exception != null) {
+                throw exception;
+            }
             this.statement.executeQuery("select TEST.PING();");
-            Assertions.assertTrue(dummySocketServer.hasClient);
+            Assertions.assertTrue(dummySocketServer.hasClient.get());
         } finally {
             dummySocketServer.shutdown();
         }
@@ -146,8 +151,17 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     private static class DummySocketServer extends Thread {
-        private boolean hasClient = false;
+        private final AtomicBoolean hasClient = new AtomicBoolean(false);
         private ServerSocket serverSocket;
+        private IllegalStateException exception;
+
+        synchronized public IllegalStateException getException() {
+            return this.exception;
+        }
+
+        synchronized private void setException(final IllegalStateException exception) {
+            this.exception = exception;
+        }
 
         private DummySocketServer() {
             this.start();
@@ -167,10 +181,9 @@ public abstract class ExasolTestSetupTestBase {
             createSocket();
             try {
                 this.serverSocket.accept();
-                this.hasClient = true;
+                this.hasClient.set(true);
             } catch (final IOException exception) {
-                // ignore
-                throw new IllegalStateException(exception);
+                setException(new IllegalStateException(exception));
             }
         }
 
