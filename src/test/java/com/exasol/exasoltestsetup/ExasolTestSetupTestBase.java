@@ -115,13 +115,13 @@ public abstract class ExasolTestSetupTestBase {
                 "\n/\n";
         this.statement.executeUpdate(pingUdf);
         this.statement.executeQuery("select TEST.SERVE();");
-        Assertions.assertTrue(connectionTester.success);
+        Assertions.assertTrue(connectionTester.success.get());
     }
 
     private static class ConnectionTester extends Thread {
         private final long start;
         private final List<Integer> ports;
-        private boolean success = false;
+        private final AtomicBoolean success = new AtomicBoolean(false);
 
         public ConnectionTester(final List<Integer> ports) {
             this.ports = ports;
@@ -138,7 +138,7 @@ public abstract class ExasolTestSetupTestBase {
                         final String message = new String(socket.getInputStream().readAllBytes(),
                                 StandardCharsets.UTF_8);
                         if (message.equals("hallo")) {
-                            this.success = true;
+                            this.success.set(true);
                         }
                         socket.close();
                         break;
@@ -153,15 +153,6 @@ public abstract class ExasolTestSetupTestBase {
     private static class DummySocketServer extends Thread {
         private final AtomicBoolean hasClient = new AtomicBoolean(false);
         private ServerSocket serverSocket;
-        private IllegalStateException exception;
-
-        synchronized public IllegalStateException getException() {
-            return this.exception;
-        }
-
-        synchronized private void setException(final IllegalStateException exception) {
-            this.exception = exception;
-        }
 
         private DummySocketServer() {
             this.start();
@@ -183,7 +174,7 @@ public abstract class ExasolTestSetupTestBase {
                 this.serverSocket.accept();
                 this.hasClient.set(true);
             } catch (final IOException exception) {
-                setException(new IllegalStateException(exception));
+                throw new IllegalStateException(exception);
             }
         }
 
