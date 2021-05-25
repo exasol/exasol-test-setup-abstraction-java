@@ -2,54 +2,65 @@ package com.exasol.exasoltestsetup;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.exasol.bucketfs.Bucket;
 
-public interface ExasolTestSetup {
+/**
+ * This is an interface for accessing a running Exasol database for testing. It abstracts over the type of installation
+ * (cloud / docker, cluster / single-node).
+ */
+public interface ExasolTestSetup extends AutoCloseable {
 
-    Connection createConnection() throws SQLException;
+    /**
+     * Create a connection to the Exasol database with default credentials.
+     * 
+     * @return SQL connection
+     * @throws SQLException if something went wrong
+     */
+    public Connection createConnection() throws SQLException;
 
+    /**
+     * Get an API object for the default BucketFS bucket.
+     * 
+     * @return API object for the default BucketFS bucket
+     */
     public Bucket getDefaultBucket();
 
-    public void teardown();
-
     /**
-     * Make a service running on the test host available from within the exasol database.
+     * Make a local service available from within the Exasol database.
      * 
-     * @param hostPort port of the host
-     * @return host or ip address under which the service is available from within the exasol database
+     * @param localPort port of the service @ localhost
+     * @return host or ip address under which the service is available from within the exasol database (same port)
      */
-    public String makeLocalServiceAvailableInDatabase(int hostPort);
+    public String makeLocalServiceAvailableInDatabase(int localPort);
 
     /**
-     * Make the port of a database node available from localhost.
+     * Make the port of a database node available from localhost. If the target is a cluster, this methods sets up a
+     * redirect for each node and returns multiple local port numbers.
      * 
      * @param databasePort database port
-     * @return local port number
+     * @return list of local port numbers. One entry per cluster node.
      */
-    public int makeDatabaseServiceAvailableAtLocalhost(int databasePort);
+    public List<Integer> makeDatabaseServiceAvailableAtLocalhost(int databasePort);
 
     /**
-     * If the given address string has a format like localhost:port or 127.0.0.1:port this method replace it by a an
-     * access string by which this service is available from inside the exasol database.
-     * <p>
-     * Else this method returns the string unchanged
-     * </p>
+     * Make a given service available inside of the Exasol database.
      * 
-     * @param address address to check
+     * @param serviceAddress service address in the format host:port
      * @return modified address in the format host:port
      */
-    public default String makeHostPortAvailableInDatabaseIfRequired(final String address) {
+    public default String makeServiceAvailableInDatabase(final String serviceAddress) {
         final Pattern localhostPattern = Pattern.compile("(?:127\\.0\\.0\\.1|localhost):(\\d+)");
-        final Matcher matcher = localhostPattern.matcher(address);
+        final Matcher matcher = localhostPattern.matcher(serviceAddress);
         if (matcher.matches()) {
             final int port = Integer.parseInt(matcher.group(1));
             final String newHost = this.makeLocalServiceAvailableInDatabase(port);
             return newHost + ":" + port;
         } else {
-            return address;
+            return serviceAddress;
         }
     }
 }
