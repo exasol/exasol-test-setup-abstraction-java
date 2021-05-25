@@ -85,7 +85,6 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     }
 
     private Session configSshAuth(final JSch ssh) throws JSchException {
-        ssh.addIdentity("~/.ssh/id_rsa");
         final Session session = ssh.getSession("root", "localhost", this.exasolContainer.getMappedPort(SSH_PORT));
         session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
         session.setPassword(this.rootPassword);
