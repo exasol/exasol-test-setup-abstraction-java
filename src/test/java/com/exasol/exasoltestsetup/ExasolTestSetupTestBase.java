@@ -68,6 +68,7 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     @Test
+    @RepeatedTest(20)
     void testMakeLocalServiceAvailableInDatabase() throws Exception {
         final ExasolTestSetupTestBase.DummySocketServer dummySocketServer = new ExasolTestSetupTestBase.DummySocketServer();
         try (final ExasolTestSetup testSetup = this.getExasolTestSetup()) {
