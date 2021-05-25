@@ -15,7 +15,7 @@ public class SshPortForwarding implements AutoCloseable {
      * @param sshSessionSupplier function that fills the login information
      * @param localPort          local port
      * @param remotePort         remote port
-     * @param reverse            {@code true} --> reverse tunnel
+     * @param reverse            if {@code true} reverse tunnel
      */
     public SshPortForwarding(final SshConfigurator sshSessionSupplier, final int localPort, final int remotePort,
             final boolean reverse) {

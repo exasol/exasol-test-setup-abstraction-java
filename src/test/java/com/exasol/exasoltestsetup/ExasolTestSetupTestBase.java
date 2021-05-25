@@ -67,10 +67,9 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     @Test
-    void testMakeLocalServiceAvailableInDatabase() throws SQLException {
+    void testMakeLocalServiceAvailableInDatabase() throws Exception {
         final ExasolTestSetupTestBase.DummySocketServer dummySocketServer = new ExasolTestSetupTestBase.DummySocketServer();
-        final ExasolTestSetup testSetup = this.getExasolTestSetup();
-        try {
+        try (final ExasolTestSetup testSetup = this.getExasolTestSetup()) {
             final String mappedHostName = testSetup.makeLocalServiceAvailableInDatabase(TEST_SOCKET_PORT);
             this.statement.executeUpdate("CREATE SCHEMA TEST");
             final String pingUdf = "CREATE OR REPLACE PYTHON SCALAR SCRIPT TEST.PING() RETURNS INT AS\n" + //
