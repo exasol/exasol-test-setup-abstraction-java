@@ -81,10 +81,6 @@ public abstract class ExasolTestSetupTestBase {
                     "  return 1" + //
                     "\n/\n";
             this.statement.executeUpdate(pingUdf);
-            final IllegalStateException exception = dummySocketServer.getException();
-            if (exception != null) {
-                throw exception;
-            }
             this.statement.executeQuery("select TEST.PING();");
             Assertions.assertTrue(dummySocketServer.hasClient.get());
         } finally {
@@ -131,7 +127,7 @@ public abstract class ExasolTestSetupTestBase {
 
         @Override
         public void run() {
-            while (System.currentTimeMillis() - this.start < 1000 * 20 && !this.success) {
+            while (System.currentTimeMillis() - this.start < 1000 * 20 && !this.success.get()) {
                 for (final Integer port : this.ports) {
                     try {
                         final Socket socket = new Socket("localhost", port);
