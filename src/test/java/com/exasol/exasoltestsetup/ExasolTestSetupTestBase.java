@@ -170,6 +170,7 @@ public abstract class ExasolTestSetupTestBase {
                 this.hasClient = true;
             } catch (final IOException exception) {
                 // ignore
+                throw new IllegalStateException(exception);
             }
         }
 
