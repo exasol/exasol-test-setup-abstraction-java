@@ -1,6 +1,6 @@
 # Exasol Test Setup Abstraction
 
-Common interface for testing with an exasol database local and on AWS using Java.
+Common interface for testing with an Exasol database in local and AWS environments using Java.
 
 ## Additional Information
 

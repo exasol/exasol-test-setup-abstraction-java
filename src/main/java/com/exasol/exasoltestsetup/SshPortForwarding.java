@@ -11,6 +11,9 @@ public class SshPortForwarding implements AutoCloseable {
 
     /**
      * Create a new {@link SshPortForwarding}.
+     * <p>
+     * It automatically opens an SSH connection for forwarding.
+     * </p>
      * 
      * @param sshSessionSupplier function that fills the login information
      * @param localPort          local port
@@ -24,7 +27,7 @@ public class SshPortForwarding implements AutoCloseable {
             this.sshSession.setConfig("StrictHostKeyChecking", "no");
             this.sshSession.connect(5000);
             if (reverse) {
-                this.sshSession.setPortForwardingR("*", remotePort, "127.0.0.1", localPort);
+                this.sshSession.setPortForwardingR("*", remotePort, "localhost", localPort);
             } else {
                 this.sshSession.setPortForwardingL("localhost", localPort, "*", remotePort);
             }

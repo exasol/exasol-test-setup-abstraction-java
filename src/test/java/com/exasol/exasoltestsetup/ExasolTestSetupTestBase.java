@@ -77,11 +77,11 @@ public abstract class ExasolTestSetupTestBase {
                     "def run(ctx):\n" + //
                     "  import socket\n" + //
                     "  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n" + //
-                    "  s.connect((\"" + mappedHostName + "\", 5111))\n" + "" + //
+                    "  s.connect((\"" + mappedHostName + "\", "+ TEST_SOCKET_PORT + "))\n" + "" + //
                     "  return 1" + //
                     "\n/\n";
             this.statement.executeUpdate(pingUdf);
-            this.statement.executeQuery("select TEST.PING();");
+            this.statement.executeQuery("SELECT TEST.PING();");
             Assertions.assertTrue(dummySocketServer.hasClient.get());
         } finally {
             dummySocketServer.shutdown();
@@ -110,7 +110,7 @@ public abstract class ExasolTestSetupTestBase {
                 "  return hadClient" + //
                 "\n/\n";
         this.statement.executeUpdate(pingUdf);
-        this.statement.executeQuery("select TEST.SERVE();");
+        this.statement.executeQuery("SELECT TEST.SERVE();");
         Assertions.assertTrue(connectionTester.success.get());
     }
 
