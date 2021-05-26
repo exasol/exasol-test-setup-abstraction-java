@@ -19,6 +19,7 @@
 
 ### Test Dependency Updates
 
+* Added `nl.jqno.equalsverifier:equalsverifier:3.5.4`
 * Added `org.hamcrest:hamcrest:2.2`
 * Added `org.junit.jupiter:junit-jupiter-engine:5.7.0`
 * Added `org.junit.jupiter:junit-jupiter-params:5.7.0`
