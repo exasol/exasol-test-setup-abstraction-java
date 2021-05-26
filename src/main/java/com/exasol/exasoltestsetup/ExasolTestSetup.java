@@ -3,7 +3,6 @@ package com.exasol.exasoltestsetup;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Set;
 
 import com.exasol.bucketfs.Bucket;
 
@@ -60,7 +59,7 @@ public interface ExasolTestSetup extends AutoCloseable {
      * @return modified service address
      */
     public default ServiceAddress makeTcpServiceAccessibleFromDatabase(final ServiceAddress serviceAddress) {
-        if (Set.of("localhost", "127.0.0.1").contains(serviceAddress.getHostName())) {
+        if (serviceAddress.isLocal()) {
             return this.makeLocalTcpServiceAccessibleFromDatabase(serviceAddress.getPort());
         } else {
             return serviceAddress;

@@ -1,6 +1,7 @@
 package com.exasol.exasoltestsetup;
 
 import java.util.Objects;
+import java.util.Set;
 
 import com.exasol.errorreporting.ExaError;
 
@@ -60,6 +61,15 @@ public class ServiceAddress {
      */
     public int getPort() {
         return this.port;
+    }
+
+    /**
+     * Get if this is a local address. (host = localhost)
+     * 
+     * @return {@code true} if it's a local address
+     */
+    public boolean isLocal() {
+        return Set.of("localhost", "127.0.0.1").contains(this.getHostName());
     }
 
     @Override
