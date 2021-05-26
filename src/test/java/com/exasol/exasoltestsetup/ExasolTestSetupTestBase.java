@@ -81,7 +81,7 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     @Test
-    void testMakeServiceAvailableInDatabaseWithNoLocalService() throws Exception {
+    void testMakeServiceAvailableInDatabaseWithExternalService() throws Exception {
         final ServiceAddress serviceAddress = new ServiceAddress("my-web-server.de", TEST_SOCKET_PORT);
         final ServiceAddress inDbAddress = this.testSetup.makeTcpServiceAccessibleFromDatabase(serviceAddress);
         assertThat(inDbAddress, equalTo(serviceAddress));
