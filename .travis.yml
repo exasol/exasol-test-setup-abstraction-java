@@ -1,0 +1,23 @@
+language: java
+
+jdk:
+  - openjdk11
+
+addons:
+  sonarcloud:
+    organization: exasol
+    token:
+      secure: "RNOlOe8ASSrnhl4alJ1+zVHu3TQ6B2ZqFB6gmoOa7d0+U6gX3oaBNFjmp/+TIXj3O4dO4okkcjD1GFKCRUSecUfUgd5qK8OWnH0J1kMgva91LS8BnyQDNtTnjCEMGikuv0Ce7vjBbxN9uu3xX/Av47xg0UZG06vGbEIUlStPaIp2gdpeUn0FDws02PJ4uq8JsXhgKW4kNwFjodfe8ImiTVdbP/fc3Q353x28uSPvO/KcZ87I2ZkZheYTmRN6WGkyCXv3XNCRDXOOvrMomWMz9Al1LScgitE2sxfN6GAVjrgBSD12Y9wg4zt/1ccMXul7MXZqamjSkDtTn6UdCLf/VxmBVyFCOdWAZnM6JsBS1YfeQzo0W89GBtk+a3d8ejGw7cFpW1eDq8OlEXgtwDGkaKTbmKbVKpEzYjwgI3/CrOQS7txzs7kNfuUxqTGxfT71N5EzgMv8eM/h7JE3kgJsU1e1KdLw4C18Ksm0H1AzaJjlaHUOjY4KkXUVYfayjGOhPS7cctGUpJe1mbeH28tstRsfJfb4kTtNdN5HU//fO+EMfBngtqftoHQw7JrDUCrOJ9y8JrVRNrFOcuQaSfC9oQk0Ex9Z/0Q+8yERW/WyVHLd0XSZ2GQ63BW11fCN6EIFbVCjRwa9iZR6gzBPmreUtRBWTVkypaZLxYfwMyrX3V0="
+
+install:
+  - travis_retry mvn dependency:resolve
+
+before_script:
+  - echo 'testcontainers.reuse.enable=true' >> "$HOME"/.testcontainers.properties
+
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+
+cache:
+  directories:
+    - "$HOME/.m2"
