@@ -13,8 +13,7 @@ import org.testcontainers.containers.Container;
 import com.exasol.bucketfs.Bucket;
 import com.exasol.containers.ExasolContainer;
 import com.exasol.errorreporting.ExaError;
-import com.exasol.exasoltestsetup.ExasolTestSetup;
-import com.exasol.exasoltestsetup.SshPortForwarding;
+import com.exasol.exasoltestsetup.*;
 import com.jcraft.jsch.*;
 
 public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
@@ -41,13 +40,13 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     }
 
     @Override
-    public String makeLocalServiceAvailableInDatabase(final int localPort) {
+    public ServiceAddress makeLocalTcpServiceAccessibleFromDatabase(final int localPort) {
         this.portForwards.add(new SshPortForwarding(this::configSshAuth, localPort, localPort, true));
-        return "localhost";
+        return ServiceAddress.local(localPort);
     }
 
     @Override
-    public List<Integer> makeDatabaseServiceAvailableAtLocalhost(final int databasePort) {
+    public List<Integer> makeDatabaseTcpServiceAccessibleFromLocalhost(final int databasePort) {
         this.exasolContainer.addExposedPort(databasePort);
         this.portForwards.add(new SshPortForwarding(this::configSshAuth, databasePort, databasePort, false));
         return List.of(databasePort);

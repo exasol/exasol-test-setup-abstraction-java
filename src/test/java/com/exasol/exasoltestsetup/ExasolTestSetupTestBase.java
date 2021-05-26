@@ -69,32 +69,59 @@ public abstract class ExasolTestSetupTestBase {
 
     @Test
     void testMakeLocalServiceAvailableInDatabase() throws Exception {
+        final ServiceAddress inDbAddress = this.testSetup.makeLocalTcpServiceAccessibleFromDatabase(TEST_SOCKET_PORT);
+        assertLocalServiceIsAvailableFromDatabase(inDbAddress);
+    }
+
+    @Test
+    void testMakeServiceAvailableInDatabaseWithLocalService() throws Exception {
+        final ServiceAddress inDbAddress = this.testSetup
+                .makeTcpServiceAccessibleFromDatabase(new ServiceAddress("localhost", TEST_SOCKET_PORT));
+        assertLocalServiceIsAvailableFromDatabase(inDbAddress);
+    }
+
+    @Test
+    void testMakeServiceAvailableInDatabaseWithNoLocalService() throws Exception {
+        final ServiceAddress serviceAddress = new ServiceAddress("my-web-server.de", TEST_SOCKET_PORT);
+        final ServiceAddress inDbAddress = this.testSetup.makeTcpServiceAccessibleFromDatabase(serviceAddress);
+        assertThat(inDbAddress, equalTo(serviceAddress));
+    }
+
+    private void assertLocalServiceIsAvailableFromDatabase(final ServiceAddress inDbAddress) throws SQLException {
         final ExasolTestSetupTestBase.DummySocketServer dummySocketServer = new ExasolTestSetupTestBase.DummySocketServer();
-        try (final ExasolTestSetup testSetup = this.getExasolTestSetup()) {
-            this.statement.executeUpdate("CREATE SCHEMA TEST");
-            final String mappedHostName = testSetup.makeLocalServiceAvailableInDatabase(TEST_SOCKET_PORT);
-            final String pingUdf = "CREATE OR REPLACE PYTHON SCALAR SCRIPT TEST.PING() RETURNS INT AS\n" + //
-                    "def run(ctx):\n" + //
-                    "  import socket\n" + //
-                    "  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n" + //
-                    "  s.connect((\"" + mappedHostName + "\", "+ TEST_SOCKET_PORT + "))\n" + "" + //
-                    "  return 1" + //
-                    "\n/\n";
-            this.statement.executeUpdate(pingUdf);
-            this.statement.executeQuery("SELECT TEST.PING();");
+        try {
+            pingFromUdf(inDbAddress);
             Assertions.assertTrue(dummySocketServer.hasClient.get());
         } finally {
             dummySocketServer.shutdown();
         }
     }
 
+    private void pingFromUdf(final ServiceAddress inDbAddress) throws SQLException {
+        this.statement.executeUpdate("CREATE SCHEMA TEST");
+        final String pingUdf = "CREATE OR REPLACE PYTHON SCALAR SCRIPT TEST.PING() RETURNS INT AS\n" + //
+                "def run(ctx):\n" + //
+                "  import socket\n" + //
+                "  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n" + //
+                "  s.connect((\"" + inDbAddress.getHostName() + "\", " + inDbAddress.getPort() + "))\n" + "" + //
+                "  return 1" + //
+                "\n/\n";
+        this.statement.executeUpdate(pingUdf);
+        this.statement.executeQuery("SELECT TEST.PING();");
+    }
+
     @Test
     void testMakeDatabaseServiceAvailableAtLocalhost() throws SQLException {
-        this.statement.executeUpdate("CREATE SCHEMA TEST");
-        final List<Integer> localPorts = this.testSetup.makeDatabaseServiceAvailableAtLocalhost(8001);
+        final List<Integer> localPorts = this.testSetup.makeDatabaseTcpServiceAccessibleFromLocalhost(8001);
         assertThat(localPorts.size(), greaterThanOrEqualTo(1));
         final ConnectionTester connectionTester = new ConnectionTester(localPorts);
-        final String pingUdf = "CREATE OR REPLACE PYTHON3 SCALAR SCRIPT TEST.SERVE() RETURNS INT AS\n" + //
+        createTcpServerInUdf();// blocking until received a connection or timeout
+        Assertions.assertTrue(connectionTester.success.get());
+    }
+
+    private void createTcpServerInUdf() throws SQLException {
+        this.statement.executeUpdate("CREATE SCHEMA TEST");
+        final String serverUdf = "CREATE OR REPLACE PYTHON3 SCALAR SCRIPT TEST.SERVE() RETURNS INT AS\n" + //
                 "def run(ctx):\n" + //
                 "  hadClient = 0\n" + //
                 "  from socketserver import BaseRequestHandler, TCPServer\n" + //
@@ -109,9 +136,8 @@ public abstract class ExasolTestSetupTestBase {
                 "    server.server_close()\n" + //
                 "  return hadClient" + //
                 "\n/\n";
-        this.statement.executeUpdate(pingUdf);
+        this.statement.executeUpdate(serverUdf);
         this.statement.executeQuery("SELECT TEST.SERVE();");
-        Assertions.assertTrue(connectionTester.success.get());
     }
 
     private static class ConnectionTester extends Thread {
