@@ -1,4 +1,4 @@
-# Features of th AWS CI Account Setup
+# Features of the AWS CI Account Setup
 
 The AWS CI Account Setup provisions an AWS account for running tests from CI securely.
 
@@ -6,7 +6,7 @@ The AWS CI Account Setup provisions an AWS account for running tests from CI sec
 
 `feat~create-aws-cresources-in-ci~1`
 
-We can create AWS resources from CI builds in out GitHub Actions CI builds.
+The AWS CI Account Setup can create AWS resources from CI builds in out GitHub Actions CI builds.
 
 Rationale:
 
@@ -21,7 +21,7 @@ Needs: dsn
 
 `feat~damage-minimization-on-hacking-attacks~1`
 
-The AWS CI account setup implements measurements to reduce the damage (costs, abuse) in case an attacker gains access to the CI account.
+The AWS CI Account Setup implements measurements to reduce the damage (costs, abuse) in case an attacker gains access to the CI account.
 
 Rationale:
 Since the credentials are exposed to the CI there is an increased risk that an attacker could gain access to them. For that case the damage should be as small as possible.
@@ -32,10 +32,9 @@ Needs: dsn
 
 `feat~clean-up~1`
 
-The AWS CI account setup handles resources that were created but not deleted by the CI.
+The AWS CI Account Setup handles resources that were created but not deleted by the CI.
 
 Rationale:
 
 Usually each CI build should delete the resources it created. It can, however, happen that the cleanup fails, for example since the CI server crashes. The remaining resources can then generate high costs.
-
 
