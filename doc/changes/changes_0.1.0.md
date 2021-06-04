@@ -3,6 +3,7 @@
 ## Features
 
 * #1: Initial implementation
+* #8: Added AWS cluster setup terraform template
 
 ## Dependency Updates
 
