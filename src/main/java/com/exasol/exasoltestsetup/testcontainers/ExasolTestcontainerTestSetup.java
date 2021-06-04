@@ -5,7 +5,6 @@ import static com.exasol.exasoltestsetup.PasswordGenerator.generatePassword;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.testcontainers.containers.Container;
@@ -16,17 +15,21 @@ import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.*;
 import com.jcraft.jsch.*;
 
+/**
+ * {@link ExasolTestSetup} implementation using test containers.
+ */
 public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     private static final int SSH_PORT = 22;
     private final ExasolContainer<? extends ExasolContainer<?>> exasolContainer = new ExasolContainer<>()
             .withReuse(true);
-    private final List<SshPortForwarding> portForwards = new ArrayList<>();
     private String rootPassword;
+    private final SshConnection sshConnection;
 
     public ExasolTestcontainerTestSetup() {
         this.exasolContainer.addExposedPort(SSH_PORT);
         this.exasolContainer.start();
         setRootPassword();
+        this.sshConnection = new SshConnection(this::configSshAuth);
     }
 
     @Override
@@ -41,15 +44,15 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
 
     @Override
     public ServiceAddress makeLocalTcpServiceAccessibleFromDatabase(final int localPort) {
-        this.portForwards.add(new SshPortForwarding(this::configSshAuth, localPort, localPort, true));
-        return ServiceAddress.local(localPort);
+        final int remotePort = this.sshConnection.addReversePortForwarding(localPort);
+        return ServiceAddress.local(remotePort);
     }
 
     @Override
     public List<Integer> makeDatabaseTcpServiceAccessibleFromLocalhost(final int databasePort) {
         this.exasolContainer.addExposedPort(databasePort);
-        this.portForwards.add(new SshPortForwarding(this::configSshAuth, databasePort, databasePort, false));
-        return List.of(databasePort);
+        final int localPort = this.sshConnection.addForwardPortForwarding(databasePort);
+        return List.of(localPort);
     }
 
     private void setRootPassword() {
@@ -77,9 +80,7 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
 
     @Override
     public void close() throws Exception {
-        for (final SshPortForwarding portForward : this.portForwards) {
-            portForward.close();
-        }
+        this.sshConnection.close();
         this.exasolContainer.stop();
     }
 

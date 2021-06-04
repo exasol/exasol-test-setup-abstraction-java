@@ -3,6 +3,7 @@
 ## Features
 
 * #1: Initial implementation
+* #4: Added AWS Cluster implementation
 
 ## Dependency Updates
 

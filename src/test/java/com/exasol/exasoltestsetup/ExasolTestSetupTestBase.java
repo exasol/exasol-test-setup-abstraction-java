@@ -181,6 +181,7 @@ public abstract class ExasolTestSetupTestBase {
         }
 
         public void shutdown() {
+            System.out.println("shutting down dummy socket server");
             if (this.serverSocket != null) {
                 try {
                     this.serverSocket.close();
