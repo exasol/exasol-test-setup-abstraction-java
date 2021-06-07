@@ -127,7 +127,7 @@ module "exasol" {
   cluster_name = "${local.project_tag}-exasol-cluster"
   database_name = "exadb"
   ami_image_name = "Exasol-R7.0.8-BYOL"
-  sys_user_password = "!?S&Bsn20K?j(D>gh<W%"
+  sys_user_password = random_password.exasol_sys_password.result
   admin_user_password = random_password.exasol_admin_password.result
   management_server_instance_type = "m5.large"
   datanode_instance_type = "m5.large"
@@ -154,7 +154,7 @@ export EXASOL_DATANODE_IP="${module.exasol.first_datanode_ip}"
 export EXASOL_MANAGEMENT_IP="${module.exasol.management_server_ip}"
 export EXASOL_SSH_PORT=22
 export EXASOL_USER="sys"
-export EXASOL_PASS="!?S&Bsn20K?j(D>gh<W%"
+export EXASOL_PASS="${random_password.exasol_sys_password.result}
 export EXASOL_ADMIN_USER="admin"
 export EXASOL_ADMIN_PASS="${random_password.exasol_admin_password.result}"
   EOT
