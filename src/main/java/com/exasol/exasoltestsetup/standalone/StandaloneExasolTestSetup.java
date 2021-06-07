@@ -159,7 +159,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     }
 
     private Session configSshAuth(final JSch ssh) throws JSchException {
-        ssh.addIdentity("~/.ssh/id_rsa");
+        ssh.addIdentity("./cloudSetup/generated/exasol_cluster_ssh_key");
         return ssh.getSession("ec2-user", this.connectionDetails.getManagementNodeIp(),
                 this.connectionDetails.getSshPort());
     }
