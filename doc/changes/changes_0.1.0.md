@@ -3,6 +3,7 @@
 ## Features
 
 * #1: Initial implementation
+* #11: Add AWS CI account setup
 
 ## Dependency Updates
 

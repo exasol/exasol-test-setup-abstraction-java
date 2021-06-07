@@ -1,0 +1,33 @@
+regions:
+  - eu-west-1
+  - global
+
+account-blocklist:
+  - "922177738768"
+  - "308795167061"
+
+accounts:
+  "166283903643":
+    filters:
+      IAMUser:
+        - "ci-user"
+      IAMUserAccessKey:
+        - type: "glob"
+          value: "ci-user -> *"
+      IAMUserPolicyAttachment:
+        - type: "glob"
+          value: "ci-user -> *"
+      IAMPolicy:
+        - type: "glob"
+          value: "*/terraform-policy"
+        - type: "glob"
+          value: "*/aws-nuke-policy"
+        - type: "glob"
+          value: "*/exasol-policy"
+      IAMRole:
+        - "OrganizationAccountAccessRole"
+        - "OrganizationIAMRoleAccess"
+      IAMRolePolicyAttachment:
+        - "OrganizationIAMRoleAccess -> IAMFullAccess"
+      IAMRolePolicy:
+        - "OrganizationAccountAccessRole -> AdministratorAccess"
