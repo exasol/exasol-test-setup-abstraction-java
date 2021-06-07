@@ -7,7 +7,7 @@ provider "aws" {
 }
 
 locals {
-  project_tag = replace(var.project, "\\s", "-")
+  project_tag = replace(var.project, " ", "-")
   tags = merge(var.additional_tags, {
     "exa:owner" : var.owner,
     "exa:deputy" : var.deputy
@@ -94,7 +94,7 @@ resource "local_file" "ssh_public_key" {
 
 resource "aws_key_pair" "ssh_key" {
   key_name = "${local.project_tag}-key"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = tls_private_key.ssh_key.public_key_openssh
 }
 
 resource "aws_internet_gateway" "gw" {
@@ -127,7 +127,7 @@ module "exasol" {
   cluster_name = "${local.project_tag}-exasol-cluster"
   database_name = "exadb"
   ami_image_name = "Exasol-R7.0.8-BYOL"
-  sys_user_password = random_password.exasol_sys_password.result
+  sys_user_password = "!?S&Bsn20K?j(D>gh<W%"
   admin_user_password = random_password.exasol_admin_password.result
   management_server_instance_type = "m5.large"
   datanode_instance_type = "m5.large"
@@ -154,7 +154,7 @@ export EXASOL_DATANODE_IP="${module.exasol.first_datanode_ip}"
 export EXASOL_MANAGEMENT_IP="${module.exasol.management_server_ip}"
 export EXASOL_SSH_PORT=22
 export EXASOL_USER="sys"
-export EXASOL_PASS="${random_password.exasol_sys_password.result}"
+export EXASOL_PASS="!?S&Bsn20K?j(D>gh<W%"
 export EXASOL_ADMIN_USER="admin"
 export EXASOL_ADMIN_PASS="${random_password.exasol_admin_password.result}"
   EOT

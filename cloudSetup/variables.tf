@@ -4,8 +4,9 @@ variable "deputy" {
   default = ""
 }
 
+# Use a short project tag. Long tags will case the exasol cluster creation to fail (see https://github.com/exasol/cloudformation-aws-exasol/issues/3)
 variable "project" {
-  default = "exasol-test-setup-abstraction ci"
+  default = "ETAJ"
 }
 
 variable "additional_tags" {
