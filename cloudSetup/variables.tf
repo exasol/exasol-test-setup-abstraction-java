@@ -8,8 +8,8 @@ variable "project" {
   default = "exasol-test-setup-abstraction ci"
 }
 
-variable "project_name" {
-  default = "writing a tutorial for AWS Sage maker"
+variable "additional_tags" {
+  default = {}
+  description = "Additional resource tags"
+  type = map(string)
 }
-
-variable "stage" {}
