@@ -117,8 +117,10 @@ resource "random_password" "exasol_sys_password" {
 resource "random_password" "exasol_admin_password" {
   length = 20
   number = true
-  special = true
-  min_special = 1
+  # with some special chars login does not work
+  special = false
+  min_upper = 1
+  min_lower = 1
   min_numeric = 1
 }
 
@@ -154,7 +156,7 @@ export EXASOL_DATANODE_IP="${module.exasol.first_datanode_ip}"
 export EXASOL_MANAGEMENT_IP="${module.exasol.management_server_ip}"
 export EXASOL_SSH_PORT=22
 export EXASOL_USER="sys"
-export EXASOL_PASS="${random_password.exasol_sys_password.result}
+export EXASOL_PASS="${random_password.exasol_sys_password.result}"
 export EXASOL_ADMIN_USER="admin"
 export EXASOL_ADMIN_PASS="${random_password.exasol_admin_password.result}"
   EOT
