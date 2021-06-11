@@ -170,7 +170,7 @@ class ExaOperationInterface {
     }
 
     /**
-     * Install an JDBC driver.
+     * Install a JDBC driver.
      * 
      * @param name                   driver name
      * @param jdbcMainClass          driver class
