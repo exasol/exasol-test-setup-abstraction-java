@@ -170,7 +170,7 @@ class ExaOperationGateway {
     }
 
     /**
-     * Install an JDBC driver.
+     * Install a JDBC driver.
      * 
      * @param name                   driver name
      * @param jdbcMainClass          driver class
