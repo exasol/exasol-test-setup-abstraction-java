@@ -25,3 +25,4 @@ Scripts
 **/*.log
 .directory
 venv/
+.tmp/
