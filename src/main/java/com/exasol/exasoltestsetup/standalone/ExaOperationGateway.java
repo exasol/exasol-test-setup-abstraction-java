@@ -25,17 +25,17 @@ import com.exasol.errorreporting.ExaError;
 /**
  * This class wraps the ExaOperation XML-RPC API of an Exasol cluster with Java methods.
  */
-class ExaOperationInterface {
-    private static final Logger LOGGER = Logger.getLogger(ExaOperationInterface.class.getName());
+class ExaOperationGateway {
+    private static final Logger LOGGER = Logger.getLogger(ExaOperationGateway.class.getName());
     private final XmlRpcClient client;
 
     /**
-     * Create a new instance of {@link ExaOperationInterface}.
+     * Create a new instance of {@link ExaOperationGateway}.
      * 
      * @param exasolIpAddress ip address of the management node
      * @param credentials     credentials for EXAOperation
      */
-    public ExaOperationInterface(final String exasolIpAddress, final Credentials credentials) {
+    public ExaOperationGateway(final String exasolIpAddress, final Credentials credentials) {
         try {
             final XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
             config.setServerURL(new URL("https://" + exasolIpAddress + "/cluster1"));

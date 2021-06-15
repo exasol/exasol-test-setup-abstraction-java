@@ -9,6 +9,7 @@ import com.exasol.errorreporting.ExaError;
  */
 class EnvVarConnectionDetailProvider implements ConnectionDetailProvider {
     private static final Logger LOGGER = Logger.getLogger(EnvVarConnectionDetailProvider.class.getName());
+    public static final int SSH_DEFAULT_PORT = 22;
     private final String datanodeIp;
     private final String managementIp;
     private final Credentials databaseCredentials;
@@ -31,8 +32,9 @@ class EnvVarConnectionDetailProvider implements ConnectionDetailProvider {
     private int readSshPort() {
         final String envValue = System.getenv("EXASOL_SSH_PORT");
         if (envValue == null || envValue.isEmpty()) {
-            LOGGER.info("The environment variable EXASOL_SSH_PORT was not set. Falling back to default port 22.");
-            return 22;
+            LOGGER.info("The environment variable EXASOL_SSH_PORT was not set. Falling back to default port "
+                    + SSH_DEFAULT_PORT + ".");
+            return SSH_DEFAULT_PORT;
         } else {
             try {
                 return Integer.parseInt(envValue);

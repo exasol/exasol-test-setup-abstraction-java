@@ -24,6 +24,29 @@ public class SshConnection implements AutoCloseable {
         this.sshSession = createSession(sshSessionSupplier);
     }
 
+    private Session createSession(final SshConfigurator sshSessionSupplier) {
+        final Session session;
+        try {
+            session = sshSessionSupplier.configSshAuth(new JSch());
+            session.setConfig("StrictHostKeyChecking", "no");
+            session.connect(5000);
+        } catch (final JSchException exception) {
+            if (exception.getMessage().startsWith("invalid privatekey")) {
+                throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-13")
+                        .message("The format of your privatekey is not supported.")
+                        .mitigation("Convert using `ssh-keygen -p -f id_rsa -m pem -P \"\" -N \"\"\n`").toString(),
+                        exception);
+            } else {
+                throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-12")
+                        .message("Failed to ssh to the exasol database. This is required for redirecting a host port.")
+                        .mitigation("Make sure the database is reachable (port 22 open)")
+                        .mitigation("Make sure 'ec2-user' can login to the database using your ssh-key.").toString(),
+                        exception);
+            }
+        }
+        return session;
+    }
+
     /**
      * Add a reverse port forwarding.
      * 
@@ -52,6 +75,13 @@ public class SshConnection implements AutoCloseable {
         return addForwardPortForwarding(remotePort, "localhost");
     }
 
+    /**
+     * Add a forward port forwarding.
+     *
+     * @param remotePort port of the the server to connect to
+     * @param targetHost the host to forward the request to
+     * @return local port
+     */
     public int addForwardPortForwarding(final int remotePort, final String targetHost) {
         final int localPort = findFreeLocalPort();
         try {
@@ -62,29 +92,6 @@ public class SshConnection implements AutoCloseable {
                     ExaError.messageBuilder("E-ETAJ-24").message("Failed to setup forward port forwarding.").toString(),
                     exception);
         }
-    }
-
-    private Session createSession(final SshConfigurator sshSessionSupplier) {
-        final Session session;
-        try {
-            session = sshSessionSupplier.configSshAuth(new JSch());
-            session.setConfig("StrictHostKeyChecking", "no");
-            session.connect(5000);
-        } catch (final JSchException exception) {
-            if (exception.getMessage().startsWith("invalid privatekey")) {
-                throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-13")
-                        .message("The format of your privatekey is not supported.")
-                        .mitigation("Convert using `ssh-keygen -p -f id_rsa -m pem -P \"\" -N \"\"\n`").toString(),
-                        exception);
-            } else {
-                throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-12")
-                        .message("Failed to ssh to the exasol database. This is required for redirecting a host port.")
-                        .mitigation("Make sure the database is reachable (port 22 open)")
-                        .mitigation("Make sure 'ec2-user' can login to the database using your ssh-key.").toString(),
-                        exception);
-            }
-        }
-        return session;
     }
 
     /**

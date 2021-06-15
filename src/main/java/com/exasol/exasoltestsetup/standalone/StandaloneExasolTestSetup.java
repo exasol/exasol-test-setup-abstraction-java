@@ -43,14 +43,14 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
         this.localBucketFsPort = this.sshConnection.addForwardPortForwarding(BUCKET_FS_PORT, getADataNode());
         final int localHttpsPort = this.sshConnection.addForwardPortForwarding(443);
         this.localDatabasePort = this.sshConnection.addForwardPortForwarding(DATABASE_PORT, getADataNode());
-        final ExaOperationInterface exaOperationInterface = new ExaOperationInterface("localhost:" + localHttpsPort,
+        final ExaOperationGateway exaOperationGateway = new ExaOperationGateway("localhost:" + localHttpsPort,
                 connectionDetailProvider.getAdminCredentials());
-        exaOperationInterface.startStorageServiceIfNotRunning();
-        exaOperationInterface.startAllDatabases();
-        exaOperationInterface.setBucketFsPort("bfsdefault", BUCKET_FS_PORT);
+        exaOperationGateway.startStorageServiceIfNotRunning();
+        exaOperationGateway.startAllDatabases();
+        exaOperationGateway.setBucketFsPort("bfsdefault", BUCKET_FS_PORT);
         this.bucketFsReadPassword = generatePassword();
         this.bucketFsWritePassword = generatePassword();
-        exaOperationInterface.setBucketPasswords(this.bucketFsReadPassword, this.bucketFsWritePassword);
+        exaOperationGateway.setBucketPasswords(this.bucketFsReadPassword, this.bucketFsWritePassword);
         waitForExasolToSyncTheSettings();
         waitUntil(this::isSqlInterfaceAvailable);
         cleanTheDatabase();
@@ -79,7 +79,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     }
 
     private SshConnection addGatewayPortsIfRequired(SshConnection connection) {
-        final String sshConfig = connection.runCommandAsRoot("cat  /etc/ssh/sshd_config").whenFinished()
+        final String sshConfig = connection.runCommandAsRoot("cat /etc/ssh/sshd_config").whenFinished()
                 .assertExitCodeIsZero().getStdout();
         if (!sshConfig.contains("GatewayPorts yes")) {
             LOGGER.warning(() -> ExaError.messageBuilder("W-ETAJ-21").message(
