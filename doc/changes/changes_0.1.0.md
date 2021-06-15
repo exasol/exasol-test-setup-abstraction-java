@@ -4,6 +4,8 @@
 
 * #1: Initial implementation
 * #11: Add AWS CI account setup
+* #4: Added AWS Cluster implementation
+* #8: Added AWS cluster setup terraform template
 
 ## Dependency Updates
 
