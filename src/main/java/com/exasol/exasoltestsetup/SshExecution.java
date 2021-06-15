@@ -43,15 +43,13 @@ public class SshExecution {
             final InputStream stdErrStream, final InputStream stdOutStream) {
         try {
             final StringBuilder stdout = new StringBuilder();
-            while (true) {
+            while (channel.isClosed()) {
                 stdout.append(new String(stdOutStream.readAllBytes(), StandardCharsets.UTF_8));
-                if (channel.isClosed()) {
-                    return new SshExecutionResult(stdout.toString(),
-                            new String(stdErrStream.readAllBytes(), StandardCharsets.UTF_8), channel.getExitStatus(),
-                            command);
-                }
                 WaitHelper.waitFor(100);
             }
+            stdout.append(new String(stdOutStream.readAllBytes(), StandardCharsets.UTF_8));// read remaining
+            return new SshExecutionResult(stdout.toString(),
+                    new String(stdErrStream.readAllBytes(), StandardCharsets.UTF_8), channel.getExitStatus(), command);
         } catch (final IOException exception) {
             throw new IllegalStateException(
                     ExaError.messageBuilder("E-ETAJ-26")

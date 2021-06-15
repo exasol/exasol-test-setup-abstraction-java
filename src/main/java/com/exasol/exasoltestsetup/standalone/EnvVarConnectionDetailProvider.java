@@ -31,7 +31,7 @@ class EnvVarConnectionDetailProvider implements ConnectionDetailProvider {
 
     private int readSshPort() {
         final String envValue = System.getenv("EXASOL_SSH_PORT");
-        if (envValue == null || envValue.isEmpty()) {
+        if (isUndefined(envValue)) {
             LOGGER.info("The environment variable EXASOL_SSH_PORT was not set. Falling back to default port "
                     + SSH_DEFAULT_PORT + ".");
             return SSH_DEFAULT_PORT;
@@ -44,6 +44,10 @@ class EnvVarConnectionDetailProvider implements ConnectionDetailProvider {
                         .mitigation("The value must be a number.").toString());
             }
         }
+    }
+
+    private boolean isUndefined(final String value) {
+        return value == null || value.isEmpty();
     }
 
     private String getEnvVarWithCheck(final String variableName) {
