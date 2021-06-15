@@ -38,7 +38,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
      */
     public StandaloneExasolTestSetup(final ConnectionDetailProvider connectionDetailProvider) {
         this.connectionDetails = connectionDetailProvider;
-        this.sshConnection = setupSshConnection();
+        this.sshConnection = createConfiguredSshConnection();
         this.dataNodeIds = fetchDataNodeIds();
         this.localBucketFsPort = this.sshConnection.addForwardPortForwarding(BUCKET_FS_PORT, getADataNode());
         final int localHttpsPort = this.sshConnection.addForwardPortForwarding(443);
@@ -72,10 +72,17 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
         return nodes.stream().map(id -> "n" + id).collect(Collectors.toList());
     }
 
-    private SshConnection setupSshConnection() {
-        SshConnection connection = new SshConnection(this::configSshAuth);
-        connection = addGatewayPortsIfRequired(connection);
-        return connection;
+    /**
+     * This method creates an SSH connection with the required server side sshd configuration.
+     * 
+     * @return ssh connection
+     */
+    private SshConnection createConfiguredSshConnection() {
+        return addGatewayPortsIfRequired(createSshConnection());
+    }
+
+    private SshConnection createSshConnection() {
+        return new SshConnection(this::configSshAuth);
     }
 
     private SshConnection addGatewayPortsIfRequired(SshConnection connection) {
@@ -93,7 +100,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
             }
             connection.close();
             WaitHelper.waitFor(5000);// wait for sshd to restart
-            connection = new SshConnection(this::configSshAuth);
+            connection = createSshConnection();
         }
         return connection;
     }
