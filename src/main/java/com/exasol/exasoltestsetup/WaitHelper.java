@@ -1,4 +1,4 @@
-package com.exasol.exasoltestsetup.standalone;
+package com.exasol.exasoltestsetup;
 
 import java.util.function.BooleanSupplier;
 

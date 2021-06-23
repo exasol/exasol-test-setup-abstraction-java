@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import com.exasol.errorreporting.ExaError;
-import com.exasol.exasoltestsetup.standalone.WaitHelper;
 import com.jcraft.jsch.*;
 
 /**
