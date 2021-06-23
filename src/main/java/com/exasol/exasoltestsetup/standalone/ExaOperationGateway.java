@@ -1,7 +1,7 @@
 package com.exasol.exasoltestsetup.standalone;
 
-import static com.exasol.exasoltestsetup.standalone.WaitHelper.waitFor;
-import static com.exasol.exasoltestsetup.standalone.WaitHelper.waitUntil;
+import static com.exasol.exasoltestsetup.WaitHelper.waitFor;
+import static com.exasol.exasoltestsetup.WaitHelper.waitUntil;
 
 import java.io.*;
 import java.net.MalformedURLException;

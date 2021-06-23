@@ -1,7 +1,7 @@
 package com.exasol.exasoltestsetup.standalone;
 
 import static com.exasol.exasoltestsetup.PasswordGenerator.generatePassword;
-import static com.exasol.exasoltestsetup.standalone.WaitHelper.waitUntil;
+import static com.exasol.exasoltestsetup.WaitHelper.waitUntil;
 
 import java.sql.*;
 import java.util.*;
