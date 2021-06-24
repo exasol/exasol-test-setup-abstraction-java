@@ -1,8 +1,18 @@
-# exasol-test-setup-abstraction-java 0.1.0, released 2021-??-??
+# exasol-test-setup-abstraction-java 0.1.0, released 2021-06-24
+
+Code name: Initial implementation
+
+## Summary
+
+This is the initial implementation. It contains the interface and an implementation using exasol-testcontainers.
 
 ## Features
 
 * #1: Initial implementation
+
+## Documentation:
+
+* #16: Improved Readme
 
 ## Dependency Updates
 
