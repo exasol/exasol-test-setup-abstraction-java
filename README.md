@@ -1,8 +1,7 @@
 # Exasol Test Setup Abstraction
 
-[![Build Status](https://travis-ci.com/exasol/exasol-test-setup-abstraction.svg?branch=main)](https://travis-ci.com/exasol/exasol-test-setup-abstraction)
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aexasol-test-setup-abstraction&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.exasol%3Aexasol-test-setup-abstraction)
+[![Build Status](https://travis-ci.com/exasol/exasol-test-setup-abstraction-java.svg?branch=main)](https://travis-ci.com/exasol/exasol-test-setup-abstraction-java)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aexasol-test-setup-abstraction-java&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.exasol%3Aexasol-test-setup-abstraction-java)
 
 This repository defines a standardized interface for accessing an Exasol database for testing.
 
