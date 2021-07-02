@@ -116,8 +116,18 @@ public abstract class ExasolTestSetupTestBase {
         assertThat(localPorts.size(), greaterThanOrEqualTo(1));
         final ConnectionTester connectionTester = new ConnectionTester(localPorts);
         createTcpServerInUdf();// blocking until received a connection or timeout
-        Thread.sleep(100);// wait a bit so that the connectionTester can receive
+        waitForConnectionTesterToReceive();
         Assertions.assertTrue(connectionTester.success.get());
+    }
+
+    /**
+     * Since the connection tester runs in a dedicated thread we need to wait a bit so that it will also run on single
+     * core CPUs.
+     * 
+     * @throws InterruptedException if interrupted
+     */
+    private void waitForConnectionTesterToReceive() throws InterruptedException {
+        Thread.sleep(100);
     }
 
     private void createTcpServerInUdf() throws SQLException {
