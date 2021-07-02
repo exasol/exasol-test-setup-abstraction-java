@@ -111,11 +111,12 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     @Test
-    void testMakeDatabaseServiceAvailableAtLocalhost() throws SQLException {
+    void testMakeDatabaseServiceAvailableAtLocalhost() throws SQLException, InterruptedException {
         final List<Integer> localPorts = this.testSetup.makeDatabaseTcpServiceAccessibleFromLocalhost(8001);
         assertThat(localPorts.size(), greaterThanOrEqualTo(1));
         final ConnectionTester connectionTester = new ConnectionTester(localPorts);
         createTcpServerInUdf();// blocking until received a connection or timeout
+        Thread.sleep(100);// wait a bit so that the connectionTester can receive
         Assertions.assertTrue(connectionTester.success.get());
     }
 
