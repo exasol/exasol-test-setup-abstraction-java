@@ -73,8 +73,7 @@
         "s3:DeleteBucket",
         "s3:PutBucketTagging",
         "lambda:GetFunction",
-        "iam:GetRolePolicy",
-        "iam:PassRole"
+        "iam:GetRolePolicy"
       ],
       "Resource": "*"
     }
