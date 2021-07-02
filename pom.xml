@@ -266,7 +266,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>0.8.0</version>
+                <version>0.9.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -277,10 +277,8 @@
                 <configuration>
                     <modules>
                         <module>maven_central</module>
+                        <module>integration_tests</module>
                     </modules>
-                    <excludedFiles>
-                        <excludedFile>.travis.yml</excludedFile>
-                    </excludedFiles>
                 </configuration>
             </plugin>
             <plugin>
@@ -412,7 +410,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>error-code-crawler-maven-plugin</artifactId>
-                <version>0.1.1</version>
+                <version>0.5.0</version>
                 <executions>
                     <execution>
                         <goals>
