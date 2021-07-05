@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 0.1.0, released 2021-07-02
+# exasol-test-setup-abstraction-java 0.1.0, released 2021-07-05
 
 Code name: Initial implementation
 
