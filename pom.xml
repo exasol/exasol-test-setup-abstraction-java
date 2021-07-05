@@ -37,6 +37,12 @@
             <organizationUrl>https://www.exasol.com/</organizationUrl>
         </developer>
     </developers>
+    <scm>
+        <connection>scm:git:https://github.com/exasol/exasol-test-setup-abstraction-java.git</connection>
+        <developerConnection>scm:git:https://github.com/exasol/exasol-test-setup-abstraction-java.git
+        </developerConnection>
+        <url>https://github.com/exasol/exasol-test-setup-abstraction-java/tree/master</url>
+    </scm>
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
