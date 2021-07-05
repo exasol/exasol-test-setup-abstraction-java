@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 0.1.0, released 2021-06-24
+# exasol-test-setup-abstraction-java 0.1.0, released 2021-07-05
 
 Code name: Initial implementation
 
@@ -13,6 +13,10 @@ This is the initial implementation. It contains the interface and an implementat
 ## Documentation:
 
 * #16: Improved Readme
+
+## Refactoring:
+
+* #18: Migrated to GitHub Actions
 
 ## Dependency Updates
 
@@ -36,8 +40,8 @@ This is the initial implementation. It contains the interface and an implementat
 
 ### Plugin Dependency Updates
 
-* Added `com.exasol:error-code-crawler-maven-plugin:0.1.1`
-* Added `com.exasol:project-keeper-maven-plugin:0.7.1`
+* Added `com.exasol:error-code-crawler-maven-plugin:0.5.0`
+* Added `com.exasol:project-keeper-maven-plugin:0.9.0`
 * Added `io.github.zlika:reproducible-build-maven-plugin:0.13`
 * Added `org.apache.maven.plugins:maven-clean-plugin:2.5`
 * Added `org.apache.maven.plugins:maven-compiler-plugin:3.8.1`

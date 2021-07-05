@@ -111,12 +111,23 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     @Test
-    void testMakeDatabaseServiceAvailableAtLocalhost() throws SQLException {
+    void testMakeDatabaseServiceAvailableAtLocalhost() throws SQLException, InterruptedException {
         final List<Integer> localPorts = this.testSetup.makeDatabaseTcpServiceAccessibleFromLocalhost(8001);
         assertThat(localPorts.size(), greaterThanOrEqualTo(1));
         final ConnectionTester connectionTester = new ConnectionTester(localPorts);
         createTcpServerInUdf();// blocking until received a connection or timeout
+        waitForConnectionTesterToReceive();
         Assertions.assertTrue(connectionTester.success.get());
+    }
+
+    /**
+     * Since the connection tester runs in a dedicated thread we need to wait a bit so that it will also run on single
+     * core CPUs.
+     * 
+     * @throws InterruptedException if interrupted
+     */
+    private void waitForConnectionTesterToReceive() throws InterruptedException {
+        Thread.sleep(100);
     }
 
     private void createTcpServerInUdf() throws SQLException {
