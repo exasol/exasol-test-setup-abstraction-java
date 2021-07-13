@@ -2,7 +2,7 @@
 
 Code name: Fixed Free Port Detection
 
-## Bug Fixes:
+## Bug Fixes
 
 * #21: Fixed free port detection
 

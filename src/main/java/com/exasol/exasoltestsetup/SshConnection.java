@@ -135,7 +135,7 @@ public class SshConnection implements AutoCloseable {
             return Integer.parseInt(portOutput.trim());
         } catch (final NumberFormatException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-25")
-                    .message("Failed find free port on server. The python script had an invalid output: {{output}}.",
+                    .message("Failed to find free port on server. The python script had an invalid output: {{output}}.",
                             portOutput)
                     .ticketMitigation().toString(), exception);
         }
