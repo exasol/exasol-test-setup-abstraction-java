@@ -10,6 +10,12 @@ import com.jcraft.jsch.*;
  * This class sets up a SSH port forwarding.
  */
 public class SshConnection implements AutoCloseable {
+    private static final String PORT_FINDER_PYTHON_SCRIPT = "import socket\n" + //
+            "from contextlib import closing\n" + //
+            "with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:\n" + //
+            "    s.bind(('', 0))\n" + //
+            "    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)\n" + //
+            "    print(s.getsockname()[1])\n\n";
     private final Session sshSession;
 
     /**
@@ -123,14 +129,8 @@ public class SshConnection implements AutoCloseable {
      * @return free port number
      */
     public int findFreePortOnServer() {
-        final String portOutput = runCommand("python3 <<HEREDOC\n" + //
-                "import socket\n" + //
-                "from contextlib import closing\n" + //
-                "with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:\n" + //
-                "    s.bind(('', 0))\n" + //
-                "    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)\n" + //
-                "    print(s.getsockname()[1])\n\n" + //
-                "HEREDOC").whenFinished().assertExitCodeIsZero().getStdout();
+        final String portOutput = runCommand("python3 <<HEREDOC\n" + PORT_FINDER_PYTHON_SCRIPT + "HEREDOC")
+                .whenFinished().assertExitCodeIsZero().getStdout();
         try {
             return Integer.parseInt(portOutput.trim());
         } catch (final NumberFormatException exception) {
