@@ -123,19 +123,22 @@ public class SshConnection implements AutoCloseable {
      * @return free port number
      */
     public int findFreePortOnServer() {
-        final String netstatOutput = runCommand("netstat -tunlep | grep LISTEN | awk '{print $4}'").whenFinished()
-                .assertExitCodeIsZero().getStdout();
-        final String[] netstatRows = netstatOutput.split("\n");
-        int maxUsedPort = 0;
-        for (final String netstatRow : netstatRows) {
-            final String[] parts = netstatRow.split(":");
-            if (parts.length < 2) {
-                continue;
-            }
-            final int usedPort = Integer.parseInt(parts[parts.length - 1]);
-            maxUsedPort = Math.max(maxUsedPort, usedPort);
+        final String portOutput = runCommand("python3 <<HEREDOC\n" + //
+                "import socket\n" + //
+                "from contextlib import closing\n" + //
+                "with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:\n" + //
+                "    s.bind(('', 0))\n" + //
+                "    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)\n" + //
+                "    print(s.getsockname()[1])\n\n" + //
+                "HEREDOC").whenFinished().assertExitCodeIsZero().getStdout();
+        try {
+            return Integer.parseInt(portOutput.trim());
+        } catch (final NumberFormatException exception) {
+            throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-25")
+                    .message("Failed find free port on server. The python script had an invalid output: {{output}}.",
+                            portOutput)
+                    .ticketMitigation().toString(), exception);
         }
-        return maxUsedPort + 1;
     }
 
     private int findFreeLocalPort() {
