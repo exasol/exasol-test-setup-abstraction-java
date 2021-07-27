@@ -1,0 +1,4 @@
+error-tags:
+  ETAJ:
+    packages:
+      - com.exasol.exasoltestsetup
