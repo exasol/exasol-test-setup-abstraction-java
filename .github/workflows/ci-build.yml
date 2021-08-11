@@ -25,10 +25,9 @@ jobs:
       - name: Enable Testconatiner reuse
         run: echo 'testcontainers.reuse.enable=true' >> "$HOME"/.testcontainers.properties
       - name: Run quick checks
-        run: mvn -B verify --file pom.xml -DskipTests
+        run: mvn -B clean verify --file pom.xml -DskipTests
       - name: Create AWS test setup
         run: |
-          sudo apt-get install -y terrafrom
           terraform -chdir cloudSetup init
           terraform -chdir cloudSetup apply
           chmod 700 cloudSetup/generated/exasol_cluster_ssh_key
@@ -38,7 +37,7 @@ jobs:
       - name: Run tests and build with Maven
         run: |
           . cloudSetup/generated/setEnv.sh
-          mvn -B clean verify sonar:sonar --file pom.xml -Dsonar.organization=exasol -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+          mvn -B verify sonar:sonar --file pom.xml -Dsonar.organization=exasol -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
