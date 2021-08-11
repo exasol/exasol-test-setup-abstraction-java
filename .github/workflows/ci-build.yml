@@ -31,8 +31,11 @@ jobs:
           sudo apt-get install -y terrafrom
           terraform -chdir cloudSetup init
           terraform -chdir cloudSetup apply
+          chmod 700 cloudSetup/generated/exasol_cluster_ssh_key
       - name: Run tests and build with Maven
-        run: mvn -B clean verify sonar:sonar --file pom.xml -Dsonar.organization=exasol -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+        run: |
+          . cloudSetup/generated/setEnv.sh
+          mvn -B clean verify sonar:sonar --file pom.xml -Dsonar.organization=exasol -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
