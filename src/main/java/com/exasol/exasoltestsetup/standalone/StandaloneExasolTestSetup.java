@@ -120,7 +120,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
                 final Statement statement = connection.createStatement()) {
             new ExasolDatabaseCleaner(statement).cleanDatabase();
         } catch (final SQLException exception) {
-            throw new IllegalStateException(ExaError.messageBuilder("E-VSAJ-14")
+            throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-28")
                     .message("Failed to connect to the exasol database for cleaning.").toString(), exception);
         }
     }

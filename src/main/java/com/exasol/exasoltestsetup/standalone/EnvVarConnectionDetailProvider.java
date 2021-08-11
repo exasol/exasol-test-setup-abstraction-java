@@ -7,7 +7,7 @@ import com.exasol.errorreporting.ExaError;
 /**
  * This {@link ConnectionDetailProvider} provides connection details for an Exasol database from environment variables.
  */
-class EnvVarConnectionDetailProvider implements ConnectionDetailProvider {
+public class EnvVarConnectionDetailProvider implements ConnectionDetailProvider {
     public static final int SSH_DEFAULT_PORT = 22;
     private static final Logger LOGGER = Logger.getLogger(EnvVarConnectionDetailProvider.class.getName());
     private final String datanodeIp;
@@ -54,7 +54,7 @@ class EnvVarConnectionDetailProvider implements ConnectionDetailProvider {
         final String value = System.getenv(variableName);
         if (value == null) {
             throw new IllegalStateException(
-                    ExaError.messageBuilder("E-ETSA-15").message("Undeclared environment variable {{variable}}.")
+                    ExaError.messageBuilder("E-ETAJ-15").message("Undeclared environment variable {{variable}}.")
                             .mitigation("Please set the required variable {{variable}}.")
                             .parameter("variable", variableName).toString());
         }

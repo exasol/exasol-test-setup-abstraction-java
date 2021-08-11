@@ -14,9 +14,13 @@ import com.exasol.bucketfs.ReadOnlyBucket;
  */
 class WaitBucketFsMonitor implements BucketFsMonitor {
     @Override
-    public boolean isObjectSynchronized(final ReadOnlyBucket bucket, final String pathInBucket, final Instant afterUTC)
-            throws InterruptedException {
-        Thread.sleep(1000);
+    public boolean isObjectSynchronized(final ReadOnlyBucket bucket, final String pathInBucket,
+            final Instant afterUTC) {
+        try {
+            Thread.sleep(1000);
+        } catch (final InterruptedException exception) {
+            Thread.currentThread().interrupt();
+        }
         return true;
     }
 }

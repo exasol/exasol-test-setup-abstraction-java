@@ -129,12 +129,12 @@ public class SshConnection implements AutoCloseable {
      * @return free port number
      */
     public int findFreePortOnServer() {
-        final String portOutput = runCommand("python3 <<HEREDOC\n" + PORT_FINDER_PYTHON_SCRIPT + "HEREDOC")
+        final String portOutput = runCommand("python <<HEREDOC\n" + PORT_FINDER_PYTHON_SCRIPT + "HEREDOC")
                 .whenFinished().assertExitCodeIsZero().getStdout();
         try {
             return Integer.parseInt(portOutput.trim());
         } catch (final NumberFormatException exception) {
-            throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-25")
+            throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-29")
                     .message("Failed to find free port on server. The python script had an invalid output: {{output}}.",
                             portOutput)
                     .ticketMitigation().toString(), exception);

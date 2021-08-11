@@ -24,9 +24,19 @@ jobs:
             ${{ runner.os }}-maven-
       - name: Enable Testconatiner reuse
         run: echo 'testcontainers.reuse.enable=true' >> "$HOME"/.testcontainers.properties
+      - name: Run quick checks
+        run: mvn -B verify --file pom.xml -DskipTests
+      - name: Create AWS test setup
+        run: |
+          sudo apt-get install -y terrafrom
+          terraform -chdir cloudSetup init
+          terraform -chdir cloudSetup apply
       - name: Run tests and build with Maven
         run: mvn -B clean verify sonar:sonar --file pom.xml -Dsonar.organization=exasol -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Destroy cluster
+        run: terraform destroy
+        if: always()
