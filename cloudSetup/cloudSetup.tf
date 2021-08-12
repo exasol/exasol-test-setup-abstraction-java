@@ -4,10 +4,10 @@ provider "aws" {
 }
 
 module "exasol_setup" {
-  source = "../../terraform-aws-test-setup"
+  source = "exasol/exasol-test-setup/aws"
+  version = "0.1.1"
   owner = var.owner
   deputy = var.deputy
   datanode_count = 1
   project = "ETSA"
-  license = "./docker-db.lic"
 }
