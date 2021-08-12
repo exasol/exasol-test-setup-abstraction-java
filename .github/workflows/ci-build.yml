@@ -1,7 +1,7 @@
 name: CI Build
 
 on:
-  - push
+  - workflow_dispatch
 
 jobs:
   build:
@@ -24,8 +24,6 @@ jobs:
             ${{ runner.os }}-maven-
       - name: Enable Testconatiner reuse
         run: echo 'testcontainers.reuse.enable=true' >> "$HOME"/.testcontainers.properties
-      - name: Run quick checks
-        run: mvn -B clean verify --file pom.xml -DskipTests
       - name: Create AWS test setup
         run: |
           terraform -chdir=cloudSetup/ init
