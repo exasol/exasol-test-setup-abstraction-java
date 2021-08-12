@@ -5,10 +5,10 @@ on:
     branches:
       - "main"
   workflow_dispatch:
-
 jobs:
   ci-build:
     runs-on: ubuntu-latest
+    environment: aws
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
