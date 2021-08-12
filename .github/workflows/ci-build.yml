@@ -2,14 +2,28 @@ name: CI Build
 
 on:
   push:
-    branches: [ "main" ]
-  workflow_dispatch:
+  pull_request:
+    types: [ opened ]
+  issue_comment:
+    types: [ created ]
 
 
 jobs:
   ci-build:
     runs-on: ubuntu-latest
     steps:
+      - uses: khan/pull-request-comment-trigger@master
+        id: check
+        with:
+          trigger: '@deploy'
+          reaction: rocket
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: 'echo Found it!'
+      - run: |
+          echo "Stopping here since not enabled"
+          exit 1
+        if: steps.check.outputs.triggered != 'true'
       - name: Checkout the repository
         uses: actions/checkout@v2
         with:
