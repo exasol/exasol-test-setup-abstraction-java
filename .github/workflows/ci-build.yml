@@ -43,5 +43,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Destroy cluster
-        run: terraform -chdir=cloudSetup/ destroy
+        run: terraform -chdir=cloudSetup/ destroy -auto-approve
         if: always()
