@@ -10,5 +10,6 @@ jobs:
         uses: peter-evans/slash-command-dispatch@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          dispatch-type: "workflow"
           commands: |
             ci-build
