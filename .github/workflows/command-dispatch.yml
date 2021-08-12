@@ -11,5 +11,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           dispatch-type: "workflow"
+          event-type-suffix: ""
           commands: |
             ci-build
