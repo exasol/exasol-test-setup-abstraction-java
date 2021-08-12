@@ -1,6 +1,6 @@
 provider "aws" {
   region = "eu-central-1"
-  profile = "c1-admin"
+  profile = "c1-etsa"
 }
 
 module "exasol_setup" {
