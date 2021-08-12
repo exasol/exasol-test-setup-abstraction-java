@@ -19,7 +19,6 @@ jobs:
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-        run: 'echo Found it!'
       - run: |
           echo "Stopping here since not enabled"
           exit 1
