@@ -26,8 +26,8 @@ jobs:
         run: echo 'testcontainers.reuse.enable=true' >> "$HOME"/.testcontainers.properties
       - name: Create AWS test setup
         run: |
-          echo "owner = '$OWNER'\n" > cloudSetup/terraform.tfvars
-          echo "deputy = '$DEPUTY'\n" >> cloudSetup/terraform.tfvars
+          echo "owner = \"$OWNER\"\n" > cloudSetup/terraform.tfvars
+          echo "deputy = \"$DEPUTY\"\n" >> cloudSetup/terraform.tfvars
           terraform -chdir=cloudSetup/ init
           terraform -chdir=cloudSetup/ apply -auto-approve
         env:
