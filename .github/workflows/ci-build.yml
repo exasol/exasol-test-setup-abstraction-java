@@ -15,14 +15,15 @@ jobs:
       - uses: khan/pull-request-comment-trigger@master
         id: check
         with:
-          trigger: '@deploy'
+          trigger: '@run'
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        if: ${{ github.event.issue.pull_request }}
       - run: |
           echo "Stopping here since not enabled"
           exit 1
-        if: steps.check.outputs.triggered != 'true'
+        if: github.event.issue.pull_request && steps.check.outputs.triggered != 'true'
       - name: Checkout the repository
         uses: actions/checkout@v2
         with:
