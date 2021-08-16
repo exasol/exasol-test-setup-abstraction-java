@@ -208,18 +208,23 @@ class ExaOperationGateway {
         }
     }
 
+    // no validation is intended. A better approach is planned:
+    // https://github.com/exasol/exasol-test-setup-abstraction-java/issues/25
+    @SuppressWarnings({ "java:S4830", "java:S5527", "java:S4423" })
     private void setTrustAllCerts() throws NoSuchAlgorithmException, KeyManagementException {
         try {
             // Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
                 public X509Certificate[] getAcceptedIssuers() {
-                    return null;
+                    return new X509Certificate[] {};
                 }
 
                 public void checkClientTrusted(final X509Certificate[] certs, final String authType) {
+                    // accept everything
                 }
 
                 public void checkServerTrusted(final X509Certificate[] certs, final String authType) {
+                    // accept everything
                 }
             } };
 
@@ -229,11 +234,7 @@ class ExaOperationGateway {
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
             // Create all-trusting host name verifier
-            final HostnameVerifier allHostsValid = new HostnameVerifier() {
-                public boolean verify(final String hostname, final SSLSession session) {
-                    return true;
-                }
-            };
+            final HostnameVerifier allHostsValid = (hostname, session) -> true;
 
             // Install the all-trusting host verifier
             HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
