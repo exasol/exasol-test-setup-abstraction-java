@@ -66,7 +66,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
 
     private List<String> fetchDataNodeIds() {
         final List<String> nodes = new ArrayList<>(
-                Arrays.asList(this.sshConnection.runCommand("/usr/opt/EXASuite-7/EXAClusterOS-7.0.8/bin/cosinfo -e")
+                Arrays.asList(this.sshConnection.runCommand("/usr/opt/EXASuite-*/EXAClusterOS-*/bin/cosinfo -e")
                         .whenFinished().assertExitCodeIsZero().getStdout().split("\n")));
         nodes.removeIf(nodeId -> nodeId.equals("10"));// remove management node
         return nodes.stream().map(id -> "n" + id).collect(Collectors.toList());
