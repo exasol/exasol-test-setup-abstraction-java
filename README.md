@@ -45,6 +45,6 @@ class MyTest {
 
 ## Additional Information
 
-* [Guide for Setting up a Project With Could Resources](doc/user_guide/setup_project_with_cloud_resources.md)
+* [Guide for Setting up a Project With Cloud Resources](doc/user_guide/setup_project_with_cloud_resources.md)
 * [Changelog](doc/changes/changelog.md)
 * [Dependencies](dependencies.md)
