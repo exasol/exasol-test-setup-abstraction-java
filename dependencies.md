@@ -13,16 +13,16 @@
 | [AWS Java SDK :: Services :: Amazon EC2][8]         | [Apache License, Version 2.0][9]              |
 | [JSch][12]                                          | [Revised BSD][13]                             |
 | [database-cleaner][14]                              | [MIT][1]                                      |
-| [System Lambda][16]                                 | [MIT License][17]                             |
 
 ## Test Dependencies
 
 | Dependency                 | License                           |
 | -------------------------- | --------------------------------- |
-| [JUnit Jupiter Engine][18] | [Eclipse Public License v2.0][19] |
-| [JUnit Jupiter Params][18] | [Eclipse Public License v2.0][19] |
-| [Hamcrest][22]             | [BSD License 3][23]               |
-| [EqualsVerifier][24]       | [Apache License, Version 2.0][5]  |
+| [JUnit Jupiter Engine][16] | [Eclipse Public License v2.0][17] |
+| [JUnit Jupiter Params][16] | [Eclipse Public License v2.0][17] |
+| [Hamcrest][20]             | [BSD License 3][21]               |
+| [EqualsVerifier][22]       | [Apache License, Version 2.0][5]  |
+| [System Lambda][24]        | [MIT License][25]                 |
 
 ## Plugin Dependencies
 
@@ -65,10 +65,10 @@
 [28]: https://maven.apache.org/surefire/maven-failsafe-plugin/
 [32]: http://maven.apache.org/plugins/maven-dependency-plugin/
 [34]: http://www.mojohaus.org/versions-maven-plugin/
-[23]: http://opensource.org/licenses/BSD-3-Clause
+[21]: http://opensource.org/licenses/BSD-3-Clause
 [30]: https://maven.apache.org/plugins/maven-compiler-plugin/
-[16]: https://github.com/stefanbirkner/system-lambda/
-[17]: http://opensource.org/licenses/MIT
+[24]: https://github.com/stefanbirkner/system-lambda/
+[25]: http://opensource.org/licenses/MIT
 [44]: http://maven.apache.org/plugins/maven-gpg-plugin/
 [43]: https://www.eclipse.org/legal/epl-2.0/
 [49]: http://www.eclipse.org/legal/epl-v10.html
@@ -78,14 +78,14 @@
 [62]: http://maven.apache.org/plugins/maven-jar-plugin/
 [27]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [38]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
-[19]: https://www.eclipse.org/legal/epl-v20.html
+[17]: https://www.eclipse.org/legal/epl-v20.html
 [64]: http://maven.apache.org/plugins/maven-install-plugin/
-[18]: https://junit.org/junit5/
+[16]: https://junit.org/junit5/
 [36]: https://sonatype.github.io/ossindex-maven/maven-plugin/
-[24]: http://www.jqno.nl/equalsverifier
+[22]: http://www.jqno.nl/equalsverifier
 [50]: https://maven.apache.org/plugins/maven-source-plugin/
 [13]: http://www.jcraft.com/jsch/LICENSE.txt
-[22]: http://hamcrest.org/JavaHamcrest/
+[20]: http://hamcrest.org/JavaHamcrest/
 [46]: http://maven.apache.org/plugins/maven-deploy-plugin/
 [66]: http://maven.apache.org/plugins/maven-site-plugin/
 [60]: http://maven.apache.org/plugins/maven-resources-plugin/

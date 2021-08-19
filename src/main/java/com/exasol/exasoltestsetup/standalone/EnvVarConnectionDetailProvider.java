@@ -62,12 +62,12 @@ public class EnvVarConnectionDetailProvider implements ConnectionDetailProvider 
     }
 
     @Override
-    public String getManagementNodeIp() {
+    public String getManagementNodeAddress() {
         return this.managementIp;
     }
 
     @Override
-    public String getDataNodeIp() {
+    public String getDataNodeAddress() {
         return this.datanodeIp;
     }
 

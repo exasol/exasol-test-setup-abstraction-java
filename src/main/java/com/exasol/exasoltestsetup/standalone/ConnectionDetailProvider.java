@@ -6,18 +6,18 @@ package com.exasol.exasoltestsetup.standalone;
 interface ConnectionDetailProvider {
 
     /**
-     * Get the IP address of the management node.
+     * Get the IP address / host name of the management node.
      * 
      * @return ip address
      */
-    public String getManagementNodeIp();
+    public String getManagementNodeAddress();
 
     /**
-     * Get the ip address of a data node.
+     * Get the ip address / host name of a data node.
      * 
      * @return ip address
      */
-    public String getDataNodeIp();
+    public String getDataNodeAddress();
 
     /**
      * Get credentials for the database.

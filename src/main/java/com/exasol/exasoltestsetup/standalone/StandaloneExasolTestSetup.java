@@ -23,6 +23,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     private static final java.util.logging.Logger LOGGER = Logger.getLogger(StandaloneExasolTestSetup.class.getName());
     private static final int BUCKET_FS_PORT = 2580;
     private static final int DATABASE_PORT = 8563;
+    private static final int EXA_OPERATION_PORT = 443;
     private final ConnectionDetailProvider connectionDetails;
     private final String bucketFsReadPassword;
     private final String bucketFsWritePassword;
@@ -41,7 +42,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
         this.sshConnection = createConfiguredSshConnection();
         this.dataNodeIds = fetchDataNodeIds();
         this.localBucketFsPort = this.sshConnection.addForwardPortForwarding(BUCKET_FS_PORT, getADataNode());
-        final int localHttpsPort = this.sshConnection.addForwardPortForwarding(443);
+        final int localHttpsPort = this.sshConnection.addForwardPortForwarding(EXA_OPERATION_PORT);
         this.localDatabasePort = this.sshConnection.addForwardPortForwarding(DATABASE_PORT, getADataNode());
         final ExaOperationGateway exaOperationGateway = new ExaOperationGateway("localhost:" + localHttpsPort,
                 connectionDetailProvider.getAdminCredentials());
@@ -167,7 +168,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
 
     private Session configSshAuth(final JSch ssh) throws JSchException {
         ssh.addIdentity("./cloudSetup/generated/exasol_cluster_ssh_key");
-        return ssh.getSession("ec2-user", this.connectionDetails.getManagementNodeIp(),
+        return ssh.getSession("ec2-user", this.connectionDetails.getManagementNodeAddress(),
                 this.connectionDetails.getSshPort());
     }
 }
