@@ -47,7 +47,7 @@ class MyTest {
 The `ExasolTestSetupFactory` in the example return a test setup depending on the `EXASOL_TEST_BACKEND` environment variable. Possible values:
 
 * `testcontainer`  (default): Exasol-Testcontainer backend
-* `aws`: Exasol cluster on AWS. If you use this option also provide `EXASOL_DATANODE_IP`, `EXASOL_MANAGEMENT_IP`, `EXASOL_SSH_PORT`, `EXASOL_USER`, `EXASOL_PASS`, `EXASOL_ADMIN_USER` and `EXASOL_ADMIN_PASS` as environment variable. Typically you create these using the [terraform-aws-exasol-test-setup](https://github.com/exasol/terraform-aws-exasol-test-setup/). For details see the [guide for setting up a project with cloud resources](doc/user_guide/setup_project_with_cloud_resources.md).
+* `aws`: Exasol cluster on AWS. If you use this option also provide `EXASOL_DATANODE_IP`, `EXASOL_MANAGEMENT_IP`, `EXASOL_SSH_PORT`, `EXASOL_USER`, `EXASOL_PASS`, `EXASOL_ADMIN_USER` and `EXASOL_ADMIN_PASS` as environment variable. Typically, you create these using the [terraform-aws-exasol-test-setup](https://github.com/exasol/terraform-aws-exasol-test-setup/). For details see the [guide for setting up a project with cloud resources](doc/user_guide/setup_project_with_cloud_resources.md).
 
 You can also select a specific test-setup in code. For that simply replace `new ExasolTestSetupFactory().getTestSetup()` by `new ExasolTestcontainerTestSetup()`.
 
