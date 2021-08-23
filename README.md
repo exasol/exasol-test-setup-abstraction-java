@@ -22,13 +22,14 @@ That allows you to write tests where you can to switch the test-backend. For exa
 In addition, it contains implementations for this interface for the following test-backends:
 
 * Local - Docker (via Testcontainers)
+* With an Exasol cluster on AWS
 
 ## Usage
 
 ```java
 
 class MyTest {
-    private static final ExasolTestSetup EXASOL = new ExasolTestcontainerTestSetup();
+    private static final ExasolTestSetup EXASOL = new ExasolTestSetupFactory().getTestSetup();
 
     @Test
     void test() {
@@ -43,7 +44,15 @@ class MyTest {
 }
 ```
 
+The `ExasolTestSetupFactory` in the example return a test setup depending on the `EXASOL_TEST_BACKEND` environment variable. Possible values:
+
+* `testcontainer`  (default): Exasol-Testcontainer backend
+* `aws`: Exasol cluster on AWS. If you use this option also provide `EXASOL_DATANODE_IP`, `EXASOL_MANAGEMENT_IP`, `EXASOL_SSH_PORT`, `EXASOL_USER`, `EXASOL_PASS`, `EXASOL_ADMIN_USER` and `EXASOL_ADMIN_PASS` as environment variable. Typically, you create these using the [terraform-aws-exasol-test-setup](https://github.com/exasol/terraform-aws-exasol-test-setup/). For details see the [guide for setting up a project with cloud resources](doc/user_guide/setup_project_with_cloud_resources.md).
+
+You can also select a specific test-setup in code. For that simply replace `new ExasolTestSetupFactory().getTestSetup()` by `new ExasolTestcontainerTestSetup()`.
+
 ## Additional Information
 
+* [Guide for Setting up a Project With Cloud Resources](doc/user_guide/setup_project_with_cloud_resources.md)
 * [Changelog](doc/changes/changelog.md)
 * [Dependencies](dependencies.md)
