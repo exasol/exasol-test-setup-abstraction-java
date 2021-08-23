@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 0.2.0, released 2021-08-17
+# exasol-test-setup-abstraction-java 0.2.0, released 2021-08-??
 
 Code name: AWS Cluster Test Backend
 

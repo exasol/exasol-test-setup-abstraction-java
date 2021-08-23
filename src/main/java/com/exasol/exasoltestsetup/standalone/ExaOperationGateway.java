@@ -63,7 +63,7 @@ class ExaOperationGateway {
         try {
             LOGGER.info("Starting exasol storage service via ExaOperation.");
             this.client.execute("storage.startEXAStorage", new Object[] {});
-            waitUntil(this::isStorageServiceRunning);
+            waitUntil(this::isStorageServiceRunning, 60, "starting storage service");
         } catch (final XmlRpcException exception) {
             throw new IllegalStateException(
                     ExaError.messageBuilder("E-ETAJ-7").message("Failed to start exasol storage service.").toString(),
@@ -117,7 +117,7 @@ class ExaOperationGateway {
         try {
             LOGGER.log(Level.INFO, "Starting exasol database {0} via ExaOperation.", databaseName);
             this.client.execute("db_" + databaseName + ".startDatabase", new Object[] {});
-            waitUntil(() -> isDatabaseRunning(databaseName));
+            waitUntil(() -> isDatabaseRunning(databaseName), 60, "starting database");
             waitFor(1000);// it needs some time until it's really available
         } catch (final XmlRpcClientException exception) {
             // response parse fails, but start works anyway

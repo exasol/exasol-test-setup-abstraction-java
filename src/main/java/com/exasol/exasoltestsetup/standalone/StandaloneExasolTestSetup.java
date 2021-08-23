@@ -1,15 +1,16 @@
 package com.exasol.exasoltestsetup.standalone;
 
 import static com.exasol.exasoltestsetup.PasswordGenerator.generatePassword;
+import static com.exasol.exasoltestsetup.WaitHelper.waitFor;
 import static com.exasol.exasoltestsetup.WaitHelper.waitUntil;
 
 import java.sql.*;
 import java.util.*;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import com.exasol.bucketfs.Bucket;
-import com.exasol.bucketfs.SyncAwareBucket;
+import com.exasol.bucketfs.*;
 import com.exasol.dbcleaner.ExasolDatabaseCleaner;
 import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.*;
@@ -34,7 +35,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
 
     /**
      * Create a new instance of {@link StandaloneExasolTestSetup}.
-     * 
+     *
      * @param connectionDetailProvider provider for the connection details
      */
     public StandaloneExasolTestSetup(final ConnectionDetailProvider connectionDetailProvider) {
@@ -51,10 +52,45 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
         exaOperationGateway.setBucketFsPort("bfsdefault", BUCKET_FS_PORT);
         this.bucketFsReadPassword = generatePassword();
         this.bucketFsWritePassword = generatePassword();
-        exaOperationGateway.setBucketPasswords(this.bucketFsReadPassword, this.bucketFsWritePassword);
-        waitForExasolToSyncTheSettings();
-        waitUntil(this::isSqlInterfaceAvailable);
+        setBucketsPasswordWithWorkaround(exaOperationGateway);
+        waitUntil(this::isSqlInterfaceAvailable, 120, "SQL interface");
         cleanTheDatabase();
+    }
+
+    /**
+     * The changing of the password fails from time to time without an error (with just ni change). As a workaround we
+     * try it multiple times and check if it worked.
+     * 
+     * @param exaOperationGateway ExaOperation
+     */
+    private void setBucketsPasswordWithWorkaround(final ExaOperationGateway exaOperationGateway) {
+        int tryCounter = 0;
+        do {
+            exaOperationGateway.setBucketPasswords(this.bucketFsReadPassword, this.bucketFsWritePassword);
+            waitFor(100);
+            tryCounter++;
+            if (tryCounter > 10) {
+                throw new IllegalStateException(
+                        ExaError.messageBuilder("E-ETAJ-32").message("Failed to set BucketFS password.").toString());
+            }
+        } while (!this.isBucketFsIsAvailable());
+    }
+
+    private boolean isBucketFsIsAvailable() {
+        final String testFile = "bfs-test-" + System.currentTimeMillis() + ".txt";
+        final Bucket bucket = getDefaultBucket();
+        try {
+            bucket.uploadStringContent("1", testFile);
+            bucket.downloadFileAsString(testFile);
+            bucket.deleteFileNonBlocking(testFile);
+            return true;
+        } catch (final BucketAccessException | TimeoutException exception) {
+            return false;
+        } catch (final InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-30")
+                    .message("Interrupt which checking BucketFs connection.").toString(), exception);
+        }
     }
 
     private String getADataNode() {
@@ -75,7 +111,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
 
     /**
      * This method creates an SSH connection with the required server side sshd configuration.
-     * 
+     *
      * @return ssh connection
      */
     private SshConnection createConfiguredSshConnection() {
@@ -123,14 +159,6 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
         } catch (final SQLException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-28")
                     .message("Failed to connect to the exasol database for cleaning.").toString(), exception);
-        }
-    }
-
-    private void waitForExasolToSyncTheSettings() {
-        try {
-            Thread.sleep(2000);
-        } catch (final InterruptedException exception) {
-            Thread.currentThread().interrupt();
         }
     }
 
