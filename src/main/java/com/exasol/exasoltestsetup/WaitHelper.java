@@ -1,5 +1,6 @@
 package com.exasol.exasoltestsetup;
 
+import java.util.concurrent.TimeUnit;
 import java.util.function.BooleanSupplier;
 
 import com.exasol.errorreporting.ExaError;
@@ -40,7 +41,7 @@ public class WaitHelper {
         final long start = System.currentTimeMillis();
         while (!predicate.getAsBoolean()) {
             final long elapsed = System.currentTimeMillis() - start;
-            if (elapsed > timeoutAfterSec * 1000L) {
+            if (TimeUnit.MILLISECONDS.toSeconds(elapsed) > timeoutAfterSec) {
                 throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-31")
                         .message("Timeout waiting for {{jobDescription|uq}}.", jobDescription).toString());
             }
