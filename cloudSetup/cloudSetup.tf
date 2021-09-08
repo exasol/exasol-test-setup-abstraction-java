@@ -4,8 +4,7 @@ provider "aws" {
 }
 
 module "exasol_setup" {
-  source = "exasol/exasol-test-setup/aws"
-  version = "0.2.0"
+  source = "../../terraform-aws-exasol-test-setup"
   owner = var.owner
   deputy = var.deputy
   datanode_count = 1

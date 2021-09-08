@@ -1,5 +1,7 @@
 package com.exasol.exasoltestsetup.standalone;
 
+import java.nio.file.Path;
+
 import com.exasol.exasoltestsetup.ExasolTestSetup;
 import com.exasol.exasoltestsetup.ExasolTestSetupTestBase;
 
@@ -12,6 +14,7 @@ import com.exasol.exasoltestsetup.ExasolTestSetupTestBase;
  */
 class StandaloneExasolTestSetupTest extends ExasolTestSetupTestBase {
     protected ExasolTestSetup getExasolTestSetup() {
-        return new StandaloneExasolTestSetup(new EnvVarConnectionDetailProvider());
+        return new StandaloneExasolTestSetup(
+                new JsonConnectionDetailsReader().read(Path.of("cloudSetup/generated/testConfig.json")));
     }
 }

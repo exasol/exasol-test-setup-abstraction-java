@@ -25,7 +25,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     private static final int BUCKET_FS_PORT = 2580;
     private static final int DATABASE_PORT = 8563;
     private static final int EXA_OPERATION_PORT = 443;
-    private final ConnectionDetailProvider connectionDetails;
+    private final ConnectionDetails connectionDetails;
     private final String bucketFsReadPassword;
     private final String bucketFsWritePassword;
     private final SshConnection sshConnection;
@@ -36,17 +36,17 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     /**
      * Create a new instance of {@link StandaloneExasolTestSetup}.
      *
-     * @param connectionDetailProvider provider for the connection details
+     * @param connectionDetails connection details for the Exasol database
      */
-    public StandaloneExasolTestSetup(final ConnectionDetailProvider connectionDetailProvider) {
-        this.connectionDetails = connectionDetailProvider;
+    public StandaloneExasolTestSetup(final ConnectionDetails connectionDetails) {
+        this.connectionDetails = connectionDetails;
         this.sshConnection = createConfiguredSshConnection();
         this.dataNodeIds = fetchDataNodeIds();
         this.localBucketFsPort = this.sshConnection.addForwardPortForwarding(BUCKET_FS_PORT, getADataNode());
         final int localHttpsPort = this.sshConnection.addForwardPortForwarding(EXA_OPERATION_PORT);
         this.localDatabasePort = this.sshConnection.addForwardPortForwarding(DATABASE_PORT, getADataNode());
         final ExaOperationGateway exaOperationGateway = new ExaOperationGateway("localhost:" + localHttpsPort,
-                connectionDetailProvider.getAdminCredentials());
+                connectionDetails.getAdminCredentials());
         exaOperationGateway.startStorageServiceIfNotRunning();
         exaOperationGateway.startAllDatabases();
         exaOperationGateway.setBucketFsPort("bfsdefault", BUCKET_FS_PORT);
