@@ -4,9 +4,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import javax.json.*;
-
 import com.exasol.errorreporting.ExaError;
+
+import jakarta.json.*;
 
 /**
  * This class reads {@link ConnectionDetails} from a JSON file.
@@ -26,7 +26,7 @@ public class JsonConnectionDetailsReader {
                 .dataNodeAddress(readRequiredAttribute(jsonConfig, "dataNodeAddress", configFile))//
                 .managementNodeAddress(readRequiredAttribute(jsonConfig, "managementNodeAddress", configFile))//
                 .sshPort(jsonConfig.getInt("sshPort", DEFAULT_SSH_PORT))//
-                .sshKey(Path.of(readRequiredAttribute(jsonConfig, "sshKey", configFile)))//
+                .pathToSshKey(Path.of(readRequiredAttribute(jsonConfig, "sshKey", configFile)))//
                 .databaseCredentials(new Credentials(readRequiredAttribute(jsonConfig, "sqlUser", configFile),
                         readRequiredAttribute(jsonConfig, "sqlPass", configFile)))
                 .adminCredentials(new Credentials(readRequiredAttribute(jsonConfig, "adminUser", configFile),

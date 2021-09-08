@@ -24,7 +24,7 @@ class JsonConnectionDetailsReaderTest {
                 () -> assertThat(connectionDetails.getDataNodeAddress(), equalTo("192.168.0.1")),
                 () -> assertThat(connectionDetails.getManagementNodeAddress(), equalTo("192.168.0.2")),
                 () -> assertThat(connectionDetails.getSshPort(), equalTo(22)),
-                () -> assertThat(connectionDetails.getSshKey(), equalTo(Path.of("./exasol_cluster_ssh_key"))),
+                () -> assertThat(connectionDetails.getPathToSshKey(), equalTo(Path.of("./exasol_cluster_ssh_key"))),
                 () -> assertThat(connectionDetails.getDatabaseCredentials().getUsername(), equalTo("sys")),
                 () -> assertThat(connectionDetails.getDatabaseCredentials().getPassword(), equalTo("myPass")),
                 () -> assertThat(connectionDetails.getAdminCredentials().getUsername(), equalTo("admin")),

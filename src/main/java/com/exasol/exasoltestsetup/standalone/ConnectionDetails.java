@@ -16,5 +16,5 @@ public class ConnectionDetails {
     private Credentials databaseCredentials;
     private Credentials adminCredentials;
     private int sshPort;
-    private Path sshKey;
+    private Path pathToSshKey;
 }
