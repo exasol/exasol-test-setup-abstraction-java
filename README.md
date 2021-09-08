@@ -44,9 +44,9 @@ class MyTest {
 }
 ```
 
-The `ExasolTestSetupFactory` in the example return a test setup for an AWS cluster if the specified config file (`cloudSetup/generated/testConfig.json`) exists. Otherwise, it returns a test setup based on a local running Exasol-Testconatiner.
+The `ExasolTestSetupFactory` in the example returns a test setup for an AWS cluster if the specified config file (`cloudSetup/generated/testConfig.json`) exists. Otherwise, it returns a test setup based on a local running Exasol-Testcontainer.
 
-Usually you generate the `testConfig.json` by the Terraform module [terraform-aws-exasol-test-setup >= 1.0.0](https://github.com/exasol/terraform-aws-exasol-test-setup/). For details see the [guide for setting up a project with cloud resources](doc/user_guide/setup_project_with_cloud_resources.md).
+Usually you generate the `testConfig.json` using the Terraform module [terraform-aws-exasol-test-setup >= 1.0.0](https://github.com/exasol/terraform-aws-exasol-test-setup/). For details see the [guide for setting up a project with cloud resources](doc/user_guide/setup_project_with_cloud_resources.md).
 
 You can also select a specific test-setup in code. For that simply replace `new ExasolTestSetupFactory().getTestSetup()` by `new ExasolTestcontainerTestSetup()`.
 
