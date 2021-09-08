@@ -18,6 +18,7 @@ public class JsonConnectionDetailsReader {
      * Create a new instance of {@link JsonConnectionDetailsReader}.
      * 
      * @param configFile JSON test-config file
+     * @return read {@link ConnectionDetails}
      */
     public ConnectionDetails read(final Path configFile) {
         final JsonObject jsonConfig = readJsonConfig(configFile);

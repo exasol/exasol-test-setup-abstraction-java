@@ -71,6 +71,7 @@
 [34]: https://maven.apache.org/surefire/maven-failsafe-plugin/
 [38]: http://maven.apache.org/plugins/maven-dependency-plugin/
 [40]: http://www.mojohaus.org/versions-maven-plugin/
+[64]: http://anthonywhitford.com/lombok.maven/lombok-maven-plugin/
 [27]: http://opensource.org/licenses/BSD-3-Clause
 [36]: https://maven.apache.org/plugins/maven-compiler-plugin/
 [17]: https://oss.oracle.com/licenses/CDDL+GPL-1.1
@@ -86,7 +87,6 @@
 [70]: http://maven.apache.org/plugins/maven-jar-plugin/
 [33]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [44]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
-[64]: https://awhitford.github.com/lombok.maven/lombok-maven-plugin/
 [23]: https://www.eclipse.org/legal/epl-v20.html
 [72]: http://maven.apache.org/plugins/maven-install-plugin/
 [22]: https://junit.org/junit5/

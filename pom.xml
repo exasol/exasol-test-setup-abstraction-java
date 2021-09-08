@@ -308,6 +308,11 @@
                         <module>integration_tests</module>
                         <module>lombok</module>
                     </modules>
+                    <linkReplacements>
+                        <linkReplacement>
+                            https://awhitford.github.com/lombok.maven/lombok-maven-plugin/|http://anthonywhitford.com/lombok.maven/lombok-maven-plugin/
+                        </linkReplacement>
+                    </linkReplacements>
                 </configuration>
             </plugin>
             <plugin>
