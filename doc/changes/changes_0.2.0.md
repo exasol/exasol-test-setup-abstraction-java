@@ -15,8 +15,7 @@ Code name: AWS Cluster Test Backend
 * Updated `com.exasol:bucketfs-java:2.0.1` to `2.1.0`
 * Updated `com.exasol:database-cleaner:1.0.0` to `1.0.1`
 * Updated `com.exasol:exasol-testcontainers:3.5.3` to `4.0.0`
-* Added `javax.json:javax.json-api:1.1.4`
-* Added `org.glassfish:javax.json:1.1.4`
+* Added `org.glassfish:jakarta.json:2.0.1`
 * Updated `software.amazon.awssdk:cloudformation:2.16.100` to `2.17.16`
 * Updated `software.amazon.awssdk:ec2:2.16.100` to `2.17.16`
 
