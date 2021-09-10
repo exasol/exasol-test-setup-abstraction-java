@@ -1,0 +1,10 @@
+{
+  "dataNodeAddress": "192.168.0.1",
+  "managementNodeAddress": "192.168.0.2",
+  "sshPort": 22,
+  "sshKey": "./exasol_cluster_ssh_key",
+  "sqlUser": "sys",
+  "sqlPass": "myPass",
+  "adminUser": "admin",
+  "adminPass": "myAdminPass"
+}

@@ -36,9 +36,7 @@ jobs:
           OWNER: ${{ secrets.AWS_TAG_OWNER }}
           DEPUTY: ${{ secrets.AWS_TAG_DEPUTY }}
       - name: Run tests and build with Maven
-        run: |
-          . cloudSetup/generated/setEnv.sh # the dot loads the env vars from the script
-          mvn -B verify sonar:sonar --file pom.xml -Dsonar.organization=exasol -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+        run: mvn -B verify sonar:sonar --file pom.xml -Dsonar.organization=exasol -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

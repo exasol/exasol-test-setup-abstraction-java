@@ -1,8 +1,13 @@
 package com.exasol.exasoltestsetup.standalone;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 /**
  * A set of credentials.
  */
+@ToString
+@EqualsAndHashCode
 class Credentials {
     private final String username;
     private final String password;
