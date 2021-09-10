@@ -308,6 +308,11 @@
                             https://awhitford.github.com/lombok.maven/lombok-maven-plugin/|http://anthonywhitford.com/lombok.maven/lombok-maven-plugin/
                         </linkReplacement>
                     </linkReplacements>
+                    <excludedFiles>
+                        <excludedFile>
+                            .github/workflows/release_droid_prepare_original_checksum.yml
+                        </excludedFile>
+                    </excludedFiles>
                 </configuration>
             </plugin>
             <plugin>
