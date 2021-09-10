@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: aws
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -22,8 +23,31 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+      - name: Enable Testconatiner reuse
+        run: echo 'testcontainers.reuse.enable=true' >> "$HOME"/.testcontainers.properties
+      - name: Create AWS test setup
+        run: |
+          echo "owner = \"$OWNER\"" > cloudSetup/terraform.tfvars
+          echo "deputy = \"$DEPUTY\"" >> cloudSetup/terraform.tfvars
+          terraform -chdir=cloudSetup/ init
+          terraform -chdir=cloudSetup/ apply -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          OWNER: ${{ secrets.AWS_TAG_OWNER }}
+          DEPUTY: ${{ secrets.AWS_TAG_DEPUTY }}
       - name: Run tests and build with Maven
-        run: mvn -B clean verify --file pom.xml
+        run: mvn -B verify --file pom.xml -Dsonar.organization=exasol -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+        env:
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Destroy cluster
+        run: terraform -chdir=cloudSetup/ destroy -auto-approve
+        if: always() # also run if tests failed
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Prepare checksum
         run: find target -maxdepth 1 -name *.jar -exec sha256sum "{}" + > original_checksum
       - name: Upload checksum to the artifactory
