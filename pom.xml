@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>exasol-test-setup-abstraction-java</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
     <name>exasol-test-setup-abstraction-java</name>
     <description>Common interface for testing with an exasol database local and on AWS using Java.</description>
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java</url>
@@ -124,9 +124,15 @@
             <version>1.0.1</version>
         </dependency>
         <dependency>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>jakarta.json</artifactId>
             <version>2.0.1</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <artifactId>lombok</artifactId>
