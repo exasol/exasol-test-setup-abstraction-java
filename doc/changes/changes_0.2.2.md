@@ -15,7 +15,7 @@ Code name: Dependency Updates
 ### Test Dependency Updates
 
 * Updated `com.github.stefanbirkner:system-lambda:1.2.0` to `1.2.1`
-* Updated `nl.jqno.equalsverifier:equalsverifier:3.7` to `3.8.2`
+* Updated `nl.jqno.equalsverifier:equalsverifier:3.7` to `3.8.1`
 * Updated `org.junit.jupiter:junit-jupiter-engine:5.7.2` to `5.8.2`
 * Updated `org.junit.jupiter:junit-jupiter-params:5.7.2` to `5.8.2`
 
