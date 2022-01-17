@@ -25,6 +25,9 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     private String rootPassword;
     private final SshConnection sshConnection;
 
+    /**
+     * Test-setup using exasol-testcontainers.
+     */
     public ExasolTestcontainerTestSetup() {
         this.exasolContainer.addExposedPort(SSH_PORT);
         this.exasolContainer.start();

@@ -23,7 +23,7 @@
 | [JUnit Jupiter Engine][21] | [Eclipse Public License v2.0][22] |
 | [JUnit Jupiter Params][21] | [Eclipse Public License v2.0][22] |
 | [Hamcrest][25]             | [BSD License 3][26]               |
-| [EqualsVerifier][27]       | [Apache License, Version 2.0][5]  |
+| [EqualsVerifier][27]       | [Apache License, Version 2.0][28] |
 | [System Lambda][29]        | [MIT License][30]                 |
 
 ## Runtime Dependencies
@@ -63,47 +63,48 @@
 [50]: https://www.eclemma.org/jacoco/index.html
 [0]: https://github.com/exasol/bucketfs-java
 [6]: https://github.com/exasol/error-reporting-java
-[12]: http://www.jcraft.com/jsch/
 [4]: http://ws.apache.org/xmlrpc/xmlrpc-client/
 [5]: http://www.apache.org/licenses/LICENSE-2.0.txt
 [19]: https://projectlombok.org
 [34]: https://maven.apache.org/surefire/maven-surefire-plugin/
-[56]: http://www.sonatype.com/public-parent/nexus-maven-plugins/nexus-staging/nexus-staging-maven-plugin/
 [68]: http://maven.apache.org/plugins/maven-clean-plugin/
 [8]: https://aws.amazon.com/sdkforjava
 [1]: https://opensource.org/licenses/MIT
-[36]: https://maven.apache.org/surefire/maven-failsafe-plugin/
-[40]: http://maven.apache.org/plugins/maven-dependency-plugin/
 [42]: http://www.mojohaus.org/versions-maven-plugin/
-[66]: http://anthonywhitford.com/lombok.maven/lombok-maven-plugin/
 [26]: http://opensource.org/licenses/BSD-3-Clause
 [38]: https://maven.apache.org/plugins/maven-compiler-plugin/
 [29]: https://github.com/stefanbirkner/system-lambda/
-[30]: http://opensource.org/licenses/MIT
 [52]: http://maven.apache.org/plugins/maven-gpg-plugin/
+[28]: https:///www.apache.org/licenses/LICENSE-2.0.txt
 [51]: https://www.eclipse.org/legal/epl-2.0/
-[57]: http://www.eclipse.org/legal/epl-v10.html
-[2]: https://github.com/exasol/exasol-testcontainers
 [9]: https://aws.amazon.com/apache2.0
 [20]: https://projectlombok.org/LICENSE
 [64]: http://zlika.github.io/reproducible-build-maven-plugin
+[21]: https://junit.org/junit5/
+[27]: https:///www.jqno.nl/equalsverifier
+[16]: https://github.com/eclipse-ee4j/jsonp
+[58]: https://maven.apache.org/plugins/maven-source-plugin/
+[18]: https://projects.eclipse.org/license/secondary-gpl-2.0-cp
+[25]: http://hamcrest.org/JavaHamcrest/
+[70]: http://maven.apache.org/plugins/maven-resources-plugin/
+[12]: http://www.jcraft.com/jsch/
+[56]: http://www.sonatype.com/public-parent/nexus-maven-plugins/nexus-staging/nexus-staging-maven-plugin/
+[36]: https://maven.apache.org/surefire/maven-failsafe-plugin/
+[40]: http://maven.apache.org/plugins/maven-dependency-plugin/
+[66]: http://anthonywhitford.com/lombok.maven/lombok-maven-plugin/
+[30]: http://opensource.org/licenses/MIT
+[57]: http://www.eclipse.org/legal/epl-v10.html
+[2]: https://github.com/exasol/exasol-testcontainers
 [72]: http://maven.apache.org/plugins/maven-jar-plugin/
 [17]: https://projects.eclipse.org/license/epl-2.0
 [35]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [46]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [22]: https://www.eclipse.org/legal/epl-v20.html
 [74]: http://maven.apache.org/plugins/maven-install-plugin/
-[21]: https://junit.org/junit5/
 [44]: https://sonatype.github.io/ossindex-maven/maven-plugin/
-[16]: https://github.com/eclipse-ee4j/jsonp
-[27]: http://www.jqno.nl/equalsverifier
-[58]: https://maven.apache.org/plugins/maven-source-plugin/
 [13]: http://www.jcraft.com/jsch/LICENSE.txt
-[18]: https://projects.eclipse.org/license/secondary-gpl-2.0-cp
-[25]: http://hamcrest.org/JavaHamcrest/
 [54]: http://maven.apache.org/plugins/maven-deploy-plugin/
 [76]: http://maven.apache.org/plugins/maven-site-plugin/
-[70]: http://maven.apache.org/plugins/maven-resources-plugin/
 [60]: https://maven.apache.org/plugins/maven-javadoc-plugin/
 [14]: https://github.com/exasol/database-cleaner
 [62]: https://github.com/exasol/error-code-crawler-maven-plugin

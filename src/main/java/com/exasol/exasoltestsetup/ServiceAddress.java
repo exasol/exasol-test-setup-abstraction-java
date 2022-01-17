@@ -23,6 +23,12 @@ public class ServiceAddress {
         this.port = port;
     }
 
+    /**
+     * Create a {@link ServiceAddress} for a local service.
+     * 
+     * @param port port number
+     * @return service address
+     */
     public static ServiceAddress local(final int port) {
         return new ServiceAddress("localhost", port);
     }
