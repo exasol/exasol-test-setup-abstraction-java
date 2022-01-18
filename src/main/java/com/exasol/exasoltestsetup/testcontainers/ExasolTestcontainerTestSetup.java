@@ -33,9 +33,9 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
         this.exasolContainer.start();
         try {
             this.keyPair = KeyPair.genKeyPair(new JSch(), KeyPair.RSA);
-        } catch (final JSchException e) {
-            throw new IllegalStateException(e);
-            // todo
+        } catch (final JSchException exception) {
+            throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-36")
+                    .message("Failed to generate temporary ssh-key.").ticketMitigation().toString(), exception);
         }
         installSshKeyInDatabase();
         this.sshConnection = new SshConnection(this::configSshAuth);
