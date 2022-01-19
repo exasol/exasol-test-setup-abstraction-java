@@ -10,7 +10,13 @@ variable "project" {
 }
 
 variable "additional_tags" {
-  default = {}
+  default     = {}
   description = "Additional resource tags"
-  type = map(string)
+  type        = map(string)
+}
+
+variable "aws_profile" {
+  default     = ""
+  description = "AWS profile to use"
+  type        = string
 }

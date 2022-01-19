@@ -164,14 +164,15 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
 
     @Override
     public Connection createConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:exa:localhost:" + this.localDatabasePort,
+        return DriverManager.getConnection(
+                "jdbc:exa:localhost:" + this.localDatabasePort + ";validateservercertificate=0",
                 this.connectionDetails.getDatabaseCredentials().getUsername(),
                 this.connectionDetails.getDatabaseCredentials().getPassword());
     }
 
     @Override
     public Bucket getDefaultBucket() {
-        return SyncAwareBucket.builder().ipAddress("localhost").httpPort(this.localBucketFsPort).name("default")
+        return SyncAwareBucket.builder().ipAddress("localhost").port(this.localBucketFsPort).name("default")
                 .serviceName("bfsdefault").readPassword(this.bucketFsReadPassword)
                 .writePassword(this.bucketFsWritePassword).monitor(new WaitBucketFsMonitor()).build();
     }

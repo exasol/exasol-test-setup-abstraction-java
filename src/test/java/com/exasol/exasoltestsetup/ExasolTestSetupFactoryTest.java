@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -15,6 +16,7 @@ import com.exasol.exasoltestsetup.testcontainers.ExasolTestcontainerTestSetup;
 
 class ExasolTestSetupFactoryTest {
 
+    @Tag("cloudOnly")
     @Test
     void testGetStandaloneTestSetup() {
         final Path configFile = Path.of("cloudSetup/generated/testConfig.json");

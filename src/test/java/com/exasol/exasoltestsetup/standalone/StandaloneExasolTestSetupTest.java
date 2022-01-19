@@ -2,6 +2,8 @@ package com.exasol.exasoltestsetup.standalone;
 
 import java.nio.file.Path;
 
+import org.junit.jupiter.api.Tag;
+
 import com.exasol.exasoltestsetup.ExasolTestSetup;
 import com.exasol.exasoltestsetup.ExasolTestSetupTestBase;
 
@@ -12,6 +14,7 @@ import com.exasol.exasoltestsetup.ExasolTestSetupTestBase;
  * or tests in the same shell to that this test can read the configuration from the environment variables. In the CI
  * this process is done automatically.
  */
+@Tag("cloudOnly")
 class StandaloneExasolTestSetupTest extends ExasolTestSetupTestBase {
     protected ExasolTestSetup getExasolTestSetup() {
         return new StandaloneExasolTestSetup(

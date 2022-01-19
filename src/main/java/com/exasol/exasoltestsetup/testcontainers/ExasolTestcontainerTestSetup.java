@@ -1,10 +1,10 @@
 package com.exasol.exasoltestsetup.testcontainers;
 
-import static com.exasol.exasoltestsetup.PasswordGenerator.generatePassword;
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 
 import org.testcontainers.containers.Container;
@@ -22,13 +22,22 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     private static final int SSH_PORT = 22;
     private final ExasolContainer<? extends ExasolContainer<?>> exasolContainer = new ExasolContainer<>()
             .withReuse(true);
-    private String rootPassword;
     private final SshConnection sshConnection;
+    private final KeyPair keyPair;
 
+    /**
+     * Test-setup using exasol-testcontainers.
+     */
     public ExasolTestcontainerTestSetup() {
         this.exasolContainer.addExposedPort(SSH_PORT);
         this.exasolContainer.start();
-        setRootPassword();
+        try {
+            this.keyPair = KeyPair.genKeyPair(new JSch(), KeyPair.RSA);
+        } catch (final JSchException exception) {
+            throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-36")
+                    .message("Failed to generate temporary ssh-key.").ticketMitigation().toString(), exception);
+        }
+        installSshKeyInDatabase();
         this.sshConnection = new SshConnection(this::configSshAuth);
     }
 
@@ -55,14 +64,14 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
         return List.of(localPort);
     }
 
-    private void setRootPassword() {
+    private void installSshKeyInDatabase() {
         try {
-            this.rootPassword = generatePassword();
-            runInContainerWithCheck("exaconf", "passwd-user", "-n", "root", "-p", this.rootPassword);
-            runInContainerWithCheck("exaconf", "commit");
+            runInContainerWithCheck("bash", "-c",
+                    "echo \"ssh-rsa " + Base64.getEncoder().encodeToString(this.keyPair.getPublicKeyBlob())
+                            + "\" >> /root/.ssh/authorized_keys");
         } catch (final IOException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-16")
-                    .message("Failed to set root password of docker container. This is required for login in via SSH.")
+                    .message("Failed to upload ssh-public-key to container. This is required for login in via SSH.")
                     .ticketMitigation().toString(), exception);
         } catch (final InterruptedException exception) {
             Thread.currentThread().interrupt();
@@ -86,8 +95,9 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
 
     private Session configSshAuth(final JSch ssh) throws JSchException {
         final Session session = ssh.getSession("root", "localhost", this.exasolContainer.getMappedPort(SSH_PORT));
-        session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
-        session.setPassword(this.rootPassword);
+        final ByteArrayOutputStream privateKey = new ByteArrayOutputStream();
+        this.keyPair.writePrivateKey(privateKey);
+        ssh.addIdentity("tmp-key", privateKey.toByteArray(), this.keyPair.getPublicKeyBlob(), null);
         return session;
     }
 }
