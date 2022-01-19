@@ -1,6 +1,6 @@
 provider "aws" {
   region  = "eu-central-1"
-  profile = "jb-dev-credentials_mfa"
+  profile = var.aws_profile
 }
 
 module "exasol_setup" {

@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 0.2.2, released 2022-01-18
+# exasol-test-setup-abstraction-java 0.2.2, released 2022-01-19
 
 Code name: Dependency Updates
 
