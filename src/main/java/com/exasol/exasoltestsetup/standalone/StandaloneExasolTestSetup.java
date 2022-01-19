@@ -164,7 +164,8 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
 
     @Override
     public Connection createConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:exa:localhost:" + this.localDatabasePort,
+        return DriverManager.getConnection(
+                "jdbc:exa:localhost:" + this.localDatabasePort + ";validateservercertificate=0",
                 this.connectionDetails.getDatabaseCredentials().getUsername(),
                 this.connectionDetails.getDatabaseCredentials().getPassword());
     }
