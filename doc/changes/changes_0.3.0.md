@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 0.3.0, released 2022-??-??
+# exasol-test-setup-abstraction-java 0.3.0, released 2022-05-06
 
 Code name: Connection Details
 
