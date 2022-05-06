@@ -47,6 +47,12 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     }
 
     @Override
+    public SqlConnectionInfo getConnectionInfo() {
+        return new SqlConnectionInfo(this.exasolContainer.getHost(), this.exasolContainer.getFirstMappedDatabasePort(),
+                this.exasolContainer.getUsername(), this.exasolContainer.getPassword());
+    }
+
+    @Override
     public Bucket getDefaultBucket() {
         return this.exasolContainer.getDefaultBucket();
     }

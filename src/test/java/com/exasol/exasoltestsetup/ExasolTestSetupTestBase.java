@@ -58,6 +58,21 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     @Test
+    void testGetConnectionDetails() throws SQLException {
+        final SqlConnectionInfo connectionInfo = this.testSetup.getConnectionInfo();
+        try (final Connection connection = DriverManager
+                .getConnection(
+                        "jdbc:exa:" + connectionInfo.getHost() + ":" + connectionInfo.getPort()
+                                + ";validateservercertificate=0",
+                        connectionInfo.getUser(), connectionInfo.getPassword());
+                final Statement statement = connection.createStatement();
+                final ResultSet resultSet = statement.executeQuery("SELECT 1 FROM DUAL");) {
+            resultSet.next();
+            assertThat(resultSet.getInt(1), equalTo(1));
+        }
+    }
+
+    @Test
     void testBucketFS(@TempDir final Path tempDir)
             throws InterruptedException, BucketAccessException, TimeoutException, IOException {
         final Bucket bucket = this.testSetup.getDefaultBucket();
