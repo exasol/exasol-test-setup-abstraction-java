@@ -9,8 +9,6 @@
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java/</url>
     <properties>
         <junit.version>5.8.2</junit.version>
-        <jacoco.version>0.8.5</jacoco.version>
-        <org.testcontainers.version>1.15.1</org.testcontainers.version>
         <!--
                 M4 does not fail tests if beforeAll fails
                 M5 fails in integration tests with a strange error
