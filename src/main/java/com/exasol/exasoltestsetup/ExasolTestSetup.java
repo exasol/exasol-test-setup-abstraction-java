@@ -21,6 +21,13 @@ public interface ExasolTestSetup extends AutoCloseable {
     public Connection createConnection() throws SQLException;
 
     /**
+     * Get the information required for connection to the Exasol database.
+     * 
+     * @return object containing the connection details
+     */
+    public SqlConnectionInfo getConnectionInfo();
+
+    /**
      * Get an API object for the default BucketFS bucket.
      * 
      * @return API object for the default BucketFS bucket

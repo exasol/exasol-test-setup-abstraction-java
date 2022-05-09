@@ -171,6 +171,13 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     }
 
     @Override
+    public SqlConnectionInfo getConnectionInfo() {
+        return new SqlConnectionInfo("localhost", this.localDatabasePort,
+                this.connectionDetails.getDatabaseCredentials().getUsername(),
+                this.connectionDetails.getDatabaseCredentials().getPassword());
+    }
+
+    @Override
     public Bucket getDefaultBucket() {
         return SyncAwareBucket.builder().ipAddress("localhost").port(this.localBucketFsPort).name("default")
                 .serviceName("bfsdefault").readPassword(this.bucketFsReadPassword)
