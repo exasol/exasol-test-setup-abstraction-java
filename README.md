@@ -17,7 +17,7 @@
 
 This repository defines a standardized interface for accessing an Exasol database for testing.
 
-That allows you to write tests where you can to switch the test-backend. For example you can switch between an Exasol cluster in the cloud or a local docker-db.
+That allows you to write tests where you can switch the test-backend. For example you can switch between an Exasol cluster in the cloud or a local docker-db.
 
 In addition, it contains implementations for this interface for the following test-backends:
 
