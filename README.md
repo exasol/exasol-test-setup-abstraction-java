@@ -27,13 +27,12 @@ In addition, it contains implementations for this interface for the following te
 ## Usage
 
 ```java
-
 class MyTest {
     private static final ExasolTestSetup EXASOL = new ExasolTestSetupFactory("cloudSetup/generated/testConfig.json").getTestSetup();
 
     @Test
     void test() {
-        var sqlConnection = Exasol.createConnection();
+        var sqlConnection = EXASOL.createConnection();
         //...
     }
 
