@@ -88,7 +88,7 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
         final Container.ExecResult execResult = this.exasolContainer.execInContainer(commands);
         if (execResult.getExitCode() != 0) {
             throw new IOException(ExaError.messageBuilder("F-ETAJ-17").message(
-                    "Filed to exit exaconf in container. The program had an exit code != 0. Error message:\n {{message|uq}}",
+                    "Failed to exit exaconf in container. The program had an exit code != 0. Error message:\n {{message|uq}}",
                     execResult.getStderr()).toString());
         }
     }
@@ -100,7 +100,7 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     }
 
     private Session configSshAuth(final JSch ssh) throws JSchException {
-        final Session session = ssh.getSession("root", "localhost", this.exasolContainer.getMappedPort(SSH_PORT));
+        final Session session = ssh.getSession("root", this.exasolContainer.getHost(), this.exasolContainer.getMappedPort(SSH_PORT));
         final ByteArrayOutputStream privateKey = new ByteArrayOutputStream();
         this.keyPair.writePrivateKey(privateKey);
         ssh.addIdentity("tmp-key", privateKey.toByteArray(), this.keyPair.getPublicKeyBlob(), null);
