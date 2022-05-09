@@ -23,11 +23,11 @@ For details check the [ci-isolation-aws user-guide](https://github.com/exasol/ci
 
 Now login to the AWS console, go to the newly created user in the IAM section and generate an access key.
 
-Next, go to the GitHub admin section of the repository of your project, create and environment called `aws`, add protection that requires an approval by someone and add the AWS credentials there as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+Next, go to the GitHub admin section of the repository of your project, create an environment called `aws`, add protection that requires an approval by someone and add the AWS credentials there as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
-I recommend to also store the credentials as a profile in your local `~/.aws/credentilas`.
+I recommend to also store the credentials as a profile in your local `~/.aws/credentials`.
 
-In addition, create the two secrets `AWS_TAG_OWNER` and `AWS_TAG_DEPUTY` with the e-mail addresses with you and the deputy of this project. They will be used to tag the resources.
+In addition, create the two secrets `AWS_TAG_OWNER` and `AWS_TAG_DEPUTY` with the e-mail addresses of you and the deputy of this project. They will be used to tag the resources.
 
 ## Create Terraform File
 
@@ -40,7 +40,7 @@ You can add additional resources you need for testing here.
 Now you can try out to create the setup by
 
 * Change the profile in `cloudSetup/cloudSetup.tf` to the profile of the user we created earlier
-* run:
+* Run:
     ```shell
     terraform init
     terraform apply

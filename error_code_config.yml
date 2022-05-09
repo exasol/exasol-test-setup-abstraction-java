@@ -2,3 +2,4 @@ error-tags:
   ETAJ:
     packages:
       - com.exasol.exasoltestsetup
+    highest-index: 36

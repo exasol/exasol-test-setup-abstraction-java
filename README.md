@@ -1,7 +1,7 @@
 # Exasol Test Setup Abstraction
 
 [![Build Status](https://github.com/exasol/exasol-test-setup-abstraction-java/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/exasol-test-setup-abstraction-java/actions/workflows/ci-build.yml)
-[![Maven Central](https://img.shields.io/maven-central/v/com.exasol/exasol-test-setup-abstraction-java)](https://search.maven.org/artifact/com.exasol/exasol-test-setup-abstraction-java)
+[![Maven Central – exasol-test-setup-abstraction-java](https://img.shields.io/maven-central/v/com.exasol/exasol-test-setup-abstraction-java)](https://search.maven.org/artifact/com.exasol/exasol-test-setup-abstraction-java)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aexasol-test-setup-abstraction-java&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.exasol%3Aexasol-test-setup-abstraction-java)
 
@@ -27,13 +27,12 @@ In addition, it contains implementations for this interface for the following te
 ## Usage
 
 ```java
-
 class MyTest {
     private static final ExasolTestSetup EXASOL = new ExasolTestSetupFactory("cloudSetup/generated/testConfig.json").getTestSetup();
 
     @Test
     void test() {
-        var sqlConnection = Exasol.createConnection();
+        var sqlConnection = EXASOL.createConnection();
         //...
     }
 
