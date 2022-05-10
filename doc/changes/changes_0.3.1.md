@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 0.3.1, released 2022-05-09
+# exasol-test-setup-abstraction-java 0.3.1, released 2022-05-10
 
 Code name: Support for remote docker hosts
 
