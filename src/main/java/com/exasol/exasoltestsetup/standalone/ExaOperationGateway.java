@@ -6,28 +6,24 @@ import static com.exasol.exasoltestsetup.WaitHelper.waitUntil;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javax.net.ssl.*;
-
 import org.apache.commons.compress.utils.IOUtils;
-import org.apache.xmlrpc.XmlRpcException;
-import org.apache.xmlrpc.client.*;
 
 import com.exasol.errorreporting.ExaError;
+
+import de.timroes.axmlrpc.XMLRPCClient;
+import de.timroes.axmlrpc.XMLRPCException;
 
 /**
  * This class wraps the ExaOperation XML-RPC API of an Exasol cluster with Java methods.
  */
 class ExaOperationGateway {
     private static final Logger LOGGER = Logger.getLogger(ExaOperationGateway.class.getName());
-    private final XmlRpcClient client;
+    private final XMLRPCClient client;
 
     /**
      * Create a new instance of {@link ExaOperationGateway}.
@@ -37,14 +33,13 @@ class ExaOperationGateway {
      */
     public ExaOperationGateway(final String exasolIpAddress, final Credentials credentials) {
         try {
-            final XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-            config.setServerURL(new URL("https://" + exasolIpAddress + "/cluster1"));
-            config.setBasicUserName(credentials.getUsername());
-            config.setBasicPassword(credentials.getPassword());
-            this.client = new XmlRpcClient();
-            this.client.setConfig(config);
-            setTrustAllCerts();
-        } catch (final NoSuchAlgorithmException | KeyManagementException | MalformedURLException exception) {
+            final URL serverUrl = new URL("https://" + exasolIpAddress + "/cluster1");
+            // No validation is intended. A better approach is planned:
+            // https://github.com/exasol/exasol-test-setup-abstraction-java/issues/25
+            this.client = new XMLRPCClient(serverUrl,
+                    XMLRPCClient.FLAGS_SSL_IGNORE_INVALID_CERT | XMLRPCClient.FLAGS_SSL_IGNORE_INVALID_HOST);
+            this.client.setLoginData(credentials.getUsername(), credentials.getPassword());
+        } catch (final MalformedURLException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-1")
                     .message("Failed to connect to the ExaOperation XML-RPC interface.").toString(), exception);
         }
@@ -62,9 +57,9 @@ class ExaOperationGateway {
     private void startStorageService() {
         try {
             LOGGER.info("Starting exasol storage service via ExaOperation.");
-            this.client.execute("storage.startEXAStorage", new Object[] {});
+            this.client.call("storage.startEXAStorage");
             waitUntil(this::isStorageServiceRunning, 60, "starting storage service");
-        } catch (final XmlRpcException exception) {
+        } catch (final XMLRPCException exception) {
             throw new IllegalStateException(
                     ExaError.messageBuilder("E-ETAJ-7").message("Failed to start exasol storage service.").toString(),
                     exception);
@@ -73,8 +68,8 @@ class ExaOperationGateway {
 
     private boolean isStorageServiceRunning() {
         try {
-            return (boolean) this.client.execute("storage.serviceIsOnline", new Object[] {});
-        } catch (final XmlRpcException exception) {
+            return (boolean) this.client.call("storage.serviceIsOnline", new Object[] {});
+        } catch (final XMLRPCException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-14")
                     .message("Failed to test if exasol storage service is running.").toString(), exception);
         }
@@ -94,9 +89,9 @@ class ExaOperationGateway {
      */
     public List<String> listDatabases() {
         try {
-            final Object[] result = (Object[]) this.client.execute("getDatabaseList", new Object[] {});
+            final Object[] result = (Object[]) this.client.call("getDatabaseList");
             return Arrays.stream(result).map(String.class::cast).collect(Collectors.toList());
-        } catch (final XmlRpcException exception) {
+        } catch (final XMLRPCException exception) {
             throw new IllegalStateException(
                     ExaError.messageBuilder("E-ETAJ-8").message("Failed list exasol databases.").toString(), exception);
         }
@@ -116,12 +111,10 @@ class ExaOperationGateway {
     private void startDatabase(final String databaseName) {
         try {
             LOGGER.log(Level.INFO, "Starting exasol database {0} via ExaOperation.", databaseName);
-            this.client.execute("db_" + databaseName + ".startDatabase", new Object[] {});
+            this.client.call("db_" + databaseName + ".startDatabase");
             waitUntil(() -> isDatabaseRunning(databaseName), 60, "starting database");
-            waitFor(1000);// it needs some time until it's really available
-        } catch (final XmlRpcClientException exception) {
-            // response parse fails, but start works anyway
-        } catch (final XmlRpcException exception) {
+            waitFor(1000); // it needs some time until it's really available
+        } catch (final XMLRPCException exception) {
             throw new IllegalStateException(
                     ExaError.messageBuilder("E-ETAJ-9").message("Failed to start exasol databases.").toString(),
                     exception);
@@ -130,8 +123,8 @@ class ExaOperationGateway {
 
     private boolean isDatabaseRunning(final String databaseName) {
         try {
-            return (boolean) this.client.execute("db_" + databaseName + ".runningDatabase", new Object[] {});
-        } catch (final XmlRpcException exception) {
+            return (boolean) this.client.call("db_" + databaseName + ".runningDatabase");
+        } catch (final XMLRPCException exception) {
             throw new IllegalStateException(
                     ExaError.messageBuilder("E-ETAJ-10").message("Failed to test if database is running.").toString(),
                     exception);
@@ -146,8 +139,8 @@ class ExaOperationGateway {
      */
     public void setBucketFsPort(final String bucketFsName, final int port) {
         try {
-            this.client.execute(bucketFsName + ".editBucketFS", new Object[] { Map.of("http_port", port) });
-        } catch (final XmlRpcException exception) {
+            this.client.call(bucketFsName + ".editBucketFS", Map.of("http_port", port));
+        } catch (final XMLRPCException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-2")
                     .message("Failed to set BucketFS port in ExaOperation.").toString(), exception);
         }
@@ -161,9 +154,9 @@ class ExaOperationGateway {
      */
     public void setBucketPasswords(final String readPassword, final String writePassword) {
         try {
-            this.client.execute("bfsdefault.default.editBucketFSBucket",
-                    new Object[] { Map.of("read_password", readPassword, "write_password", writePassword) });
-        } catch (final XmlRpcException exception) {
+            this.client.call("bfsdefault.default.editBucketFSBucket",
+                    Map.of("read_password", readPassword, "write_password", writePassword));
+        } catch (final XMLRPCException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-3")
                     .message("Failed to set BucketFS password in ExaOperation.").toString(), exception);
         }
@@ -188,9 +181,9 @@ class ExaOperationGateway {
     private String addJdbcDriver(final String name, final String jdbcMainClass, final String prefix,
             final boolean disableSecurityManager) {
         try {
-            return (String) this.client.execute("addJDBCDriver", new Object[] { Map.of("jdbc_main", jdbcMainClass,
-                    "jdbc_name", name, "jdbc_prefix", prefix, "disable_security_manager", disableSecurityManager) });
-        } catch (final XmlRpcException exception) {
+            return (String) this.client.call("addJDBCDriver", Map.of("jdbc_main", jdbcMainClass, "jdbc_name", name,
+                    "jdbc_prefix", prefix, "disable_security_manager", disableSecurityManager));
+        } catch (final XMLRPCException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-4")
                     .message("Failed to add JDBC driver using ExaOperation.").toString(), exception);
         }
@@ -199,51 +192,10 @@ class ExaOperationGateway {
     private void uploadJdbcDriver(final String jdbcDriverId, final File file) throws IOException {
         try (final InputStream inputStream = new FileInputStream(file)) {
             final byte[] driverBytes = IOUtils.toByteArray(inputStream);
-            this.client.execute(jdbcDriverId + ".uploadFile", new Object[] { driverBytes, file.getName() });
-        } catch (final XmlRpcClientException exception) {
-            // This exception happens always. I don't know why but it still works...
-        } catch (final XmlRpcException exception) {
+            this.client.call(jdbcDriverId + ".uploadFile", driverBytes, file.getName());
+        } catch (final XMLRPCException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-5")
                     .message("Failed to upload JDBC driver using ExaOperation.").toString(), exception);
-        }
-    }
-
-    // no validation is intended. A better approach is planned:
-    // https://github.com/exasol/exasol-test-setup-abstraction-java/issues/25
-    @SuppressWarnings({ "java:S4830", "java:S5527", "java:S4423" })
-    private void setTrustAllCerts() throws NoSuchAlgorithmException, KeyManagementException {
-        try {
-            // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-                @Override
-                public X509Certificate[] getAcceptedIssuers() {
-                    return new X509Certificate[] {};
-                }
-                
-                @Override
-                public void checkClientTrusted(final X509Certificate[] certs, final String authType) {
-                    // accept everything
-                }
-                
-                @Override
-                public void checkServerTrusted(final X509Certificate[] certs, final String authType) {
-                    // accept everything
-                }
-            } };
-
-            // Install the all-trusting trust manager
-            final SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-            // Create all-trusting host name verifier
-            final HostnameVerifier allHostsValid = (hostname, session) -> true;
-
-            // Install the all-trusting host verifier
-            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-        } catch (final NoSuchAlgorithmException | KeyManagementException e) {
-            throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-6")
-                    .message("Failed to configure Java to trust all certificates.").toString());
         }
     }
 }
