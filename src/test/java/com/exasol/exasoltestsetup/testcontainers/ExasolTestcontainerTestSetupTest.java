@@ -5,6 +5,7 @@ import com.exasol.exasoltestsetup.ExasolTestSetupTestBase;
 
 public class ExasolTestcontainerTestSetupTest extends ExasolTestSetupTestBase {
 
+    @Override
     protected ExasolTestSetup getExasolTestSetup() {
         return new ExasolTestcontainerTestSetup();
     }

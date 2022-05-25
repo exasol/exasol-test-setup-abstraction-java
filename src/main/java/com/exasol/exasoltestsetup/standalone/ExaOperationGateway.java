@@ -215,14 +215,17 @@ class ExaOperationGateway {
         try {
             // Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+                @Override
                 public X509Certificate[] getAcceptedIssuers() {
                     return new X509Certificate[] {};
                 }
-
+                
+                @Override
                 public void checkClientTrusted(final X509Certificate[] certs, final String authType) {
                     // accept everything
                 }
-
+                
+                @Override
                 public void checkServerTrusted(final X509Certificate[] certs, final String authType) {
                     // accept everything
                 }
