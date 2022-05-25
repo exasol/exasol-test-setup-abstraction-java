@@ -12,3 +12,7 @@ Code name: Fixed makeDatabaseTcpServiceAccessibleFromLocalhost
 
 * Updated `software.amazon.awssdk:cloudformation:2.17.186` to `2.17.191`
 * Updated `software.amazon.awssdk:ec2:2.17.186` to `2.17.191`
+
+### Plugin Dependency Updates
+
+* Updated `com.exasol:project-keeper-maven-plugin:2.3.2` to `2.4.4`

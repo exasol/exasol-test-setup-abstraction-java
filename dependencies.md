@@ -70,6 +70,7 @@
 [72]: http://maven.apache.org/plugins/maven-clean-plugin/
 [8]: https://aws.amazon.com/sdkforjava
 [1]: https://opensource.org/licenses/MIT
+[40]: https://www.mojohaus.org/flatten-maven-plugin/
 [50]: http://www.mojohaus.org/versions-maven-plugin/
 [66]: https://github.com/exasol/project-keeper/
 [26]: http://opensource.org/licenses/BSD-3-Clause
@@ -83,8 +84,8 @@
 [20]: https://projectlombok.org/LICENSE
 [44]: http://zlika.github.io/reproducible-build-maven-plugin
 [34]: http://sonarsource.github.io/sonar-scanner-maven/
+[62]: https://projectlombok.org/setup/maven
 [21]: https://junit.org/junit5/
-[40]: https://www.mojohaus.org/flatten-maven-plugin/flatten-maven-plugin
 [16]: https://github.com/eclipse-ee4j/jsonp
 [56]: https://maven.apache.org/plugins/maven-source-plugin/
 [18]: https://projects.eclipse.org/license/secondary-gpl-2.0-cp
@@ -103,7 +104,6 @@
 [28]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [27]: https://www.jqno.nl/equalsverifier
 [38]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
-[62]: https://awhitford.github.com/lombok.maven/lombok-maven-plugin/
 [22]: https://www.eclipse.org/legal/epl-v20.html
 [78]: http://maven.apache.org/plugins/maven-install-plugin/
 [42]: https://sonatype.github.io/ossindex-maven/maven-plugin/
