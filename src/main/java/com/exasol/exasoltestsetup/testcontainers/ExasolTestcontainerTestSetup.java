@@ -65,7 +65,6 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
 
     @Override
     public List<Integer> makeDatabaseTcpServiceAccessibleFromLocalhost(final int databasePort) {
-        this.exasolContainer.addExposedPort(databasePort);
         final int localPort = this.sshConnection.addForwardPortForwarding(databasePort);
         return List.of(localPort);
     }
@@ -100,7 +99,8 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     }
 
     private Session configSshAuth(final JSch ssh) throws JSchException {
-        final Session session = ssh.getSession("root", this.exasolContainer.getHost(), this.exasolContainer.getMappedPort(SSH_PORT));
+        final Session session = ssh.getSession("root", this.exasolContainer.getHost(),
+                this.exasolContainer.getMappedPort(SSH_PORT));
         final ByteArrayOutputStream privateKey = new ByteArrayOutputStream();
         this.keyPair.writePrivateKey(privateKey);
         ssh.addIdentity("tmp-key", privateKey.toByteArray(), this.keyPair.getPublicKeyBlob(), null);
