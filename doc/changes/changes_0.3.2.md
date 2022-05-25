@@ -12,6 +12,7 @@ Code name:
 
 ### Compile Dependency Updates
 
+* Added `fr.turri:aXMLRPC:1.12.0`
 * Removed `org.apache.xmlrpc:xmlrpc-client:3.1.3`
 * Updated `software.amazon.awssdk:cloudformation:2.17.186` to `2.17.198`
 * Updated `software.amazon.awssdk:ec2:2.17.186` to `2.17.198`
