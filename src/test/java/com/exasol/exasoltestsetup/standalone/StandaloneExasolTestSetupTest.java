@@ -16,6 +16,7 @@ import com.exasol.exasoltestsetup.ExasolTestSetupTestBase;
  */
 @Tag("cloudOnly")
 class StandaloneExasolTestSetupTest extends ExasolTestSetupTestBase {
+    @Override
     protected ExasolTestSetup getExasolTestSetup() {
         return new StandaloneExasolTestSetup(
                 new JsonConnectionDetailsReader().read(Path.of("cloudSetup/generated/testConfig.json")));
