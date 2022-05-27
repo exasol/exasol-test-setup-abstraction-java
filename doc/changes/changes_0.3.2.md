@@ -1,11 +1,14 @@
 # exasol-test-setup-abstraction-java 0.3.2, released 2022-05-27
 
-Code name:
+Code name: Fixed makeDatabaseTcpServiceAccessibleFromLocalhost
 
 ## Summary
 
-## Features
+This release fixes a bug in `makeDatabaseTcpServiceAccessibleFromLocalhost()` and replaces the deprecated `xmlrpc-client` library with `aXMLRPC`.
 
+## Bug Fixes
+
+* #39: Calling makeDatabaseTcpServiceAccessibleFromLocalhost breaks BucketFS support
 * #38: Replaced xmlrpc dependency
 
 ## Dependency Updates
@@ -15,8 +18,8 @@ Code name:
 * Added `commons-codec:commons-codec:1.15`
 * Added `fr.turri:aXMLRPC:1.12.0`
 * Removed `org.apache.xmlrpc:xmlrpc-client:3.1.3`
-* Updated `software.amazon.awssdk:cloudformation:2.17.186` to `2.17.198`
-* Updated `software.amazon.awssdk:ec2:2.17.186` to `2.17.198`
+* Updated `software.amazon.awssdk:cloudformation:2.17.186` to `2.17.199`
+* Updated `software.amazon.awssdk:ec2:2.17.186` to `2.17.199`
 
 ### Plugin Dependency Updates
 
