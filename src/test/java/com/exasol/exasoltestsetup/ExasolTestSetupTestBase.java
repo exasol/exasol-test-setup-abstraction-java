@@ -217,6 +217,7 @@ public abstract class ExasolTestSetupTestBase {
             }
         }
 
+        @Override
         public void run() {
             createSocket();
             try {
