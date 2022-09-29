@@ -38,7 +38,7 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
                     .message("Failed to generate temporary ssh-key.").ticketMitigation().toString(), exception);
         }
         installSshKeyInDatabase();
-        this.sshConnection = new SshConnection(this::configSshAuth);
+        this.sshConnection = new SshConnection(sessionBuilder());
     }
 
     @Override
@@ -98,12 +98,15 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
         this.exasolContainer.stop();
     }
 
-    private Session configSshAuth(final JSch ssh) throws JSchException {
-        final Session session = ssh.getSession("root", this.exasolContainer.getHost(),
-                this.exasolContainer.getMappedPort(SSH_PORT));
+    private SessionBuilder sessionBuilder() {
         final ByteArrayOutputStream privateKey = new ByteArrayOutputStream();
         this.keyPair.writePrivateKey(privateKey);
-        ssh.addIdentity("tmp-key", privateKey.toByteArray(), this.keyPair.getPublicKeyBlob(), null);
-        return session;
+        return new SessionBuilder() //
+                .identity("./cloudSetup/generated/exasol_cluster_ssh_key") //
+                .user("root") //
+                .host(this.exasolContainer.getHost()) //
+                .port(this.exasolContainer.getMappedPort(SSH_PORT)) //
+                .publicKey(this.keyPair.getPublicKeyBlob()) //
+                .privateKey(privateKey.toByteArray()).identity("tmp-key");
     }
 }

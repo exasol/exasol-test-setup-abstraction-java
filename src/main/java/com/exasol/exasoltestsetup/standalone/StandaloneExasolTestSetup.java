@@ -14,7 +14,6 @@ import com.exasol.bucketfs.*;
 import com.exasol.dbcleaner.ExasolDatabaseCleaner;
 import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.*;
-import com.jcraft.jsch.*;
 
 /**
  * This class implements the {@link ExasolTestSetup} interface for Exasol databases that are running in the Cloud or in
@@ -60,7 +59,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     /**
      * The changing of the password fails from time to time without an error (with just ni change). As a workaround we
      * try it multiple times and check if it worked.
-     * 
+     *
      * @param exaOperationGateway ExaOperation
      */
     private void setBucketsPasswordWithWorkaround(final ExaOperationGateway exaOperationGateway) {
@@ -119,7 +118,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     }
 
     private SshConnection createSshConnection() {
-        return new SshConnection(this::configSshAuth);
+        return new SshConnection(sessionBuilder());
     }
 
     private SshConnection addGatewayPortsIfRequired(SshConnection connection) {
@@ -202,9 +201,11 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
         this.sshConnection.close();
     }
 
-    private Session configSshAuth(final JSch ssh) throws JSchException {
-        ssh.addIdentity("./cloudSetup/generated/exasol_cluster_ssh_key");
-        return ssh.getSession("ec2-user", this.connectionDetails.getManagementNodeAddress(),
-                this.connectionDetails.getSshPort());
+    private SessionBuilder sessionBuilder() {
+        return new SessionBuilder() //
+                .identity("./cloudSetup/generated/exasol_cluster_ssh_key") //
+                .user("ec2-user") //
+                .host(this.connectionDetails.getManagementNodeAddress()) //
+                .port(this.connectionDetails.getSshPort());
     }
 }

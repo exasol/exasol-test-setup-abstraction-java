@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 import com.exasol.errorreporting.ExaError;
-import com.jcraft.jsch.*;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 
 /**
  * This class sets up a SSH port forwarding.
@@ -23,19 +24,19 @@ public class SshConnection implements AutoCloseable {
      * <p>
      * It automatically opens an SSH connection for forwarding.
      * </p>
-     * 
+     *
      * @param sshSessionSupplier function that fills the login information
      */
-    public SshConnection(final SshConfigurator sshSessionSupplier) {
-        this.sshSession = createSession(sshSessionSupplier);
+    public SshConnection(final SessionBuilder sessionBuilder) {
+        this.sshSession = createSession(sessionBuilder);
     }
 
-    private Session createSession(final SshConfigurator sshSessionSupplier) {
+    private Session createSession(final SessionBuilder sessionBuilder) {
         final Session session;
         try {
-            session = sshSessionSupplier.configSshAuth(new JSch());
+            session = sessionBuilder.build();
             session.setConfig("StrictHostKeyChecking", "no");
-            session.connect(5000);
+            session.connect();
         } catch (final JSchException exception) {
             if (exception.getMessage().startsWith("invalid privatekey")) {
                 throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-13")
@@ -45,9 +46,11 @@ public class SshConnection implements AutoCloseable {
             } else {
                 throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-12")
                         .message("Failed to ssh to the exasol database. This is required for redirecting a host port.")
-                        .mitigation("Make sure the database is reachable (port 22 open)")
-                        .mitigation("Make sure 'ec2-user' can login to the database using your ssh-key.").toString(),
-                        exception);
+                        .mitigation("Make sure the database is reachable, i.e. port {{port}} open on host {{host}}.", //
+                                sessionBuilder.getPort(), sessionBuilder.getHost())
+                        .mitigation("Make sure user {{user}} can login to the database using your ssh-key.",
+                                sessionBuilder.getUser())
+                        .toString(), exception);
             }
         }
         return session;
@@ -55,7 +58,7 @@ public class SshConnection implements AutoCloseable {
 
     /**
      * Add a reverse port forwarding.
-     * 
+     *
      * @param localPort local port to expose
      * @return port number on the server
      */
@@ -73,7 +76,7 @@ public class SshConnection implements AutoCloseable {
 
     /**
      * Add a forward port forwarding.
-     * 
+     *
      * @param remotePort port of the the server to connect to
      * @return local port
      */
@@ -105,7 +108,7 @@ public class SshConnection implements AutoCloseable {
      * <p>
      * This is a synchronous method. It will block until the command is finished.
      * </p>
-     * 
+     *
      * @param command command to run
      * @return command output (stdout)
      */
@@ -125,7 +128,7 @@ public class SshConnection implements AutoCloseable {
 
     /**
      * Find a free port on the server.
-     * 
+     *
      * @return free port number
      */
     public int findFreePortOnServer() {
@@ -153,20 +156,5 @@ public class SshConnection implements AutoCloseable {
     @Override
     public void close() {
         this.sshSession.disconnect();
-    }
-
-    /**
-     * Functional interface that configures ssh auth.
-     */
-    @FunctionalInterface
-    public interface SshConfigurator {
-        /**
-         * Get a ssh session configured with credentials.
-         * 
-         * @param ssh {@link JSch} ssh client
-         * @return ssh sessions with configured auth
-         * @throws JSchException if configuring went wrong
-         */
-        public Session configSshAuth(JSch ssh) throws JSchException;
     }
 }
