@@ -8,12 +8,10 @@ import com.jcraft.jsch.*;
  * Builder for {@link com.jcraft.jsch.Session}
  */
 public class SessionBuilder {
-    // session parameters
     private String user;
     private String host;
     private int port;
 
-    // identity parameters
     private String identity;
     private byte[] privateKey;
     private byte[] publicKey;
