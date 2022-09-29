@@ -102,7 +102,6 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
         final ByteArrayOutputStream privateKey = new ByteArrayOutputStream();
         this.keyPair.writePrivateKey(privateKey);
         return new SessionBuilder() //
-                .identity("./cloudSetup/generated/exasol_cluster_ssh_key") //
                 .user("root") //
                 .host(this.exasolContainer.getHost()) //
                 .port(this.exasolContainer.getMappedPort(SSH_PORT)) //

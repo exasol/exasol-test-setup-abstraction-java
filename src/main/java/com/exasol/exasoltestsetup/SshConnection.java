@@ -25,7 +25,7 @@ public class SshConnection implements AutoCloseable {
      * It automatically opens an SSH connection for forwarding.
      * </p>
      *
-     * @param sshSessionSupplier function that fills the login information
+     * @param sessionBuilder used to populate the parameters of the session
      */
     public SshConnection(final SessionBuilder sessionBuilder) {
         this.sshSession = createSession(sessionBuilder);
