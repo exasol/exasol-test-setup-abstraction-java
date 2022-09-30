@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.exasol.bucketfs.*;
+import com.exasol.bucketfs.monitor.TimestampRetriever;
 import com.exasol.dbcleaner.ExasolDatabaseCleaner;
 import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.*;
@@ -73,10 +74,10 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
                 throw new IllegalStateException(
                         ExaError.messageBuilder("E-ETAJ-32").message("Failed to set BucketFS password.").toString());
             }
-        } while (!this.isBucketFsIsAvailable());
+        } while (!this.isBucketFsAvailable());
     }
 
-    private boolean isBucketFsIsAvailable() {
+    private boolean isBucketFsAvailable() {
         final String testFile = "bfs-test-" + System.currentTimeMillis() + ".txt";
         final Bucket bucket = getDefaultBucket();
         try {
@@ -183,6 +184,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
                 .serviceName("bfsdefault").readPassword(this.bucketFsReadPassword)
                 .writePassword(this.bucketFsWritePassword) //
                 .monitor(new WaitBucketFsMonitor()) //
+                .stateRetriever(new TimestampRetriever()) //
                 .build();
     }
 

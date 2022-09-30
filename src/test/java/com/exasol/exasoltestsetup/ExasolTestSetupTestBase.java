@@ -44,8 +44,12 @@ public abstract class ExasolTestSetupTestBase {
 
     @AfterEach
     void afterEach() throws Exception {
-        this.statement.close();
-        this.connection.close();
+        if (this.statement != null) {
+            this.statement.close();
+        }
+        if (this.connection != null) {
+            this.connection.close();
+        }
         this.testSetup.close();
     }
 
@@ -138,7 +142,7 @@ public abstract class ExasolTestSetupTestBase {
     /**
      * Since the connection tester runs in a dedicated thread we need to wait a bit so that it will also run on single
      * core CPUs.
-     * 
+     *
      * @throws InterruptedException if interrupted
      */
     private void waitForConnectionTesterToReceive() throws InterruptedException {
@@ -179,7 +183,7 @@ public abstract class ExasolTestSetupTestBase {
 
         @Override
         public void run() {
-            while (System.currentTimeMillis() - this.start < 1000 * 20 && !this.success.get()) {
+            while (((System.currentTimeMillis() - this.start) < (1000 * 20)) && !this.success.get()) {
                 for (final Integer port : this.ports) {
                     try {
                         final Socket socket = new Socket("localhost", port);
