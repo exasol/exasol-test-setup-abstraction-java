@@ -1,6 +1,6 @@
 package com.exasol.exasoltestsetup;
 
-import java.util.Hashtable;
+import java.util.*;
 
 import com.exasol.exasoltestsetup.identity.IdentityProvider;
 import com.jcraft.jsch.*;
@@ -13,12 +13,13 @@ public class SessionBuilder {
     private String host;
     private int port;
     private IdentityProvider identityProvider;
-    private final Hashtable<String, String> config = new Hashtable<>();
+    private final Map<String, String> config = new HashMap<>();
 
     /**
      * Create new instance of {@link SessionBuilder}
      */
     public SessionBuilder() {
+        // Empty by intention
     }
 
     /**
@@ -77,7 +78,7 @@ public class SessionBuilder {
         final JSch jsch = new JSch();
         this.identityProvider.addIdentityTo(jsch);
         final Session session = jsch.getSession(this.user, this.host, this.port);
-        session.setConfig(this.config);
+        session.setConfig(new Hashtable<>(this.config));
         return session;
     }
 
