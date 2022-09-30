@@ -14,6 +14,7 @@ import java.sql.*;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -23,6 +24,7 @@ import com.exasol.bucketfs.BucketAccessException;
 import com.exasol.errorreporting.ExaError;
 
 public abstract class ExasolTestSetupTestBase {
+    private static final Logger LOGGER = Logger.getLogger(ExasolTestSetupTestBase.class.getName());
     private static final String TEST_FILE_NAME = "testFile.txt";
     private static final String TEST_CONTENT = "my test string";
     private static final int TEST_SOCKET_PORT = 5111;
@@ -207,11 +209,12 @@ public abstract class ExasolTestSetupTestBase {
         private ServerSocket serverSocket;
 
         private DummySocketServer() {
+            LOGGER.info("Starting dummy socket server on part " + TEST_SOCKET_PORT);
             this.start();
         }
 
         public void shutdown() {
-            System.out.println("shutting down dummy socket server");
+            LOGGER.info("Shutting down dummy socket server");
             if (this.serverSocket != null) {
                 try {
                     this.serverSocket.close();
@@ -238,7 +241,7 @@ public abstract class ExasolTestSetupTestBase {
             } catch (final IOException exception) {
                 throw new IllegalStateException(
                         ExaError.messageBuilder("E-ETAJ-11").message("Failed to start a socket server for testing.")
-                                .mitigation("Make sure that port 5111 is free.").toString(),
+                                .mitigation("Make sure that port {{port}} is free.", TEST_SOCKET_PORT).toString(),
                         exception);
             }
         }
