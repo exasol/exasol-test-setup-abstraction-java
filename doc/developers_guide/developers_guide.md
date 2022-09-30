@@ -20,3 +20,12 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+Then run integration tests with `mvn verify`.
+
+After tests are completed, delete the cloud setup with
+
+```
+cd cloudSetup/
+terraform destroy
+```
