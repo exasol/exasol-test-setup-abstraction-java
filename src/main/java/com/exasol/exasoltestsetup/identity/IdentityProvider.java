@@ -23,6 +23,12 @@ public interface IdentityProvider {
         return jsch -> jsch.addIdentity(path);
     }
 
+    /**
+     * Adds the identity represented by the current instance to java secure channel {@link JSch}.
+     *
+     * @param jsch java secure channel {@link JSch} to add identity to
+     * @throws JSchException if adding identity fails.
+     */
     void addIdentityTo(JSch jsch) throws JSchException;
 
     /**
