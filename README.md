@@ -54,3 +54,4 @@ You can also select a specific test-setup in code. For that simply replace `new 
 * [Guide for Setting up a Project With Cloud Resources](doc/user_guide/setup_project_with_cloud_resources.md)
 * [Changelog](doc/changes/changelog.md)
 * [Dependencies](dependencies.md)
+* [Developers Guide](doc/developers_guide/developers_guide.md)
