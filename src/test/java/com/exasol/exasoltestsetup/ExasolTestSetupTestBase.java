@@ -52,7 +52,9 @@ public abstract class ExasolTestSetupTestBase {
         if (this.connection != null) {
             this.connection.close();
         }
-        this.testSetup.close();
+        if (this.testSetup != null) {
+            this.testSetup.close();
+        }
     }
 
     @Test
