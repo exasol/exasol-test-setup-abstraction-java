@@ -50,12 +50,12 @@
 | [Apache Maven Source Plugin][39]                        | [Apache License, Version 2.0][10]              |
 | [Apache Maven Javadoc Plugin][40]                       | [Apache License, Version 2.0][10]              |
 | [Nexus Staging Maven Plugin][41]                        | [Eclipse Public License][42]                   |
-| [Lombok Maven Plugin][43]                               | [The MIT License][44]                          |
-| [Maven Failsafe Plugin][45]                             | [Apache License, Version 2.0][10]              |
-| [Project keeper maven plugin][46]                       | [The MIT License][47]                          |
-| [JaCoCo :: Maven Plugin][48]                            | [Eclipse Public License 2.0][49]               |
-| [error-code-crawler-maven-plugin][50]                   | [MIT][44]                                      |
-| [Reproducible Build Maven Plugin][51]                   | [Apache 2.0][32]                               |
+| [Maven Failsafe Plugin][43]                             | [Apache License, Version 2.0][10]              |
+| [Project keeper maven plugin][44]                       | [The MIT License][45]                          |
+| [JaCoCo :: Maven Plugin][46]                            | [Eclipse Public License 2.0][47]               |
+| [error-code-crawler-maven-plugin][48]                   | [MIT][49]                                      |
+| [Reproducible Build Maven Plugin][50]                   | [Apache 2.0][32]                               |
+| [Lombok Maven Plugin][51]                               | [The MIT License][49]                          |
 | [Maven Clean Plugin][52]                                | [The Apache Software License, Version 2.0][32] |
 | [Maven Resources Plugin][53]                            | [The Apache Software License, Version 2.0][32] |
 | [Maven JAR Plugin][54]                                  | [The Apache Software License, Version 2.0][32] |
@@ -105,15 +105,15 @@
 [40]: https://maven.apache.org/plugins/maven-javadoc-plugin/
 [41]: http://www.sonatype.com/public-parent/nexus-maven-plugins/nexus-staging/nexus-staging-maven-plugin/
 [42]: http://www.eclipse.org/legal/epl-v10.html
-[43]: https://anthonywhitford.com/lombok.maven/lombok-maven-plugin/
-[44]: https://opensource.org/licenses/MIT
-[45]: https://maven.apache.org/surefire/maven-failsafe-plugin/
-[46]: https://github.com/exasol/project-keeper/
-[47]: https://github.com/exasol/project-keeper/blob/main/LICENSE
-[48]: https://www.jacoco.org/jacoco/trunk/doc/maven.html
-[49]: https://www.eclipse.org/legal/epl-2.0/
-[50]: https://github.com/exasol/error-code-crawler-maven-plugin
-[51]: http://zlika.github.io/reproducible-build-maven-plugin
+[43]: https://maven.apache.org/surefire/maven-failsafe-plugin/
+[44]: https://github.com/exasol/project-keeper/
+[45]: https://github.com/exasol/project-keeper/blob/main/LICENSE
+[46]: https://www.jacoco.org/jacoco/trunk/doc/maven.html
+[47]: https://www.eclipse.org/legal/epl-2.0/
+[48]: https://github.com/exasol/error-code-crawler-maven-plugin
+[49]: https://opensource.org/licenses/MIT
+[50]: http://zlika.github.io/reproducible-build-maven-plugin
+[51]: https://anthonywhitford.com/lombok.maven/lombok-maven-plugin/
 [52]: http://maven.apache.org/plugins/maven-clean-plugin/
 [53]: http://maven.apache.org/plugins/maven-resources-plugin/
 [54]: http://maven.apache.org/plugins/maven-jar-plugin/

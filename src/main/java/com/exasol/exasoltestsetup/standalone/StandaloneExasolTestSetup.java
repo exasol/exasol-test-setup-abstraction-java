@@ -59,7 +59,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     }
 
     /**
-     * The changing of the password fails from time to time without an error (with just ni change). As a workaround we
+     * The changing of the password fails from time to time without an error (with just no change). As a workaround we
      * try it multiple times and check if it worked.
      *
      * @param exaOperationGateway ExaOperation
