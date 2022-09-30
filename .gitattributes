@@ -8,3 +8,4 @@ doc/changes/changelog.md                                         linguist-genera
 .github/workflows/release_droid_prepare_original_checksum.yml    linguist-generated=true
 .github/workflows/release_droid_print_quick_checksum.yml         linguist-generated=true
 .github/workflows/release_droid_upload_github_release_assets.yml linguist-generated=true
+cloudSetup/.terraform.lock.hcl                                   linguist-generated=true
