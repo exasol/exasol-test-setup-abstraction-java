@@ -13,6 +13,7 @@ import com.exasol.bucketfs.Bucket;
 import com.exasol.containers.ExasolContainer;
 import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.*;
+import com.exasol.exasoltestsetup.identity.IdentityProvider;
 import com.jcraft.jsch.*;
 
 /**
@@ -105,7 +106,10 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
                 .user("root") //
                 .host(this.exasolContainer.getHost()) //
                 .port(this.exasolContainer.getMappedPort(SSH_PORT)) //
-                .publicKey(this.keyPair.getPublicKeyBlob()) //
-                .privateKey(privateKey.toByteArray()).identity("tmp-key");
+                .identity(IdentityProvider.builder() //
+                        .identityName("tmp-key") //
+                        .publicKey(this.keyPair.getPublicKeyBlob()) //
+                        .privateKey(privateKey.toByteArray()) //
+                        .build());
     }
 }

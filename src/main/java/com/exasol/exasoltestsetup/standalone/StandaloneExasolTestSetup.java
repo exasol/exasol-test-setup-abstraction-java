@@ -14,6 +14,7 @@ import com.exasol.bucketfs.*;
 import com.exasol.dbcleaner.ExasolDatabaseCleaner;
 import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.*;
+import com.exasol.exasoltestsetup.identity.IdentityProvider;
 
 /**
  * This class implements the {@link ExasolTestSetup} interface for Exasol databases that are running in the Cloud or in
@@ -180,7 +181,9 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     public Bucket getDefaultBucket() {
         return SyncAwareBucket.builder().ipAddress("localhost").port(this.localBucketFsPort).name("default")
                 .serviceName("bfsdefault").readPassword(this.bucketFsReadPassword)
-                .writePassword(this.bucketFsWritePassword).monitor(new WaitBucketFsMonitor()).build();
+                .writePassword(this.bucketFsWritePassword) //
+                .monitor(new WaitBucketFsMonitor()) //
+                .build();
     }
 
     @Override
@@ -203,9 +206,10 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
 
     private SessionBuilder sessionBuilder() {
         return new SessionBuilder() //
-                .identity("./cloudSetup/generated/exasol_cluster_ssh_key") //
                 .user("ec2-user") //
                 .host(this.connectionDetails.getManagementNodeAddress()) //
-                .port(this.connectionDetails.getSshPort());
+                .port(this.connectionDetails.getSshPort()) //
+                .identity(IdentityProvider.fromPathToPrivateKey( //
+                        "./cloudSetup/generated/exasol_cluster_ssh_key"));
     }
 }

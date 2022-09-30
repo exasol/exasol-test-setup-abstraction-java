@@ -2,6 +2,7 @@ package com.exasol.exasoltestsetup;
 
 import java.util.Hashtable;
 
+import com.exasol.exasoltestsetup.identity.IdentityProvider;
 import com.jcraft.jsch.*;
 
 /**
@@ -11,11 +12,7 @@ public class SessionBuilder {
     private String user;
     private String host;
     private int port;
-
-    private String identity;
-    private byte[] privateKey;
-    private byte[] publicKey;
-    private byte[] passPhrase = null;
+    private IdentityProvider identityProvider;
     private final Hashtable<String, String> config = new Hashtable<>();
 
     /**
@@ -25,38 +22,11 @@ public class SessionBuilder {
     }
 
     /**
-     * @param value identity to be used by the session
+     * @param value identity provider to use for the session
      * @return instance of this for fluent programming
      */
-    public SessionBuilder identity(final String value) {
-        this.identity = value;
-        return this;
-    }
-
-    /**
-     * @param value public key to be used by the session
-     * @return instance of this for fluent programming
-     */
-    public SessionBuilder publicKey(final byte[] value) {
-        this.publicKey = value;
-        return this;
-    }
-
-    /**
-     * @param value private key to be used by the session
-     * @return instance of this for fluent programming
-     */
-    public SessionBuilder privateKey(final byte[] value) {
-        this.privateKey = value;
-        return this;
-    }
-
-    /**
-     * @param value passphrase to be used by the session
-     * @return instance of this for fluent programming
-     */
-    public SessionBuilder passphrase(final byte[] value) {
-        this.passPhrase = value;
+    public SessionBuilder identity(final IdentityProvider value) {
+        this.identityProvider = value;
         return this;
     }
 
@@ -105,7 +75,7 @@ public class SessionBuilder {
      */
     public Session build() throws JSchException {
         final JSch jsch = new JSch();
-        jsch.addIdentity(this.identity, this.privateKey, this.publicKey, this.passPhrase);
+        this.identityProvider.addIdentityTo(jsch);
         final Session session = jsch.getSession(this.user, this.host, this.port);
         session.setConfig(this.config);
         return session;
