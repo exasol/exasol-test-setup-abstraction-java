@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 1.0.0, released 2022-09-30
+# exasol-test-setup-abstraction-java 1.0.0, released 2022-10-04
 
 Code name: Fix SSH Connection
 
