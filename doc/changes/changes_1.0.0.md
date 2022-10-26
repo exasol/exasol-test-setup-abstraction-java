@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 1.0.0, released 2022-10-04
+# exasol-test-setup-abstraction-java 1.0.0, released 2022-10-26
 
 Code name: Fix SSH Connection
 
@@ -14,10 +14,10 @@ Fixed setup of SSH connection that failed on windows.
 
 ### Compile Dependency Updates
 
-* Updated `com.exasol:bucketfs-java:2.3.0` to `2.4.0`
+* Updated `com.exasol:bucketfs-java:2.3.0` to `2.4.1`
 * Updated `com.exasol:database-cleaner:1.0.1` to `1.0.2`
 * Updated `com.exasol:error-reporting-java:0.4.1` to `1.0.0`
-* Updated `com.exasol:exasol-testcontainers:6.1.1` to `6.2.0`
+* Updated `com.exasol:exasol-testcontainers:6.1.1` to `6.3.0`
 * Updated `jakarta.json:jakarta.json-api:2.1.0` to `2.1.1`
 * Updated `software.amazon.awssdk:cloudformation:2.17.199` to `2.17.283`
 * Updated `software.amazon.awssdk:ec2:2.17.199` to `2.17.283`
