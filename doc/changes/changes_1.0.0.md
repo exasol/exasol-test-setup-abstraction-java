@@ -8,7 +8,7 @@ Fixed setup of SSH connection that failed on windows.
 
 ## Bug Fixes
 
-* #21: Fixed SSH connection.
+* #44: Fixed SSH connection.
 
 ## Dependency Updates
 
