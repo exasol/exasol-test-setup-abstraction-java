@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 1.0.0, released 2022-10-26
+# exasol-test-setup-abstraction-java 1.0.0, released 2022-10-27
 
 Code name: Fix SSH Connection
 
@@ -30,4 +30,12 @@ Fixed setup of SSH connection that failed on windows.
 
 ### Plugin Dependency Updates
 
+* Updated `com.exasol:error-code-crawler-maven-plugin:1.1.1` to `1.1.2`
 * Updated `com.exasol:project-keeper-maven-plugin:2.4.4` to `2.8.0`
+* Removed `org.apache.maven.plugins:maven-dependency-plugin:2.8`
+* Updated `org.apache.maven.plugins:maven-deploy-plugin:3.0.0-M2` to `3.0.0-M1`
+* Updated `org.apache.maven.plugins:maven-enforcer-plugin:3.0.0` to `3.1.0`
+* Updated `org.apache.maven.plugins:maven-failsafe-plugin:3.0.0-M6` to `3.0.0-M5`
+* Updated `org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M6` to `3.0.0-M5`
+* Updated `org.codehaus.mojo:versions-maven-plugin:2.11.0` to `2.10.0`
+* Removed `org.projectlombok:lombok-maven-plugin:1.18.20.0`
