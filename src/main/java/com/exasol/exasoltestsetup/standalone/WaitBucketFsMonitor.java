@@ -1,9 +1,8 @@
 package com.exasol.exasoltestsetup.standalone;
 
-import java.time.Instant;
-
-import com.exasol.bucketfs.BucketFsMonitor;
+import com.exasol.bucketfs.BucketAccessException;
 import com.exasol.bucketfs.ReadOnlyBucket;
+import com.exasol.bucketfs.monitor.BucketFsMonitor;
 
 /**
  * This simple {@link BucketFsMonitor} waits for one second and hopes that the contents will be synchronized.
@@ -14,8 +13,8 @@ import com.exasol.bucketfs.ReadOnlyBucket;
  */
 class WaitBucketFsMonitor implements BucketFsMonitor {
     @Override
-    public boolean isObjectSynchronized(final ReadOnlyBucket bucket, final String pathInBucket,
-            final Instant afterUTC) {
+    public boolean isObjectSynchronized(final ReadOnlyBucket bucket, final String pathInBucket, final State state)
+            throws BucketAccessException {
         try {
             Thread.sleep(1000);
         } catch (final InterruptedException exception) {

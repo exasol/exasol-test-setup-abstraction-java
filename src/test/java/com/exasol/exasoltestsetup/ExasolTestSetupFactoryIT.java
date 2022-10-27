@@ -14,7 +14,7 @@ import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.standalone.StandaloneExasolTestSetup;
 import com.exasol.exasoltestsetup.testcontainers.ExasolTestcontainerTestSetup;
 
-class ExasolTestSetupFactoryTest {
+class ExasolTestSetupFactoryIT {
 
     @Tag("cloudOnly")
     @Test

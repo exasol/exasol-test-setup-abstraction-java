@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>ci-isolation-aws</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
 </project>

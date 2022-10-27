@@ -13,6 +13,7 @@ import com.exasol.bucketfs.Bucket;
 import com.exasol.containers.ExasolContainer;
 import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.*;
+import com.exasol.exasoltestsetup.identity.IdentityProvider;
 import com.jcraft.jsch.*;
 
 /**
@@ -20,7 +21,7 @@ import com.jcraft.jsch.*;
  */
 public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     private static final int SSH_PORT = 22;
-    private final ExasolContainer<? extends ExasolContainer<?>> exasolContainer = new ExasolContainer<>("7.1.10")
+    private final ExasolContainer<? extends ExasolContainer<?>> exasolContainer = new ExasolContainer<>("7.1.15")
             .withReuse(true);
     private final SshConnection sshConnection;
     private final KeyPair keyPair;
@@ -38,7 +39,7 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
                     .message("Failed to generate temporary ssh-key.").ticketMitigation().toString(), exception);
         }
         installSshKeyInDatabase();
-        this.sshConnection = new SshConnection(this::configSshAuth);
+        this.sshConnection = new SshConnection(sessionBuilder());
     }
 
     @Override
@@ -98,12 +99,17 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
         this.exasolContainer.stop();
     }
 
-    private Session configSshAuth(final JSch ssh) throws JSchException {
-        final Session session = ssh.getSession("root", this.exasolContainer.getHost(),
-                this.exasolContainer.getMappedPort(SSH_PORT));
+    private SessionBuilder sessionBuilder() {
         final ByteArrayOutputStream privateKey = new ByteArrayOutputStream();
         this.keyPair.writePrivateKey(privateKey);
-        ssh.addIdentity("tmp-key", privateKey.toByteArray(), this.keyPair.getPublicKeyBlob(), null);
-        return session;
+        return new SessionBuilder() //
+                .user("root") //
+                .host(this.exasolContainer.getHost()) //
+                .port(this.exasolContainer.getMappedPort(SSH_PORT)) //
+                .identity(IdentityProvider.builder() //
+                        .identityName("tmp-key") //
+                        .publicKey(this.keyPair.getPublicKeyBlob()) //
+                        .privateKey(privateKey.toByteArray()) //
+                        .build());
     }
 }

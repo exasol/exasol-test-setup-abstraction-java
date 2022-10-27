@@ -15,7 +15,7 @@ import com.exasol.exasoltestsetup.ExasolTestSetupTestBase;
  * this process is done automatically.
  */
 @Tag("cloudOnly")
-class StandaloneExasolTestSetupTest extends ExasolTestSetupTestBase {
+class StandaloneExasolTestSetupIT extends ExasolTestSetupTestBase {
     @Override
     protected ExasolTestSetup getExasolTestSetup() {
         return new StandaloneExasolTestSetup(

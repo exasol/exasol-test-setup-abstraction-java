@@ -34,3 +34,7 @@ venv/
 *.old
 *.md.html
 *.flattened-pom.xml
+/.apt_generated/
+/.apt_generated_tests/
+/.settings/org.eclipse.m2e.core.prefs
+/.settings/org.eclipse.core.resources.prefs

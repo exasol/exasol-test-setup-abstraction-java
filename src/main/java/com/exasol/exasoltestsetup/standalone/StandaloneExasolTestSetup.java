@@ -11,10 +11,11 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.exasol.bucketfs.*;
+import com.exasol.bucketfs.monitor.TimestampRetriever;
 import com.exasol.dbcleaner.ExasolDatabaseCleaner;
 import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.*;
-import com.jcraft.jsch.*;
+import com.exasol.exasoltestsetup.identity.IdentityProvider;
 
 /**
  * This class implements the {@link ExasolTestSetup} interface for Exasol databases that are running in the Cloud or in
@@ -58,9 +59,9 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     }
 
     /**
-     * The changing of the password fails from time to time without an error (with just ni change). As a workaround we
+     * The changing of the password fails from time to time without an error (with just no change). As a workaround we
      * try it multiple times and check if it worked.
-     * 
+     *
      * @param exaOperationGateway ExaOperation
      */
     private void setBucketsPasswordWithWorkaround(final ExaOperationGateway exaOperationGateway) {
@@ -73,10 +74,10 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
                 throw new IllegalStateException(
                         ExaError.messageBuilder("E-ETAJ-32").message("Failed to set BucketFS password.").toString());
             }
-        } while (!this.isBucketFsIsAvailable());
+        } while (!this.isBucketFsAvailable());
     }
 
-    private boolean isBucketFsIsAvailable() {
+    private boolean isBucketFsAvailable() {
         final String testFile = "bfs-test-" + System.currentTimeMillis() + ".txt";
         final Bucket bucket = getDefaultBucket();
         try {
@@ -119,7 +120,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     }
 
     private SshConnection createSshConnection() {
-        return new SshConnection(this::configSshAuth);
+        return new SshConnection(sessionBuilder());
     }
 
     private SshConnection addGatewayPortsIfRequired(SshConnection connection) {
@@ -181,7 +182,10 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     public Bucket getDefaultBucket() {
         return SyncAwareBucket.builder().ipAddress("localhost").port(this.localBucketFsPort).name("default")
                 .serviceName("bfsdefault").readPassword(this.bucketFsReadPassword)
-                .writePassword(this.bucketFsWritePassword).monitor(new WaitBucketFsMonitor()).build();
+                .writePassword(this.bucketFsWritePassword) //
+                .monitor(new WaitBucketFsMonitor()) //
+                .stateRetriever(new TimestampRetriever()) //
+                .build();
     }
 
     @Override
@@ -202,9 +206,12 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
         this.sshConnection.close();
     }
 
-    private Session configSshAuth(final JSch ssh) throws JSchException {
-        ssh.addIdentity("./cloudSetup/generated/exasol_cluster_ssh_key");
-        return ssh.getSession("ec2-user", this.connectionDetails.getManagementNodeAddress(),
-                this.connectionDetails.getSshPort());
+    private SessionBuilder sessionBuilder() {
+        return new SessionBuilder() //
+                .user("ec2-user") //
+                .host(this.connectionDetails.getManagementNodeAddress()) //
+                .port(this.connectionDetails.getSshPort()) //
+                .identity(IdentityProvider.fromPathToPrivateKey( //
+                        "./cloudSetup/generated/exasol_cluster_ssh_key"));
     }
 }
