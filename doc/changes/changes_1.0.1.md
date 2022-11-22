@@ -1,12 +1,17 @@
-# exasol-test-setup-abstraction-java 1.0.1, released 2022-??-??
+# exasol-test-setup-abstraction-java 1.0.1, released 2022-11-22
 
-Code name:
+Code name: Update on top of 1.0.0
 
 ## Summary
 
+We fixed a version conflict in the BucketFS library between this project and `udf-debugging-java` that lead to a class-not-found error by updating to the latest version of the `exasol-testcontainers`.
+
+This update also fixes a problem when the `target` directory does not exist in a project using this library. 
+
 ## Features
 
-* ISSUE_NUMBER: description
+* #48: Fixed version conflicts by updating
+* #46: Fixed problem with missing `target` directory by updating `exasol-testcontainers`
 
 ## Dependency Updates
 
