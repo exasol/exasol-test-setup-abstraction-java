@@ -49,9 +49,12 @@ Usually you generate the `testConfig.json` using the Terraform module [terraform
 
 You can also select a specific test-setup in code. For that simply replace `new ExasolTestSetupFactory().getTestSetup()` by `new ExasolTestcontainerTestSetup()`.
 
-## Additional Information
+## Information for Users of This Library
 
 * [Guide for Setting up a Project With Cloud Resources](doc/user_guide/setup_project_with_cloud_resources.md)
 * [Changelog](doc/changes/changelog.md)
+
+## Information for Developers of This Library
+
+* [Developer Guide](doc/developer_guide/developer_guide.md)
 * [Dependencies](dependencies.md)
-* [Developers Guide](doc/developers_guide/developers_guide.md)
