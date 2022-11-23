@@ -53,3 +53,38 @@ Now you can try out to create the setup by
 Now copy the [CI build](../../.github/workflows/ci-build.yml) from this project. The build uses the `aws` environment we created earlier. By that it requires an approval before each run. That is very handy since you probably don't want to create the resources for each commit that just fixed a typo but only before merging a pull request.
 
 The CI build creates the setup using Terraform and writes connection details for the Exasol cluster to `cloudSetup/generated/testConfig.json`. In your test you can use the exasol-test-setup-abstraction-java (ETAJ) to create a connection to the Exasol database. The ETAJ will retrieve the credentials from the config file. When you do local testing you can create the cluster using Terraform as showed above and use it for all your test runs. That will save you a lot of time.
+
+## Controlling the Kind of Test Environment that is Created
+
+The class `ExasolTestSetupFactory` is responsible for selecting the test setup (e.g. a local Exasol test container or an AWS setup).
+
+You have three choices when it comes to creating such a setup. Either you enforce the type you want, or you let the factory choose.
+
+If you construct the factory using either the default constructor or with the constructor that takes the dispatcher mode set to `CONTAINER`, the factory will always construct a container setup.
+
+Example:
+
+```java
+import com.exasol.exasoltestsetup.ExasolTestSetupFactory;
+
+final ExasolTestSetupFactory factory = new ExasolTestSetupFactory();
+final ExasolTestSetup testSetup = factory.getTestSetup();
+```
+
+Likewise, you can enforce the creation of a cloud setup (aka. "standalone setup") like this:
+
+```java
+final ExasolTestSetupFactory factory = new ExasolTestSetupFactory(pathToConfigFile, DispatchMode.STANDALONE)
+```
+
+The configuration file is **mandatory** in that case. If the parameter is `null` or the file does not exist, the constructor will throw an exception.
+
+Finally, there is the automatic mode, which comes in handy in case you normally can live with a container test but occasionally want to run the same test on a cloud &mdash; for example when you run the test in a CI build. In this mode the factory checks the existence of the configuration file for the cloud environment. If it exists, a cloud setup is spun up. If not, you get an Exasol Test Container.
+
+Example:
+
+```java
+final ExasolTestSetup testSetup = new ExasolTestSetupFactory(configFile).getTestSetup();
+```
+
+To use that to your advantage, you would have a local project on your development machine where the file does not exist at the given path and work with the test container. On your CI build server you generate the configuration file on the fly and use it to test in the cloud.

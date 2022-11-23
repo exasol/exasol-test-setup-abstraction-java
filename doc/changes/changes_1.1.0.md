@@ -1,14 +1,21 @@
 # exasol-test-setup-abstraction-java 1.0.1, released 2022-11-22
 
-Code name: Update on top of 1.0.0
+Code name: Update on top of 1.1.0
 
 ## Summary
+
+With this release we introduce two new constructors for the `ExasolTestSetupFactory`, a default constructor that gives you a factory that always produces 
+
 
 We fixed a version conflict in the BucketFS library between this project and `udf-debugging-java` that led to a class-not-found error by updating to the latest version of the `exasol-testcontainers`.
 
 This update also fixes a problem when the `target` directory does not exist in a project using this library. 
 
 ## Features
+
+* #47: We added new constructors to the `ExasolTestSetupFactory` for more precise control over which kind of environment is created.
+
+## Bugfixes
 
 * #48: Fixed version conflicts by updating
 * #46: Fixed problem with missing `target` directory by updating `exasol-testcontainers`

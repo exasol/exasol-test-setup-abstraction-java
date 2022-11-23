@@ -2,20 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>exasol-test-setup-abstraction-java</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <name>exasol-test-setup-abstraction-java</name>
     <description>Common interface for testing with an exasol database local and on AWS using Java.</description>
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java/</url>
     <properties>
         <junit.version>5.9.1</junit.version>
         <surefire.and.failsafe.plugin.version>3.0.0-M6</surefire.and.failsafe.plugin.version>
+        <awssdk.version>2.18.23</awssdk.version>
     </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>software.amazon.awssdk</groupId>
                 <artifactId>bom</artifactId>
-                <version>2.18.3</version>
+                <version>${awssdk.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -45,12 +46,12 @@
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>cloudformation</artifactId>
-            <version>2.18.22</version>
+            <version>${awssdk.version}</version>
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>ec2</artifactId>
-            <version>2.18.22</version>
+            <version>${awssdk.version}</version>
         </dependency>
         <!-- Upgrade transitive dependency of org.apache.httpcomponents:httpclient via software.amazon.awssdk:apache-client
             to fix vulnerability https://ossindex.sonatype.org/vulnerability/sonatype-2012-0050 -->
