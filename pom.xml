@@ -143,7 +143,7 @@
     <parent>
         <artifactId>exasol-test-setup-abstraction-java-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>1.0.1</version>
+        <version>1.1.0</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>

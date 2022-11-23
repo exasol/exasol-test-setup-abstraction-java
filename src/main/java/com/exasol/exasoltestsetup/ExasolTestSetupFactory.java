@@ -131,7 +131,7 @@ public class ExasolTestSetupFactory {
     /**
      * Check if the path to the standalone configuration was provided.
      *
-     * @return @{@code true} if the path to the configuration file was provided
+     * @return {@code true} if the path to the configuration file was provided
      */
     public boolean hasStandaloneConfigurationPath() {
         return this.standaloneConfigurationPath != null;
