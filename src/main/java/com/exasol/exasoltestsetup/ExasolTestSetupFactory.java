@@ -124,7 +124,7 @@ public class ExasolTestSetupFactory {
             }
         default:
             throw new IllegalArgumentException(
-                    "Unkown Dispatcher Mode '" + this.dispatchMode + "' trying to create test setup");
+                    "Unknown Dispatcher Mode '" + this.dispatchMode + "' trying to create test setup");
         }
     }
 
