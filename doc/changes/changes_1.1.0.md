@@ -4,8 +4,7 @@ Code name: Update on top of 1.1.0
 
 ## Summary
 
-With this release we introduce two new constructors for the `ExasolTestSetupFactory`, a default constructor that gives you a factory that always produces 
-
+With this release we introduce two new constructors for the `ExasolTestSetupFactory`, a default constructor that gives you a factory that always produces a container setup and two other constructors that can create cloud setups.
 
 We fixed a version conflict in the BucketFS library between this project and `udf-debugging-java` that led to a class-not-found error by updating to the latest version of the `exasol-testcontainers`.
 
@@ -17,7 +16,7 @@ This update also fixes a problem when the `target` directory does not exist in a
 
 ## Bugfixes
 
-* #48: Fixed version conflicts by updating
+* #48: Fixed version conflicts by updating `udf-debuggin-java`
 * #46: Fixed problem with missing `target` directory by updating `exasol-testcontainers`
 
 ## Dependency Updates
