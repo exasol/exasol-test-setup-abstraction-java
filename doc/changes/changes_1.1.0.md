@@ -1,4 +1,4 @@
-# exasol-test-setup-abstraction-java 1.0.1, released 2022-11-25
+# exasol-test-setup-abstraction-java 1.1.0, released 2022-11-25
 
 Code name: Update on top of 1.1.0
 
