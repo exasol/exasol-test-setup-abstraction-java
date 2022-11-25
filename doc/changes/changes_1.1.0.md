@@ -1,8 +1,10 @@
-# exasol-test-setup-abstraction-java 1.0.1, released 2022-11-22
+# exasol-test-setup-abstraction-java 1.0.1, released 2022-11-25
 
-Code name: Update on top of 1.0.0
+Code name: Update on top of 1.1.0
 
 ## Summary
+
+With this release we introduce two new constructors for the `ExasolTestSetupFactory`, a default constructor that gives you a factory that always produces a container setup and two other constructors that can create cloud setups.
 
 We fixed a version conflict in the BucketFS library between this project and `udf-debugging-java` that led to a class-not-found error by updating to the latest version of the `exasol-testcontainers`.
 
@@ -10,7 +12,11 @@ This update also fixes a problem when the `target` directory does not exist in a
 
 ## Features
 
-* #48: Fixed version conflicts by updating
+* #47: We added new constructors to the `ExasolTestSetupFactory` for more precise control over which kind of environment is created.
+
+## Bugfixes
+
+* #48: Fixed version conflicts by updating `udf-debuggin-java`
 * #46: Fixed problem with missing `target` directory by updating `exasol-testcontainers`
 
 ## Dependency Updates
@@ -19,8 +25,8 @@ This update also fixes a problem when the `target` directory does not exist in a
 
 * Updated `com.exasol:exasol-testcontainers:6.3.0` to `6.3.1`
 * Updated `fr.turri:aXMLRPC:1.12.0` to `1.13.0`
-* Updated `software.amazon.awssdk:cloudformation:2.18.3` to `2.18.22`
-* Updated `software.amazon.awssdk:ec2:2.18.3` to `2.18.22`
+* Updated `software.amazon.awssdk:cloudformation:2.18.3` to `2.18.23`
+* Updated `software.amazon.awssdk:ec2:2.18.3` to `2.18.23`
 
 ### Test Dependency Updates
 
