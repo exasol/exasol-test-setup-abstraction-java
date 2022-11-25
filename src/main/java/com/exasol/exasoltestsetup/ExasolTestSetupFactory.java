@@ -80,7 +80,7 @@ public class ExasolTestSetupFactory {
                         .toString());
             }
             else {
-                throw new IllegalArgumentException(ExaError.messageBuilder("E-ETAJ-37")
+                throw new IllegalArgumentException(ExaError.messageBuilder("E-ETAJ-38")
                         .message("The configuration file {{file}} "
                                 + "required for a for a standalone test setup does not exist.")
                         .parameter("file", standaloneConfigurationPath.toString(), "path to the configuration file")
