@@ -56,11 +56,17 @@ The CI build creates the setup using Terraform and writes connection details for
 
 ## Controlling the Kind of Test Environment that is Created
 
-The class `ExasolTestSetupFactory` is responsible for selecting the test setup (e.g. a local Exasol test container or an AWS setup).
+The class `ExasolTestSetupFactory` is responsible for selecting the test setup type.
 
-You have three choices when it comes to creating such a setup. Either you enforce the type you want, or you let the factory choose.
+There are two types:
+* using local Exasol test container or
+* using AWS resources
 
-If you construct the factory using either the default constructor or with the constructor that takes the dispatcher mode set to `CONTAINER`, the factory will always construct a container setup.
+Besides specifying the type manually ETAJ can select the type based on the existence of a configuration file for cloud setup.
+
+### Select Test Setup Type Explicitly
+
+To select the type use parameter `dispatchMode` to the constructor of `ExasolTestSetupFactory`. The default constructor will use `DispatchMode.CONTAINER`.
 
 Example:
 
@@ -71,20 +77,24 @@ final ExasolTestSetupFactory factory = new ExasolTestSetupFactory();
 final ExasolTestSetup testSetup = factory.getTestSetup();
 ```
 
-Likewise, you can enforce the creation of a cloud setup (aka. "standalone setup") like this:
+Likewise, you can select a cloud setup (aka. "standalone setup") like this:
 
 ```java
 final ExasolTestSetupFactory factory = new ExasolTestSetupFactory(pathToConfigFile, DispatchMode.STANDALONE)
 ```
 
-The configuration file is **mandatory** in that case. If the parameter is `null` or the file does not exist, the constructor will throw an exception.
+The configuration file `pathToConfigFile` for the cloud setup is **mandatory** in that case. If the parameter is `null` or the file does not exist, the constructor will throw an exception.
 
-Finally, there is the automatic mode, which comes in handy in case you normally can live with a container test but occasionally want to run the same test on a cloud &mdash; for example when you run the test in a CI build. In this mode the factory checks the existence of the configuration file for the cloud environment. If it exists, a cloud setup is spun up. If not, you get an Exasol Test Container.
+### Automated Selection of Test Setup Type
+
+Automated selection comes in handy in case you normally can live with a container test but occasionally want to run the same test on a cloud &mdash; for example when you run the test in a CI build. In this mode the factory checks the existence of the configuration file for the cloud environment. If it exists, a cloud setup is spun up. If not, you get an Exasol Test Container.
 
 Example:
 
 ```java
-final ExasolTestSetup testSetup = new ExasolTestSetupFactory(configFile).getTestSetup();
+final ExasolTestSetup testSetup = new ExasolTestSetupFactory(configFile, DispatchMode.AUTO).getTestSetup();
 ```
 
 To use that to your advantage, you would have a local project on your development machine where the file does not exist at the given path and work with the test container. On your CI build server you generate the configuration file on the fly and use it to test in the cloud.
+
+For backwards compatibility there is still a constructor accepting the path to a configuration file but no dispatch mode. This constructor will use `DispatchMode.AUTO`, too.
