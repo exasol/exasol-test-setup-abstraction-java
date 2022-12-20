@@ -1,4 +1,4 @@
-# Exasol Test Setup Abstraction Java 1.1.1, released 2022-12-20
+# Exasol Test Setup Abstraction Java 1.1.1, released 2022-12-21
 
 Code name: Dependency Upgrade
 
