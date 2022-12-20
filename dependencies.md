@@ -85,7 +85,7 @@
 [23]: https://github.com/stefanbirkner/system-lambda/
 [24]: http://opensource.org/licenses/MIT
 [25]: http://sonarsource.github.io/sonar-scanner-maven/
-[26]: http://www.gnu.org/licenses/lgpl.txt
+[26]: https://www.gnu.org/licenses/lgpl-3.0.txt
 [27]: https://maven.apache.org/plugins/maven-compiler-plugin/
 [28]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [29]: https://www.mojohaus.org/flatten-maven-plugin/
