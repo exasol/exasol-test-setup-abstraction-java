@@ -180,7 +180,7 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
 
     @Override
     public Bucket getDefaultBucket() {
-        return SyncAwareBucket.builder().ipAddress("localhost").port(this.localBucketFsPort).name("default")
+        return SyncAwareBucket.builder().host("localhost").port(this.localBucketFsPort).name("default")
                 .serviceName("bfsdefault").readPassword(this.bucketFsReadPassword)
                 .writePassword(this.bucketFsWritePassword) //
                 .monitor(new WaitBucketFsMonitor()) //
