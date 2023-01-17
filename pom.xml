@@ -2,14 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>exasol-test-setup-abstraction-java</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <name>exasol-test-setup-abstraction-java</name>
     <description>Common interface for testing with an exasol database local and on AWS using Java.</description>
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java/</url>
     <properties>
-        <junit.version>5.9.1</junit.version>
-        <surefire.and.failsafe.plugin.version>3.0.0-M6</surefire.and.failsafe.plugin.version>
-        <awssdk.version>2.19.0</awssdk.version>
+        <junit.version>5.9.2</junit.version>
+        <awssdk.version>2.19.17</awssdk.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -68,7 +67,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>database-cleaner</artifactId>
-            <version>1.0.2</version>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>jakarta.json</groupId>
@@ -143,7 +142,7 @@
     <parent>
         <artifactId>exasol-test-setup-abstraction-java-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>
