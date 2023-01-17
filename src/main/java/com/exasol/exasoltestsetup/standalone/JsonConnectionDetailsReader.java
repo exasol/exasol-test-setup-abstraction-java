@@ -51,7 +51,8 @@ public class JsonConnectionDetailsReader {
             return jsonReader.readObject();
         } catch (final IOException exception) {
             throw new IllegalStateException(
-                    ExaError.messageBuilder("E-ETAJ-33").message("Failed to open test-config file.").toString(),
+                    ExaError.messageBuilder("E-ETAJ-33")
+                            .message("Failed to open test-config file {{config file}}.", configFile).toString(),
                     exception);
         }
     }
