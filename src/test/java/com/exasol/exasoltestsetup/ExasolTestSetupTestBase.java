@@ -5,8 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -92,25 +91,26 @@ public abstract class ExasolTestSetupTestBase {
 
     @Test
     void testMakeLocalServiceAvailableInDatabase() throws Exception {
-        final ServiceAddress inDbAddress = this.testSetup.makeLocalTcpServiceAccessibleFromDatabase(TEST_SOCKET_PORT);
+        final InetSocketAddress inDbAddress = this.testSetup
+                .makeLocalTcpServiceAccessibleFromDatabase(TEST_SOCKET_PORT);
         assertLocalServiceIsAvailableFromDatabase(inDbAddress);
     }
 
     @Test
     void testMakeServiceAvailableInDatabaseWithLocalService() throws Exception {
-        final ServiceAddress inDbAddress = this.testSetup
-                .makeTcpServiceAccessibleFromDatabase(new ServiceAddress("localhost", TEST_SOCKET_PORT));
+        final InetSocketAddress inDbAddress = this.testSetup
+                .makeTcpServiceAccessibleFromDatabase(new InetSocketAddress("localhost", TEST_SOCKET_PORT));
         assertLocalServiceIsAvailableFromDatabase(inDbAddress);
     }
 
     @Test
     void testMakeServiceAvailableInDatabaseWithExternalService() throws Exception {
-        final ServiceAddress serviceAddress = new ServiceAddress("my-web-server.de", TEST_SOCKET_PORT);
-        final ServiceAddress inDbAddress = this.testSetup.makeTcpServiceAccessibleFromDatabase(serviceAddress);
+        final InetSocketAddress serviceAddress = new InetSocketAddress("my-web-server.de", TEST_SOCKET_PORT);
+        final InetSocketAddress inDbAddress = this.testSetup.makeTcpServiceAccessibleFromDatabase(serviceAddress);
         assertThat(inDbAddress, equalTo(serviceAddress));
     }
 
-    private void assertLocalServiceIsAvailableFromDatabase(final ServiceAddress inDbAddress) throws SQLException {
+    private void assertLocalServiceIsAvailableFromDatabase(final InetSocketAddress inDbAddress) throws SQLException {
         final ExasolTestSetupTestBase.DummySocketServer dummySocketServer = new ExasolTestSetupTestBase.DummySocketServer();
         try {
             pingFromUdf(inDbAddress);
@@ -120,7 +120,7 @@ public abstract class ExasolTestSetupTestBase {
         }
     }
 
-    private void pingFromUdf(final ServiceAddress inDbAddress) throws SQLException {
+    private void pingFromUdf(final InetSocketAddress inDbAddress) throws SQLException {
         this.statement.executeUpdate("CREATE SCHEMA TEST");
         final String pingUdf = "CREATE OR REPLACE PYTHON SCALAR SCRIPT TEST.PING() RETURNS INT AS\n" + //
                 "def run(ctx):\n" + //
