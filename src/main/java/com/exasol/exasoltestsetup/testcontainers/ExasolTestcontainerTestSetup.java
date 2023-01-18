@@ -2,6 +2,7 @@ package com.exasol.exasoltestsetup.testcontainers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Base64;
@@ -59,9 +60,9 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     }
 
     @Override
-    public ServiceAddress makeLocalTcpServiceAccessibleFromDatabase(final int localPort) {
+    public InetSocketAddress makeLocalTcpServiceAccessibleFromDatabase(final int localPort) {
         final int remotePort = this.sshConnection.addReversePortForwarding(localPort);
-        return ServiceAddress.local(remotePort);
+        return new InetSocketAddress("localhost", remotePort);
     }
 
     @Override

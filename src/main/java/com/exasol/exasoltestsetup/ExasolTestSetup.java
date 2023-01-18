@@ -1,8 +1,10 @@
 package com.exasol.exasoltestsetup;
 
+import java.net.InetSocketAddress;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import com.exasol.bucketfs.Bucket;
 
@@ -44,7 +46,7 @@ public interface ExasolTestSetup extends AutoCloseable {
      * @param localPort port of the service @ localhost
      * @return address under which the service is available from within the exasol database (same port)
      */
-    public ServiceAddress makeLocalTcpServiceAccessibleFromDatabase(int localPort);
+    public InetSocketAddress makeLocalTcpServiceAccessibleFromDatabase(int localPort);
 
     /**
      * Make the port of a database node available from localhost. If the target is a cluster, this methods sets up a
@@ -65,8 +67,9 @@ public interface ExasolTestSetup extends AutoCloseable {
      * @param serviceAddress service address in the format host:port
      * @return modified service address
      */
-    public default ServiceAddress makeTcpServiceAccessibleFromDatabase(final ServiceAddress serviceAddress) {
-        if (serviceAddress.isLocal()) {
+    public default InetSocketAddress makeTcpServiceAccessibleFromDatabase(final InetSocketAddress serviceAddress) {
+        final boolean isLocalAddress = Set.of("localhost", "127.0.0.1").contains(serviceAddress.getHostName());
+        if (isLocalAddress) {
             return this.makeLocalTcpServiceAccessibleFromDatabase(serviceAddress.getPort());
         } else {
             return serviceAddress;

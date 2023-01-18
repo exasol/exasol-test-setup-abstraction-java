@@ -4,6 +4,7 @@ import static com.exasol.exasoltestsetup.PasswordGenerator.generatePassword;
 import static com.exasol.exasoltestsetup.WaitHelper.waitFor;
 import static com.exasol.exasoltestsetup.WaitHelper.waitUntil;
 
+import java.net.InetSocketAddress;
 import java.sql.*;
 import java.util.*;
 import java.util.concurrent.TimeoutException;
@@ -189,9 +190,9 @@ public class StandaloneExasolTestSetup implements ExasolTestSetup {
     }
 
     @Override
-    public ServiceAddress makeLocalTcpServiceAccessibleFromDatabase(final int localPort) {
+    public InetSocketAddress makeLocalTcpServiceAccessibleFromDatabase(final int localPort) {
         final int remotePort = this.sshConnection.addReversePortForwarding(localPort);
-        return new ServiceAddress("license", remotePort);
+        return new InetSocketAddress("license", remotePort);
     }
 
     @Override
