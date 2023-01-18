@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>exasol-test-setup-abstraction-java</artifactId>
     <version>1.1.2</version>
@@ -8,7 +10,7 @@
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java/</url>
     <properties>
         <junit.version>5.9.2</junit.version>
-        <awssdk.version>2.19.17</awssdk.version>
+        <awssdk.version>2.19.18</awssdk.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -30,7 +32,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>exasol-testcontainers</artifactId>
-            <version>6.4.1</version>
+            <version>6.5.0</version>
         </dependency>
         <dependency>
             <groupId>fr.turri</groupId>
@@ -52,8 +54,10 @@
             <artifactId>ec2</artifactId>
             <version>${awssdk.version}</version>
         </dependency>
-        <!-- Upgrade transitive dependency of org.apache.httpcomponents:httpclient via software.amazon.awssdk:apache-client
-            to fix vulnerability https://ossindex.sonatype.org/vulnerability/sonatype-2012-0050 -->
+        <!-- Upgrade transitive dependency of org.apache.httpcomponents:httpclient via
+        software.amazon.awssdk:apache-client
+            to fix vulnerability
+        https://ossindex.sonatype.org/vulnerability/sonatype-2012-0050 -->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -119,9 +123,18 @@
                 <artifactId>ossindex-maven-plugin</artifactId>
                 <configuration>
                     <excludeVulnerabilityIds>
-                        <!-- Vulnerability in io.netty:netty-handler:4.1.77.Final https://ossindex.sonatype.org/vulnerability/sonatype-2020-0026
-                    Excluded until a fixed version is available. -->
+                        <!-- Transitive test dependency io.netty:netty-handler:4.1.77 used by
+                        software.amazon.awssdk:cloudformation. we are not affected, see
+                        https://github.com/aws/aws-sdk-java-v2/issues/3263 for details -->
                         <exclude>sonatype-2020-0026</exclude>
+                        <!-- Transitive dependency fr.turri:aXMLRPC used by
+                        com.exasol:bucketfs-java. CVE-2020-36641 is reported to
+                        be
+                        fixed in aXMLRPC 1.12.1. We use version
+                        1.13.0,
+                        so
+                        this is a false positive. -->
+                        <exclude>CVE-2020-36641</exclude>
                     </excludeVulnerabilityIds>
                 </configuration>
             </plugin>

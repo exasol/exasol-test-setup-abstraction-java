@@ -1,4 +1,4 @@
-# Exasol Test Setup Abstraction Java 1.1.2, released 2023-01-17
+# Exasol Test Setup Abstraction Java 1.1.2, released 2023-01-18
 
 Code name: Dependency Updates
 
@@ -15,8 +15,9 @@ This release updates dependencies and removes an internal workaround that is no 
 ### Compile Dependency Updates
 
 * Updated `com.exasol:database-cleaner:1.0.2` to `1.1.0`
-* Updated `software.amazon.awssdk:cloudformation:2.19.0` to `2.19.17`
-* Updated `software.amazon.awssdk:ec2:2.19.0` to `2.19.17`
+* Updated `com.exasol:exasol-testcontainers:6.4.1` to `6.5.0`
+* Updated `software.amazon.awssdk:cloudformation:2.19.0` to `2.19.18`
+* Updated `software.amazon.awssdk:ec2:2.19.0` to `2.19.18`
 
 ### Test Dependency Updates
 
