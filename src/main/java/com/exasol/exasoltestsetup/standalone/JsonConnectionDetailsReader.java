@@ -1,7 +1,6 @@
 package com.exasol.exasoltestsetup.standalone;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 
 import com.exasol.errorreporting.ExaError;
@@ -22,6 +21,10 @@ public class JsonConnectionDetailsReader {
      */
     public ConnectionDetails read(final Path configFile) {
         final JsonObject jsonConfig = readJsonConfig(configFile);
+        return readDetails(configFile, jsonConfig);
+    }
+
+    ConnectionDetails readDetails(final Path configFile, final JsonObject jsonConfig) {
         return ConnectionDetails.builder()//
                 .dataNodeAddress(readRequiredAttribute(jsonConfig, "dataNodeAddress", configFile))//
                 .managementNodeAddress(readRequiredAttribute(jsonConfig, "managementNodeAddress", configFile))//
@@ -35,7 +38,6 @@ public class JsonConnectionDetailsReader {
     }
 
     private String readRequiredAttribute(final JsonObject jsonConfig, final String attribute, final Path fileName) {
-
         final String attributeValue = jsonConfig.getString(attribute, null);
         if (attributeValue == null) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-34")
@@ -50,7 +52,7 @@ public class JsonConnectionDetailsReader {
                 final JsonReader jsonReader = Json.createReader(fileReader)) {
             return jsonReader.readObject();
         } catch (final IOException exception) {
-            throw new IllegalStateException(
+            throw new UncheckedIOException(
                     ExaError.messageBuilder("E-ETAJ-33")
                             .message("Failed to open test-config file {{config file}}.", configFile).toString(),
                     exception);
