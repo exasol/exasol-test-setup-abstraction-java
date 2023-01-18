@@ -1,14 +1,16 @@
-# Exasol Test Setup Abstraction Java 1.1.2, released 2023-01-18
+# Exasol Test Setup Abstraction Java 2.0.0, released 2023-01-18
 
-Code name: Dependency Updates
+Code name: Replace ServiceAddress by InetSocketAddress
 
 ## Summary
 
-This release updates dependencies and removes an internal workaround that is no longer necessary.
+This release replaces the custom class `ServiceAddress` by the JRE class `InetSocketAddress`.
+
+This is a breaking change because the API changes.
 
 ## Refactoring
 
-* #27: Removed workaround for ssh credentials issue
+* #32: Replaced ServiceAddress by InetSocketAddress
 
 ## Dependency Updates
 
