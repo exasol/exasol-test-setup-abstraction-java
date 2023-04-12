@@ -28,6 +28,7 @@ This release fixes an issue with reusing containers caused by [exasol-testcontai
 ### Test Dependency Updates
 
 * Updated `nl.jqno.equalsverifier:equalsverifier:3.12.3` to `3.14.1`
+* Added `org.slf4j:slf4j-jdk14:2.0.7`
 
 ### Plugin Dependency Updates
 
