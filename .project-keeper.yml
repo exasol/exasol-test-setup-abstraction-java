@@ -8,6 +8,4 @@ excludes:
   - "E-PK-CORE-18: Outdated content: '.github/workflows/ci-build.yml'"
   - "E-PK-CORE-18: Outdated content: '.github/workflows/release_droid_prepare_original_checksum.yml'"
 linkReplacements:
-  - https://www.mojohaus.org/flatten-maven-plugin/flatten-maven-plugin|https://www.mojohaus.org/flatten-maven-plugin/
-  - http://www.gnu.org/licenses/lgpl.txt|https://www.gnu.org/licenses/lgpl-3.0.txt
   - https://github.com/eclipse-ee4j/parsson/parsson|https://github.com/eclipse-ee4j/parsson

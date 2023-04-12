@@ -87,7 +87,7 @@
 [24]: http://opensource.org/licenses/MIT
 [25]: https://github.com/eclipse-ee4j/parsson
 [26]: http://sonarsource.github.io/sonar-scanner-maven/
-[27]: https://www.gnu.org/licenses/lgpl-3.0.txt
+[27]: http://www.gnu.org/licenses/lgpl.txt
 [28]: https://maven.apache.org/plugins/maven-compiler-plugin/
 [29]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [30]: https://www.mojohaus.org/flatten-maven-plugin/
