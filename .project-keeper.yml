@@ -10,3 +10,4 @@ excludes:
 linkReplacements:
   - https://www.mojohaus.org/flatten-maven-plugin/flatten-maven-plugin|https://www.mojohaus.org/flatten-maven-plugin/
   - http://www.gnu.org/licenses/lgpl.txt|https://www.gnu.org/licenses/lgpl-3.0.txt
+  - https://github.com/eclipse-ee4j/parsson/parsson|https://github.com/eclipse-ee4j/parsson

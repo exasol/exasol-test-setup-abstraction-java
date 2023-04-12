@@ -85,7 +85,7 @@
 [22]: https://www.jqno.nl/equalsverifier
 [23]: https://github.com/stefanbirkner/system-lambda/
 [24]: http://opensource.org/licenses/MIT
-[25]: https://github.com/eclipse-ee4j/parsson/parsson
+[25]: https://github.com/eclipse-ee4j/parsson
 [26]: http://sonarsource.github.io/sonar-scanner-maven/
 [27]: https://www.gnu.org/licenses/lgpl-3.0.txt
 [28]: https://maven.apache.org/plugins/maven-compiler-plugin/
