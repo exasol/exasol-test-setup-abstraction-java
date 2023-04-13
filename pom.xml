@@ -4,13 +4,13 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>exasol-test-setup-abstraction-java</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <name>exasol-test-setup-abstraction-java</name>
     <description>Common interface for testing with an exasol database local and on AWS using Java.</description>
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java/</url>
     <properties>
         <junit.version>5.9.2</junit.version>
-        <awssdk.version>2.19.18</awssdk.version>
+        <awssdk.version>2.20.44</awssdk.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -27,12 +27,12 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>bucketfs-java</artifactId>
-            <version>2.6.0</version>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>exasol-testcontainers</artifactId>
-            <version>6.5.0</version>
+            <version>6.5.2</version>
         </dependency>
         <dependency>
             <groupId>fr.turri</groupId>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>error-reporting-java</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
@@ -79,9 +79,9 @@
             <version>2.1.1</version>
         </dependency>
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.json</artifactId>
-            <version>2.0.1</version>
+            <groupId>org.eclipse.parsson</groupId>
+            <artifactId>parsson</artifactId>
+            <version>1.1.1</version>
             <scope>runtime</scope>
         </dependency>
         <!-- test dependencies -->
@@ -106,13 +106,20 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <version>3.12.3</version>
+            <version>3.14.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.github.stefanbirkner</groupId>
             <artifactId>system-lambda</artifactId>
             <version>1.2.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!-- Enable log output from testcontainers in integration tests -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>2.0.7</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -141,7 +148,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>2.9.6</version>
                 <executions>
                     <execution>
                         <goals>
@@ -150,12 +157,38 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.basepom.maven</groupId>
+                <artifactId>duplicate-finder-maven-plugin</artifactId>
+                <version>1.5.1</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <printEqualFiles>true</printEqualFiles>
+                    <failBuildInCaseOfDifferentContentConflict>true</failBuildInCaseOfDifferentContentConflict>
+                    <failBuildInCaseOfEqualContentConflict>true</failBuildInCaseOfEqualContentConflict>
+                    <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
+                    <checkCompileClasspath>true</checkCompileClasspath>
+                    <checkRuntimeClasspath>true</checkRuntimeClasspath>
+                    <checkTestClasspath>false</checkTestClasspath>
+                    <quiet>true</quiet>
+                    <preferLocal>true</preferLocal>
+                    <useResultFile>false</useResultFile>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <parent>
         <artifactId>exasol-test-setup-abstraction-java-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>2.0.0</version>
+        <version>2.0.1</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>
