@@ -42,6 +42,7 @@
         "lambda:DeleteFunction",
         "lambda:GetFunctionConfiguration",
         "lambda:InvokeFunction",
+        "lambda:TagResource",
         "kms:*",
         "iam:GetRole",
         "iam:CreateRole",
