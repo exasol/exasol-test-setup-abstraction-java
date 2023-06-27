@@ -70,7 +70,7 @@
 [6]: https://github.com/exasol/error-reporting-java/blob/main/LICENSE
 [7]: https://aws.amazon.com/sdkforjava
 [8]: https://aws.amazon.com/apache2.0
-[9]: https://netty.io/netty-handler/
+[9]: https://netty.io/
 [10]: https://www.apache.org/licenses/LICENSE-2.0
 [11]: http://www.jcraft.com/jsch/
 [12]: http://www.jcraft.com/jsch/LICENSE.txt
