@@ -1,14 +1,39 @@
-# Exasol Test Setup Abstraction Java 2.0.2, released 2023-??-??
+# Exasol Test Setup Abstraction Java 2.0.2, released 2023-06-28
 
-Code name:
+Code name: Upgrade dependencies on top of 2.0.1
 
 ## Summary
+
+This release fixes vulnerabilities CVE-2023-34462 (Uncontrolled Resource Consumption) in transitive dependency `io.netty:netty-handler` by upgrading it to the latest version.
 
 ## Refactoring
 
 * #58: Migrated CI isolation to AWS CDK v2
 
+## Security
+
+* #60: Upgrade dependencies to fix vulnerabilities
+
 ## Dependency Updates
+
+### Compile Dependency Updates
+
+* Updated `com.exasol:exasol-testcontainers:6.5.2` to `6.6.0`
+* Removed `commons-codec:commons-codec:1.15`
+* Added `io.netty:netty-handler:4.1.94.Final`
+* Updated `jakarta.json:jakarta.json-api:2.1.1` to `2.1.2`
+* Updated `software.amazon.awssdk:cloudformation:2.20.44` to `2.20.93`
+* Updated `software.amazon.awssdk:ec2:2.20.44` to `2.20.93`
+
+### Runtime Dependency Updates
+
+* Updated `org.eclipse.parsson:parsson:1.1.1` to `1.1.2`
+
+### Test Dependency Updates
+
+* Updated `nl.jqno.equalsverifier:equalsverifier:3.14.1` to `3.14.3`
+* Updated `org.junit.jupiter:junit-jupiter-engine:5.9.2` to `5.9.3`
+* Updated `org.junit.jupiter:junit-jupiter-params:5.9.2` to `5.9.3`
 
 ### Plugin Dependency Updates
 

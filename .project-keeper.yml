@@ -9,3 +9,4 @@ excludes:
   - "E-PK-CORE-18: Outdated content: '.github/workflows/release_droid_prepare_original_checksum.yml'"
 linkReplacements:
   - https://github.com/eclipse-ee4j/parsson/parsson|https://github.com/eclipse-ee4j/parsson
+  - https://netty.io/netty-handler/|https://netty.io/
