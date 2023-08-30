@@ -19,6 +19,10 @@ This excludes vulnerability CVE-2023-4586 in transitive dependency `io.netty:net
 * Updated `software.amazon.awssdk:cloudformation:2.20.93` to `2.20.137`
 * Updated `software.amazon.awssdk:ec2:2.20.93` to `2.20.137`
 
+### Runtime Dependency Updates
+
+* Updated `org.eclipse.parsson:parsson:1.1.2` to `1.1.4`
+
 ### Test Dependency Updates
 
 * Updated `nl.jqno.equalsverifier:equalsverifier:3.14.3` to `3.15.1`
