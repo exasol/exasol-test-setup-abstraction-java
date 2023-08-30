@@ -1,22 +1,25 @@
-import com.exasol.exasoltestsetup.ExasolTestSetupFactory;
-import com.exasol.exasoltestsetup.ExasolTestSetupFactory.DispatchMode;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+package com.exasol.exasoltestsetup;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import com.exasol.exasoltestsetup.ExasolTestSetupFactory.DispatchMode;
 
 /**
  * Unit test for the test setup factory.
  * <p>
  * Note that this test only checks the construction of the factory itself. Since the method
- * {@link ExasolTestSetupFactory#getTestSetup()} automatically spins up a real test environment, the corresponding
- * test is an integration test that you can find in {@code ExasolTestSetupFactoryIT}.
+ * {@link ExasolTestSetupFactory#getTestSetup()} automatically spins up a real test environment, the corresponding test
+ * is an integration test that you can find in {@code ExasolTestSetupFactoryIT}.
  * </p>
  */
 class ExasolTestSetupFactoryTest {
@@ -46,7 +49,7 @@ class ExasolTestSetupFactoryTest {
     void testForcedStandaloneModeThrowsExceptionIfConfigFileIsNull() {
         final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> new ExasolTestSetupFactory(null, DispatchMode.STANDALONE));
-        assertThat(exception.getMessage(), containsString("configuration file parameter must not be NULL "
-                + "for a for a standalone test setup does not exist"));
+        assertThat(exception.getMessage(), containsString(
+                "configuration file parameter must not be NULL " + "for a for a standalone test setup does not exist"));
     }
 }
