@@ -1,12 +1,14 @@
-# Exasol Test Setup Abstraction Java 2.0.4, released 2023-??-??
+# Exasol Test Setup Abstraction Java 2.0.4, released 2023-09-25
 
-Code name:
+Code name: Fix CVE-2023-42503
 
 ## Summary
 
-## Features
+This release fixes CVE-2023-42503 in `org.apache.commons:commons-compress`. Please note that transitive dependency `netty-handler` still contains CVE-2023-4586. See [issue #65](https://github.com/exasol/exasol-test-setup-abstraction-java/issues/65) for details.
 
-* ISSUE_NUMBER: description
+## Security
+
+* #67 Fixed CVE-2023-42503 in `org.apache.commons:commons-compress`
 
 ## Dependency Updates
 
