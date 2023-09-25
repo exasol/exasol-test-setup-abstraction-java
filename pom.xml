@@ -32,6 +32,7 @@
             <artifactId>exasol-testcontainers</artifactId>
             <version>6.6.2</version>
         </dependency>
+        <!-- Required for ExaOperationGateway -->
         <dependency>
             <groupId>fr.turri</groupId>
             <artifactId>aXMLRPC</artifactId>

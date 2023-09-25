@@ -4,7 +4,9 @@ Code name: Fix CVE-2023-42503
 
 ## Summary
 
-This release fixes CVE-2023-42503 in `org.apache.commons:commons-compress`. Please note that transitive dependency `netty-handler` still contains CVE-2023-4586. See [issue #65](https://github.com/exasol/exasol-test-setup-abstraction-java/issues/65) for details.
+This release fixes CVE-2023-42503 in `org.apache.commons:commons-compress`. 
+
+Known issue: Transitive dependency `io.netty:netty-handler` (via `software.amazon.awssdk:cloudformation`) still contains CVE-2023-4586. See [issue #65](https://github.com/exasol/exasol-test-setup-abstraction-java/issues/65) for details.
 
 ## Security
 
