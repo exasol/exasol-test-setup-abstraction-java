@@ -1,4 +1,4 @@
-# Exasol Test Setup Abstraction Java 2.0.4, released 2023-09-25
+# Exasol Test Setup Abstraction Java 2.0.4, released 2023-09-26
 
 Code name: Fix CVE-2023-42503
 
