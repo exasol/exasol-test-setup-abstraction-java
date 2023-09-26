@@ -24,7 +24,7 @@
 | [Hamcrest][18]                             | [BSD License 3][19]               |
 | [EqualsVerifier \| release normal jar][20] | [Apache License, Version 2.0][21] |
 | [System Lambda][22]                        | [MIT License][23]                 |
-| [SLF4J JDK14 Binding][24]                  | [MIT License][25]                 |
+| [SLF4J JDK14 Provider][24]                 | [MIT License][25]                 |
 
 ## Runtime Dependencies
 
@@ -98,7 +98,7 @@
 [35]: https://www.mojohaus.org/versions/versions-maven-plugin/
 [36]: https://github.com/exasol/project-keeper/
 [37]: https://github.com/exasol/project-keeper/blob/main/LICENSE
-[38]: https://github.com/basepom/duplicate-finder-maven-plugin
+[38]: https://basepom.github.io/duplicate-finder-maven-plugin
 [39]: http://www.apache.org/licenses/LICENSE-2.0.html
 [40]: https://maven.apache.org/plugins/maven-deploy-plugin/
 [41]: https://maven.apache.org/plugins/maven-gpg-plugin/
