@@ -19,6 +19,7 @@ class ExasolTestSetupFactoryIT {
     @Tag("cloudOnly")
     @Test
     void testGetStandaloneTestSetup() {
+        ExasolVersionCheck.assumeExasol71();
         final Path configFile = Path.of("cloudSetup/generated/testConfig.json");
         if (!Files.exists(configFile)) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-35")

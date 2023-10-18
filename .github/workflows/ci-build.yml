@@ -10,8 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: aws
+    strategy:
+      fail-fast: false
+      matrix:
+        docker_db_version: ["7.1.23", "8.23.0"]
+    env:
+      DEFAULT_DB_VERSION: "7.1.23"
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.docker_db_version }}
       cancel-in-progress: true
     steps:
       - name: Free Disk Space
@@ -56,6 +62,7 @@ jobs:
       - name: Run tests and build with Maven
         run: |
           JAVA_HOME=$JAVA_HOME_11_X64 mvn --batch-mode clean verify \
+              -Dcom.exasol.dockerdb.image=${{ matrix.docker_db_version }} \
               -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
               -DtrimStackTrace=false
       - name: Publish Test Report

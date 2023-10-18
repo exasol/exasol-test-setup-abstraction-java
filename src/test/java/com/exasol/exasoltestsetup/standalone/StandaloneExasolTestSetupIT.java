@@ -4,8 +4,7 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Tag;
 
-import com.exasol.exasoltestsetup.ExasolTestSetup;
-import com.exasol.exasoltestsetup.ExasolTestSetupTestBase;
+import com.exasol.exasoltestsetup.*;
 
 /**
  * This test requires a running Exasol cluster. Please start the cluster first by running <i>terraform apply</i> in
@@ -18,6 +17,7 @@ import com.exasol.exasoltestsetup.ExasolTestSetupTestBase;
 class StandaloneExasolTestSetupIT extends ExasolTestSetupTestBase {
     @Override
     protected ExasolTestSetup getExasolTestSetup() {
+        ExasolVersionCheck.assumeExasol71();
         return new StandaloneExasolTestSetup(
                 new JsonConnectionDetailsReader().read(Path.of("cloudSetup/generated/testConfig.json")));
     }
