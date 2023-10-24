@@ -49,7 +49,7 @@ Usually you generate the `testConfig.json` using the Terraform module [terraform
 
 You can also select a specific test-setup in code. For that simply replace `new ExasolTestSetupFactory().getTestSetup()` by `new ExasolTestcontainerTestSetup()`.
 
-To change the Exasol Docker DB version being used you can define the 'com.exasol.dockerdb.image' system property,  e.g: 'mvn verify -Dcom.exasol.dockerdb.image=${{ matrix.docker_db_version }}'.
+To change the Exasol Docker DB version being used you can define the `com.exasol.dockerdb.image` system property,  e.g: `mvn verify -Dcom.exasol.dockerdb.image=${{ matrix.docker_db_version }}`.
 
 ## Information for Users of This Library
 
