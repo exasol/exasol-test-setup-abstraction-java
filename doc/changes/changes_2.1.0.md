@@ -1,4 +1,4 @@
-# Exasol Test Setup Abstraction Java 2.1.0, released 2023-11-03
+# Exasol Test Setup Abstraction Java 2.1.0, released 2023-11-09
 
 Code name: Default database version bump
 
