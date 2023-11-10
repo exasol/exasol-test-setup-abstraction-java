@@ -22,7 +22,7 @@ import com.jcraft.jsch.*;
  */
 public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     private static final int SSH_PORT = 22;
-    private final ExasolContainer<? extends ExasolContainer<?>> exasolContainer = new ExasolContainer<>("8.23.0")
+    private final ExasolContainer<? extends ExasolContainer<?>> exasolContainer = new ExasolContainer<>("8.23.1")
             .withReuse(true);
     private final SshConnection sshConnection;
     private final KeyPair keyPair;

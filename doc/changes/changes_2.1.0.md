@@ -4,11 +4,11 @@ Code name: Default database version bump
 
 ## Summary
 
-Updated default database being used to v 8.23.0
+Updated default database being used to v8.23.1
 
 ## Features
 
-* #71: Updated default database being used to v 8.23.0
+* #71: Updated default database being used to v8.23.1
 
 ## Dependency Updates
 
