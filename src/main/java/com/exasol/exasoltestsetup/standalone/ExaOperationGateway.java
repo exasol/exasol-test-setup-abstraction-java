@@ -68,7 +68,8 @@ class ExaOperationGateway {
 
     private boolean isStorageServiceRunning() {
         try {
-            return (boolean) this.client.call("storage.serviceIsOnline", new Object[] {});
+            final Object[] args = new Object[] {};
+            return (boolean) this.client.call("storage.serviceIsOnline", args);
         } catch (final XMLRPCException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-14")
                     .message("Failed to test if exasol storage service is running.").toString(), exception);
