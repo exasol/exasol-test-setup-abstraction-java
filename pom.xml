@@ -116,6 +116,18 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgs>
+                        <!-- We turn off `path` to suppress warning
+                        "[path] bad path element "~/.m2/repository/fr/turri/aXMLRPC/1.14.0/jISO8601-0.2.jar": no such file or directory" -->
+                        <arg>-Xlint:all,-path</arg>
+                        <arg>-Werror</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.sonatype.ossindex.maven</groupId>
                 <artifactId>ossindex-maven-plugin</artifactId>
                 <configuration>

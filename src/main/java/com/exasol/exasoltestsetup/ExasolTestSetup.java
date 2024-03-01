@@ -75,4 +75,7 @@ public interface ExasolTestSetup extends AutoCloseable {
             return serviceAddress;
         }
     }
+
+    @Override
+    public void close();
 }

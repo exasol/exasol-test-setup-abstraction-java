@@ -95,7 +95,7 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         this.sshConnection.close();
         this.exasolContainer.stop();
     }
