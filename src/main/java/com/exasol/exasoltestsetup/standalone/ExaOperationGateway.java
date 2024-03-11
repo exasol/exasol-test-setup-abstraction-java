@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.exasol.errorreporting.ExaError;
 
@@ -68,7 +68,8 @@ class ExaOperationGateway {
 
     private boolean isStorageServiceRunning() {
         try {
-            return (boolean) this.client.call("storage.serviceIsOnline", new Object[] {});
+            final Object[] args = new Object[] {};
+            return (boolean) this.client.call("storage.serviceIsOnline", args);
         } catch (final XMLRPCException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-ETAJ-14")
                     .message("Failed to test if exasol storage service is running.").toString(), exception);
