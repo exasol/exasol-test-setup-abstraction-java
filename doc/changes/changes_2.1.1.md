@@ -1,4 +1,4 @@
-# Exasol Test Setup Abstraction Java 2.1.1, released 2024-03-04
+# Exasol Test Setup Abstraction Java 2.1.1, released 2024-03-11
 
 Code name: Fix CVE-2024-25710 and CVE-2024-26308 in compile dependency `org.apache.commons:commons-compress`
 
@@ -18,11 +18,11 @@ This release fixes vulnerabilities CVE-2024-25710 and CVE-2024-26308 in compile 
 ### Compile Dependency Updates
 
 * Updated `com.exasol:bucketfs-java:3.1.1` to `3.1.2`
-* Updated `com.exasol:database-cleaner:1.1.1` to `1.1.2`
+* Updated `com.exasol:database-cleaner:1.1.1` to `1.1.3`
 * Updated `com.exasol:exasol-testcontainers:6.6.3` to `7.0.1`
 * Updated `fr.turri:aXMLRPC:1.13.0` to `1.14.0`
-* Updated `software.amazon.awssdk:cloudformation:2.21.20` to `2.25.0`
-* Updated `software.amazon.awssdk:ec2:2.21.20` to `2.25.0`
+* Updated `software.amazon.awssdk:cloudformation:2.21.20` to `2.25.6`
+* Updated `software.amazon.awssdk:ec2:2.21.20` to `2.25.6`
 
 ### Test Dependency Updates
 
