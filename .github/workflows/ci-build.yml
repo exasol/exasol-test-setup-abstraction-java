@@ -10,6 +10,7 @@ jobs:
     defaults:
       run:
         shell: "bash"
+    environment: aws
     permissions:
       contents: read
       checks: write # Allow scacap/action-surefire-report
