@@ -23,4 +23,4 @@ jobs:
         run: |
           echo 'testcontainers.reuse.enable=true' > "/home/runner/.testcontainers.properties"
       - name: Run quick checks
-        run: mvn --batch-mode clean verify --file pom.xml -DexcludedGroups=cloudOnly
+        run: mvn --batch-mode clean verify -DexcludedGroups=cloudOnly
