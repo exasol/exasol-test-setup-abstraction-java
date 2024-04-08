@@ -46,7 +46,7 @@ Now you can try out to create the setup by
     terraform apply
     #check the setup
     terraform destroy # IMPORTANT otherwise you'll pay for the running resources
-  ```
+    ```
 
 ## Set Up CI Build
 
