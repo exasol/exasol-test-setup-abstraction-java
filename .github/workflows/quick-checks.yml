@@ -1,11 +1,19 @@
 name: Quick Checks
 
 on:
-  - push
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   quick-check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
