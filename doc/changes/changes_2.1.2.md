@@ -1,4 +1,4 @@
-# Exasol Test Setup Abstraction Java 2.1.2, released 2024-??-??
+# Exasol Test Setup Abstraction Java 2.1.2, released 2024-04-08
 
 Code name: Fixed vulnerability CVE-2024-29025 in io.netty:netty-codec-http:jar:4.1.107.Final:runtime
 
