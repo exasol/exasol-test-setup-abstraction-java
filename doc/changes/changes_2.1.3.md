@@ -12,5 +12,11 @@ Code name:
 
 ### Compile Dependency Updates
 
-* Updated `software.amazon.awssdk:cloudformation:2.25.26` to `2.25.29`
-* Updated `software.amazon.awssdk:ec2:2.25.26` to `2.25.29`
+* Added `com.github.mwiede:jsch:0.2.17`
+* Removed `com.jcraft:jsch:0.1.55`
+* Updated `software.amazon.awssdk:cloudformation:2.25.26` to `2.25.31`
+* Updated `software.amazon.awssdk:ec2:2.25.26` to `2.25.31`
+
+### Test Dependency Updates
+
+* Updated `org.slf4j:slf4j-jdk14:2.0.12` to `2.0.13`
