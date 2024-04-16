@@ -22,7 +22,7 @@ import com.jcraft.jsch.*;
  */
 public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     private static final int SSH_PORT = 22;
-    private final ExasolContainer<? extends ExasolContainer<?>> exasolContainer = new ExasolContainer<>("7.1.25")
+    private final ExasolContainer<? extends ExasolContainer<?>> exasolContainer = new ExasolContainer<>("7.1.26")
             .withReuse(true);
     private final SshConnection sshConnection;
     private final KeyPair keyPair;
@@ -33,14 +33,18 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     public ExasolTestcontainerTestSetup() {
         this.exasolContainer.addExposedPort(SSH_PORT);
         this.exasolContainer.start();
+        this.keyPair = generateKeyPair();
+        installSshKeyInDatabase();
+        this.sshConnection = new SshConnection(sessionBuilder());
+    }
+
+    private static KeyPair generateKeyPair() {
         try {
-            this.keyPair = KeyPair.genKeyPair(new JSch(), KeyPair.RSA);
+            return KeyPair.genKeyPair(new JSch(), KeyPair.RSA, 3072);
         } catch (final JSchException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-36")
                     .message("Failed to generate temporary ssh-key.").ticketMitigation().toString(), exception);
         }
-        installSshKeyInDatabase();
-        this.sshConnection = new SshConnection(sessionBuilder());
     }
 
     @Override
@@ -73,9 +77,10 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
 
     private void installSshKeyInDatabase() {
         try {
+            final String publicKey = Base64.getEncoder().encodeToString(this.keyPair.getPublicKeyBlob());
+            final String keyType = "ssh-rsa";
             runInContainerWithCheck("bash", "-c",
-                    "echo \"ssh-rsa " + Base64.getEncoder().encodeToString(this.keyPair.getPublicKeyBlob())
-                            + "\" >> /root/.ssh/authorized_keys");
+                    "echo '" + keyType + " " + publicKey + "' >> /root/.ssh/authorized_keys");
         } catch (final IOException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-16")
                     .message("Failed to upload ssh-public-key to container. This is required for login in via SSH.")

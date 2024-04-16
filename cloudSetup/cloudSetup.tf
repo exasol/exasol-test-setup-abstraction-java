@@ -10,5 +10,5 @@ module "exasol_setup" {
   deputy         = var.deputy
   datanode_count = 1
   project        = "ETSA"
-  exasol_image   = "Exasol-R7.1.19-BYOL"
+  exasol_image   = "Exasol-R7.1.26-BYOL"
 }

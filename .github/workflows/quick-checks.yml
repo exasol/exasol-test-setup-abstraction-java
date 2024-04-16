@@ -1,19 +1,24 @@
-name: Quick Checks
-
+name: CI Build Quick Checks
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
   pull_request:
 
 jobs:
-  quick-check:
+  quick-check-matrix-build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: "bash"
     permissions:
       contents: read
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.exasol_db_version }}
       cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        exasol_db_version: [8.26.0, 7.1.26]
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
@@ -27,8 +32,16 @@ jobs:
             11
             17
           cache: "maven"
-      - name: "Prepare container reuse"
+      - name: Enable testcontainer reuse
+        run: echo 'testcontainers.reuse.enable=true' > "$HOME/.testcontainers.properties"
+      - name: Run tests and build with Maven
         run: |
-          echo 'testcontainers.reuse.enable=true' > "/home/runner/.testcontainers.properties"
-      - name: Run quick checks
-        run: mvn --batch-mode clean verify -DexcludedGroups=cloudOnly
+          mvn --batch-mode clean verify \
+              -Dcom.exasol.dockerdb.image=${{ matrix.exasol_db_version }} \
+              -DexcludedGroups=cloudOnly
+
+  quick-check-build:
+    needs: quick-check-matrix-build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Buld successful"

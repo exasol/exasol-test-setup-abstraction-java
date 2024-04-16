@@ -7,6 +7,8 @@ sources:
 excludes:
   # Environment "aws". Will be fixed in https://github.com/exasol/project-keeper/issues/566
   - "E-PK-CORE-18: Outdated content: '.github/workflows/ci-build.yml'"
+  # Enable logging for Jsch
+  - "E-PK-CORE-18: Outdated content: 'src/test/resources/logging.properties'"
 build:
   workflows:
     - name: ci-build.yml
