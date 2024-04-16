@@ -1,6 +1,7 @@
 package com.exasol.exasoltestsetup;
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.exasol.exasoltestsetup.identity.IdentityProvider;
@@ -77,11 +78,13 @@ public class SessionBuilder {
      * @throws JSchException if session creation fails
      */
     public Session build() throws JSchException {
-        JSch.setLogger(new JulLogger());
+        if (LOG.isLoggable(Level.FINEST)) {
+            JSch.setLogger(new JulLogger());
+        }
         final JSch jsch = new JSch();
         this.identityProvider.addIdentityTo(jsch);
-        final Session session = jsch.getSession(this.user, this.host, this.port);
         LOG.fine(() -> "Connecting to via ssh: ssh " + this.user + "@" + this.host + " -p " + this.port);
+        final Session session = jsch.getSession(this.user, this.host, this.port);
         session.setConfig(new Hashtable<>(this.config));
         return session;
     }
