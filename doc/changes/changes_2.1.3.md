@@ -1,12 +1,14 @@
-# Exasol Test Setup Abstraction Java 2.1.3, released 2024-??-??
+# Exasol Test Setup Abstraction Java 2.1.3, released 2024-04-16
 
-Code name:
+Code name: Fix SSH connection to Exasol Docker container 8.25.0 and later
 
 ## Summary
 
-## Features
+This release fixes error `JSchException: Algorithm negotiation fail` when starting an Exasol Docker container 8.25.0 and later.
 
-* ISSUE_NUMBER: description
+## Bugfixes
+
+* #75: Fixed SSH connection to Exasol Docker container 8.25.0 and later
 
 ## Dependency Updates
 
