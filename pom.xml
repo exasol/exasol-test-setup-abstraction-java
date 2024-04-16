@@ -31,6 +31,13 @@
             <groupId>com.exasol</groupId>
             <artifactId>exasol-testcontainers</artifactId>
             <version>7.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <!-- We use com.github.mwiede:jsch instead which contains duplicate classes -->
+                    <groupId>com.jcraft</groupId>
+                    <artifactId>jsch</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Required for ExaOperationGateway -->
         <dependency>
