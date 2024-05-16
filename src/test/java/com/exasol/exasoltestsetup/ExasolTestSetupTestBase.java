@@ -67,13 +67,13 @@ public abstract class ExasolTestSetupTestBase {
     @Test
     void testGetConnectionDetails() throws SQLException {
         final SqlConnectionInfo connectionInfo = this.testSetup.getConnectionInfo();
-        try (final Connection connection = DriverManager
+        try (final Connection conn = DriverManager
                 .getConnection(
                         "jdbc:exa:" + connectionInfo.getHost() + ":" + connectionInfo.getPort()
                                 + ";validateservercertificate=0",
                         connectionInfo.getUser(), connectionInfo.getPassword());
-                final Statement statement = connection.createStatement();
-                final ResultSet resultSet = statement.executeQuery("SELECT 1 FROM DUAL");) {
+                final Statement stmt = conn.createStatement();
+                final ResultSet resultSet = stmt.executeQuery("SELECT 1 FROM DUAL");) {
             resultSet.next();
             assertThat(resultSet.getInt(1), equalTo(1));
         }
@@ -104,7 +104,7 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     @Test
-    void testMakeServiceAvailableInDatabaseWithExternalService() throws Exception {
+    void testMakeServiceAvailableInDatabaseWithExternalService() {
         final InetSocketAddress serviceAddress = new InetSocketAddress("my-web-server.de", TEST_SOCKET_PORT);
         final InetSocketAddress inDbAddress = this.testSetup.makeTcpServiceAccessibleFromDatabase(serviceAddress);
         assertThat(inDbAddress, equalTo(serviceAddress));
