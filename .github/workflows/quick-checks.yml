@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        exasol_db_version: [8.26.0, 7.1.26]
+        exasol_db_version: [8.27.0, 7.1.26]
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
@@ -44,4 +44,4 @@ jobs:
     needs: quick-check-matrix-build
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Buld successful"
+      - run: echo "Build successful"
