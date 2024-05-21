@@ -149,7 +149,7 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
     }
 
     static int getSshPort(final ExasolDockerImageReference exasolVersion) {
-        if (exasolVersion.getMajor() >= 8 && exasolVersion.getMinor() >= 27) {
+        if ((exasolVersion.getMajor() >= 8 && exasolVersion.getMinor() >= 27) || exasolVersion.getMajor() >= 9) {
             return SSH_PORT_NEW;
         } else {
             return SSH_PORT_CLASSIC;
