@@ -1,20 +1,22 @@
-# Exasol Test Setup Abstraction Java 2.1.4, released 2024-??-??
+# Exasol Test Setup Abstraction Java 2.1.4, released 2024-05-21
 
-Code name:
+Code name: Fix for Exasol Docker-DB 8.27.0
 
 ## Summary
 
-## Features
+This release fixes exception `JSchException: Algorithm negotiation fail` when starting an Exasol Docker DB version 8.27.0 or later.
 
-* ISSUE_NUMBER: description
+## Bugfixes
+
+* #82: Fixed SSH connection for Exasol Docker DB version 8.27.0
 
 ## Dependency Updates
 
 ### Compile Dependency Updates
 
 * Updated `com.exasol:exasol-testcontainers:7.0.1` to `7.1.0`
-* Updated `software.amazon.awssdk:cloudformation:2.25.31` to `2.25.53`
-* Updated `software.amazon.awssdk:ec2:2.25.31` to `2.25.53`
+* Updated `software.amazon.awssdk:cloudformation:2.25.31` to `2.25.56`
+* Updated `software.amazon.awssdk:ec2:2.25.31` to `2.25.56`
 
 ### Plugin Dependency Updates
 
