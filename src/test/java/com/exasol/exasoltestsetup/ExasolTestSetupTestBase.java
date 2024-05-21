@@ -149,6 +149,7 @@ public abstract class ExasolTestSetupTestBase {
      *
      * @throws InterruptedException if interrupted
      */
+    @SuppressWarnings("java:S2925") // sleep required for testing
     private void waitForConnectionTesterToReceive() throws InterruptedException {
         Thread.sleep(100);
     }
