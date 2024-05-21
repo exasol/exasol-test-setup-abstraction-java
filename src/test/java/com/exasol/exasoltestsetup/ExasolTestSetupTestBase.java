@@ -3,6 +3,7 @@ package com.exasol.exasoltestsetup;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.*;
@@ -114,7 +115,7 @@ public abstract class ExasolTestSetupTestBase {
         final ExasolTestSetupTestBase.DummySocketServer dummySocketServer = new ExasolTestSetupTestBase.DummySocketServer();
         try {
             pingFromUdf(inDbAddress);
-            Assertions.assertTrue(dummySocketServer.hasClient.get());
+            assertTrue(dummySocketServer.hasClient.get());
         } finally {
             dummySocketServer.shutdown();
         }
@@ -138,9 +139,9 @@ public abstract class ExasolTestSetupTestBase {
         final List<Integer> localPorts = this.testSetup.makeDatabaseTcpServiceAccessibleFromLocalhost(8001);
         assertThat(localPorts.size(), greaterThanOrEqualTo(1));
         final ConnectionTester connectionTester = new ConnectionTester(localPorts);
-        createTcpServerInUdf();// blocking until received a connection or timeout
+        createTcpServerInUdf(); // blocking until received a connection or timeout
         waitForConnectionTesterToReceive();
-        Assertions.assertTrue(connectionTester.success.get());
+        assertTrue(connectionTester.success.get());
     }
 
     /**

@@ -70,16 +70,14 @@ public class ExasolTestSetupFactory {
      */
     public ExasolTestSetupFactory(final Path standaloneConfigurationPath, final DispatchMode dispatchMode) {
         if (dispatchMode == DispatchMode.STANDALONE) {
-            if(standaloneConfigurationPath == null)
-            {
+            if (standaloneConfigurationPath == null) {
                 throw new IllegalArgumentException(ExaError.messageBuilder("E-ETAJ-37")
                         .message("The configuration file parameter must not be NULL "
                                 + "for a for a standalone test setup does not exist.")
                         .mitigation("Create the configuration file and make sure the path is provided.")
                         .mitigation("Pick a dispatch mode that does not depend on this file (either CONTAINER or AUTO)")
                         .toString());
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException(ExaError.messageBuilder("E-ETAJ-38")
                         .message("The configuration file {{file}} "
                                 + "required for a for a standalone test setup does not exist.")
