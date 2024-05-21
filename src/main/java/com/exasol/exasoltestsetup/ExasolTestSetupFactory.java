@@ -106,10 +106,10 @@ public class ExasolTestSetupFactory {
         switch (this.dispatchMode) {
         case CONTAINER:
             LOGGER.info(() -> "Using Exasol test container setup (forced container mode)");
-            return new ExasolTestcontainerTestSetup();
+            return ExasolTestcontainerTestSetup.start();
         case STANDALONE:
             LOGGER.info(() -> "Using Exasol standalone test setup (forced standalone mode)");
-            return new ExasolTestcontainerTestSetup();
+            return ExasolTestcontainerTestSetup.start();
         case AUTO:
             if (Files.exists(this.standaloneConfigurationPath)) {
                 LOGGER.info(() -> "Using Exasol standalone test setup (auto mode with configuration file present)");
@@ -118,7 +118,7 @@ public class ExasolTestSetupFactory {
             } else {
                 LOGGER.log(INFO, "Using Exasol test container setup (auto mode with configuration file {0} missing)",
                         this.standaloneConfigurationPath);
-                return new ExasolTestcontainerTestSetup();
+                return ExasolTestcontainerTestSetup.start();
             }
         default:
             throw new IllegalArgumentException(

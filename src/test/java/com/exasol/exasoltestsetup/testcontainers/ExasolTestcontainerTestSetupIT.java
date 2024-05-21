@@ -7,6 +7,6 @@ public class ExasolTestcontainerTestSetupIT extends ExasolTestSetupTestBase {
 
     @Override
     protected ExasolTestSetup getExasolTestSetup() {
-        return new ExasolTestcontainerTestSetup();
+        return ExasolTestcontainerTestSetup.start();
     }
 }
