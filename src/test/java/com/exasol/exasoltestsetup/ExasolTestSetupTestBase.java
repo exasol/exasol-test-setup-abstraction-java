@@ -3,6 +3,7 @@ package com.exasol.exasoltestsetup;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.*;
@@ -67,13 +68,13 @@ public abstract class ExasolTestSetupTestBase {
     @Test
     void testGetConnectionDetails() throws SQLException {
         final SqlConnectionInfo connectionInfo = this.testSetup.getConnectionInfo();
-        try (final Connection connection = DriverManager
+        try (final Connection conn = DriverManager
                 .getConnection(
                         "jdbc:exa:" + connectionInfo.getHost() + ":" + connectionInfo.getPort()
                                 + ";validateservercertificate=0",
                         connectionInfo.getUser(), connectionInfo.getPassword());
-                final Statement statement = connection.createStatement();
-                final ResultSet resultSet = statement.executeQuery("SELECT 1 FROM DUAL");) {
+                final Statement stmt = conn.createStatement();
+                final ResultSet resultSet = stmt.executeQuery("SELECT 1 FROM DUAL");) {
             resultSet.next();
             assertThat(resultSet.getInt(1), equalTo(1));
         }
@@ -104,7 +105,7 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     @Test
-    void testMakeServiceAvailableInDatabaseWithExternalService() throws Exception {
+    void testMakeServiceAvailableInDatabaseWithExternalService() {
         final InetSocketAddress serviceAddress = new InetSocketAddress("my-web-server.de", TEST_SOCKET_PORT);
         final InetSocketAddress inDbAddress = this.testSetup.makeTcpServiceAccessibleFromDatabase(serviceAddress);
         assertThat(inDbAddress, equalTo(serviceAddress));
@@ -114,7 +115,7 @@ public abstract class ExasolTestSetupTestBase {
         final ExasolTestSetupTestBase.DummySocketServer dummySocketServer = new ExasolTestSetupTestBase.DummySocketServer();
         try {
             pingFromUdf(inDbAddress);
-            Assertions.assertTrue(dummySocketServer.hasClient.get());
+            assertTrue(dummySocketServer.hasClient.get());
         } finally {
             dummySocketServer.shutdown();
         }
@@ -138,9 +139,9 @@ public abstract class ExasolTestSetupTestBase {
         final List<Integer> localPorts = this.testSetup.makeDatabaseTcpServiceAccessibleFromLocalhost(8001);
         assertThat(localPorts.size(), greaterThanOrEqualTo(1));
         final ConnectionTester connectionTester = new ConnectionTester(localPorts);
-        createTcpServerInUdf();// blocking until received a connection or timeout
+        createTcpServerInUdf(); // blocking until received a connection or timeout
         waitForConnectionTesterToReceive();
-        Assertions.assertTrue(connectionTester.success.get());
+        assertTrue(connectionTester.success.get());
     }
 
     /**
@@ -149,6 +150,7 @@ public abstract class ExasolTestSetupTestBase {
      *
      * @throws InterruptedException if interrupted
      */
+    @SuppressWarnings("java:S2925") // sleep required for testing
     private void waitForConnectionTesterToReceive() throws InterruptedException {
         Thread.sleep(100);
     }
