@@ -1,10 +1,12 @@
-# Exasol Test Setup Abstraction Java 2.1.4, released 2024-05-21
+# Exasol Test Setup Abstraction Java 2.1.4, released 2024-05-22
 
 Code name: Fix for Exasol Docker-DB 8.27.0
 
 ## Summary
 
 This release fixes exception `JSchException: Algorithm negotiation fail` when starting an Exasol Docker DB version 8.27.0 or later.
+
+The release also updates the default Exasol version to 8.27.0.
 
 ## Bugfixes
 
