@@ -5,7 +5,7 @@ provider "aws" {
 
 module "exasol_setup" {
   source         = "exasol/exasol-test-setup/aws"
-  version        = "1.2.2"
+  version        = "1.2.3"
   owner          = var.owner
   deputy         = var.deputy
   datanode_count = 1
