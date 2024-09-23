@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        exasol_db_version: [8.27.0, 8.26.0, 7.1.26]
+        exasol_db_version: [8.31.0, 7.1.29]
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
