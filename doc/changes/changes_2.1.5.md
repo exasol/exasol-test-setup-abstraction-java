@@ -17,8 +17,8 @@ This release fixes a `NullPointerException` when launching Exasol Docker DB >= 8
 * Updated `com.exasol:bucketfs-java:3.1.2` to `3.2.0`
 * Updated `com.exasol:exasol-testcontainers:7.1.0` to `7.1.1`
 * Updated `com.github.mwiede:jsch:0.2.17` to `0.2.20`
-* Updated `software.amazon.awssdk:cloudformation:2.25.56` to `2.28.6`
-* Updated `software.amazon.awssdk:ec2:2.25.56` to `2.28.6`
+* Updated `software.amazon.awssdk:cloudformation:2.25.56` to `2.28.11`
+* Updated `software.amazon.awssdk:ec2:2.25.56` to `2.28.11`
 
 ### Runtime Dependency Updates
 
@@ -26,10 +26,10 @@ This release fixes a `NullPointerException` when launching Exasol Docker DB >= 8
 
 ### Test Dependency Updates
 
-* Updated `nl.jqno.equalsverifier:equalsverifier:3.16.1` to `3.16.2`
+* Updated `nl.jqno.equalsverifier:equalsverifier:3.16.1` to `3.17`
 * Updated `org.hamcrest:hamcrest:2.2` to `3.0`
-* Updated `org.junit.jupiter:junit-jupiter-engine:5.10.2` to `5.11.0`
-* Updated `org.junit.jupiter:junit-jupiter-params:5.10.2` to `5.11.0`
+* Updated `org.junit.jupiter:junit-jupiter-engine:5.10.2` to `5.11.1`
+* Updated `org.junit.jupiter:junit-jupiter-params:5.10.2` to `5.11.1`
 * Updated `org.slf4j:slf4j-jdk14:2.0.13` to `2.0.16`
 
 ### Plugin Dependency Updates
