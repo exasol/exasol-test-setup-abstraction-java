@@ -21,7 +21,7 @@
 | ------------------------------------------ | --------------------------------- |
 | [JUnit Jupiter Engine][18]                 | [Eclipse Public License v2.0][19] |
 | [JUnit Jupiter Params][18]                 | [Eclipse Public License v2.0][19] |
-| [Hamcrest][20]                             | [BSD License 3][21]               |
+| [Hamcrest][20]                             | [BSD-3-Clause][21]                |
 | [EqualsVerifier \| release normal jar][22] | [Apache License, Version 2.0][23] |
 | [System Lambda][24]                        | [MIT License][25]                 |
 | [SLF4J JDK14 Provider][26]                 | [MIT License][27]                 |
@@ -77,7 +77,7 @@
 [18]: https://junit.org/junit5/
 [19]: https://www.eclipse.org/legal/epl-v20.html
 [20]: http://hamcrest.org/JavaHamcrest/
-[21]: http://opensource.org/licenses/BSD-3-Clause
+[21]: https://raw.githubusercontent.com/hamcrest/JavaHamcrest/master/LICENSE
 [22]: https://www.jqno.nl/equalsverifier
 [23]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [24]: https://github.com/stefanbirkner/system-lambda/
