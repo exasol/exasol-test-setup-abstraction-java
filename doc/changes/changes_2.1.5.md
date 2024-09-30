@@ -1,4 +1,4 @@
-# Exasol Test Setup Abstraction Java 2.1.5, released 2024-09-23
+# Exasol Test Setup Abstraction Java 2.1.5, released 2024-09-30
 
 Code name: Fix `NullPointerException` with Docker DB >= 8.29.1
 
