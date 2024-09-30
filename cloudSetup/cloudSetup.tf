@@ -5,10 +5,10 @@ provider "aws" {
 
 module "exasol_setup" {
   source         = "exasol/exasol-test-setup/aws"
-  version        = "1.2.3"
+  version        = "2.0.0"
   owner          = var.owner
   deputy         = var.deputy
   datanode_count = 1
   project        = "ETSA"
-  exasol_image   = "Exasol-R7.1.26-BYOL"
+  exasol_image   = "Exasol-R7.1.26-PAYG"
 }
