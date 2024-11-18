@@ -1,4 +1,4 @@
-# Exasol Test Setup Abstraction Java 2.1.6, released 2024-??-??
+# Exasol Test Setup Abstraction Java 2.1.6, released 2024-11-18
 
 Code name: Fixed vulnerability CVE-2024-47535 in io.netty:netty-common:jar:4.1.112.Final:runtime
 
@@ -17,6 +17,10 @@ Netty is an asynchronous event-driven network application framework for rapid de
 ## Security
 
 * #86: Fixed vulnerability CVE-2024-47535 in dependency `io.netty:netty-common:jar:4.1.112.Final:runtime`
+
+## Bugfixes
+
+* #66: Wait for DB container to be extracted
 
 ## Dependency Updates
 
