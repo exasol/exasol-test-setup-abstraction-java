@@ -4,7 +4,7 @@ Code name: Fixed vulnerability CVE-2024-47535 in io.netty:netty-common:jar:4.1.1
 
 ## Summary
 
-This release fixes the following vulnerability:
+The release updates the default Exasol DB version to 7.1.23 and fixes the following vulnerability:
 
 ### CVE-2024-47535 (CWE-400) in dependency `io.netty:netty-common:jar:4.1.112.Final:runtime`
 Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers & clients. An unsafe reading of environment file could potentially cause a denial of service in Netty. When loaded on an Windows application, Netty attempts to load a file that does not exist. If an attacker creates such a large file, the Netty application crashes. This vulnerability is fixed in 4.1.115.
