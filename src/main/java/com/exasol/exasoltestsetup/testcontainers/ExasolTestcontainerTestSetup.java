@@ -11,8 +11,7 @@ import java.util.List;
 import org.testcontainers.containers.Container;
 
 import com.exasol.bucketfs.Bucket;
-import com.exasol.containers.ExasolContainer;
-import com.exasol.containers.ExasolDockerImageReference;
+import com.exasol.containers.*;
 import com.exasol.errorreporting.ExaError;
 import com.exasol.exasoltestsetup.*;
 import com.exasol.exasoltestsetup.identity.IdentityProvider;
@@ -83,7 +82,8 @@ public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
 
         @SuppressWarnings("resource") // Resources will be closed in close method.
         SetupBuilder(final String defaultExasolVersion) {
-            exasolContainer = new ExasolContainer<>(defaultExasolVersion).withReuse(true);
+            exasolContainer = new ExasolContainer<>(defaultExasolVersion).withReuse(true)
+                    .withRequiredServices(ExasolService.BUCKETFS, ExasolService.JDBC, ExasolService.UDF);
             this.keyPair = generateKeyPair();
         }
 
