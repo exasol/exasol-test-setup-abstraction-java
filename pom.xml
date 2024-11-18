@@ -8,7 +8,7 @@
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java/</url>
     <properties>
         <junit.version>5.11.3</junit.version>
-        <awssdk.version>2.29.12</awssdk.version>
+        <awssdk.version>2.29.15</awssdk.version>
     </properties>
     <dependencyManagement>
         <dependencies>
