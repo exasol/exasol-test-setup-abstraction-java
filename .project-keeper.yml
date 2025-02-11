@@ -16,7 +16,7 @@ build:
       stepCustomizations:
         - action: INSERT_AFTER
           job: matrix-build
-          stepId: enable-testcontainer-reuse
+          stepId: setup-java
           content:
             name: Fix UDF VM Crashed error
             id: fix-udf-vm-crash
