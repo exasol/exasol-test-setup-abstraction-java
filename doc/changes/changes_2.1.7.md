@@ -1,12 +1,23 @@
-# Exasol Test Setup Abstraction Java 2.1.7, released 2025-??-??
+# Exasol Test Setup Abstraction Java 2.1.7, released 2025-02-11
 
-Code name:
+Code name: Fix CVE-2025-24970 in transitive dependency
 
 ## Summary
 
-## Features
+This release fixes CVE-2025-24970 in transitive runtime dependency `io.netty:netty-handler:jar:4.1.118.Final`. The release also upgrades the dependency to to `bucketfs-java` to fix the following runtime error:
 
-* ISSUE_NUMBER: description
+```
+NoSuchMethodError: 'com.exasol.bucketfs.ReadEnabledBucket$Builder
+com.exasol.bucketfs.WriteEnabledBucket$Builder.allowAlternativeHostName
+```
+
+## Security
+
+* #90: Fixed CVE-2025-24970 in transitive runtime dependency `io.netty:netty-handler:jar:4.1.118.Final`
+
+## Bugfixes
+
+* #89: Upgraded dependency to `bucketfs-java`
 
 ## Dependency Updates
 
