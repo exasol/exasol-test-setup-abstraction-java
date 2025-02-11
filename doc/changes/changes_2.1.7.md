@@ -11,6 +11,8 @@ NoSuchMethodError: 'com.exasol.bucketfs.ReadEnabledBucket$Builder
 com.exasol.bucketfs.WriteEnabledBucket$Builder.allowAlternativeHostName
 ```
 
+**Note:** This release deprecates support for the "cloudSetup" using Terraform (see [documentation](../user_guide/setup_project_with_cloud_resources.md)). The Exasol AMI image is not available any more in AWS so we deactivated the integration tests.
+
 ## Security
 
 * #90: Fixed CVE-2025-24970 in transitive runtime dependency `io.netty:netty-handler:jar:4.1.118.Final`

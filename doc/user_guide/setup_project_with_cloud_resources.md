@@ -1,5 +1,7 @@
 # Setting up a Project With AWS Resources
 
+⚠️ This setup is deprecated as the Exasol AMI image is not available any more in AWS ⚠️
+
 In this guide I will explain how to configure a project to run tests with resources on AWS.
 
 ## CI Isolation
