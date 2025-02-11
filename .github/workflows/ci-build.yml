@@ -7,24 +7,30 @@ on:
     ]
     
   pull_request: null
-  workflow_dispatch: null
 jobs:
-  build-and-test:
+  matrix-build:
     runs-on: ubuntu-latest
     defaults:
       run: {
         shell: bash
       }
     permissions: {
-      contents: read,
-      issues: read
+      contents: read
     }
     concurrency: {
-      group: '${{ github.workflow }}-build-and-test-${{ github.ref }}',
+      group: '${{ github.workflow }}-${{ github.ref }}-${{ matrix.exasol_db_version }}',
       cancel-in-progress: true
     }
-    outputs: {
-      release-required: '${{ steps.check-release.outputs.release-required }}'
+    strategy:
+      fail-fast: false
+      matrix:
+        exasol_db_version: [
+          8.32.0,
+          7.1.30
+        ]
+        
+    env: {
+      DEFAULT_EXASOL_DB_VERSION: 8.32.0
     }
     steps:
       - name: Free Disk Space
@@ -56,30 +62,14 @@ jobs:
           key: '${{ runner.os }}-sonar',
           restore-keys: '${{ runner.os }}-sonar'
         }
-      - {
-        name: Enable testcontainer reuse,
-        id: enable-testcontainer-reuse,
-        run: echo 'testcontainers.reuse.enable=true' > "$HOME/.testcontainers.properties"
-      }
-      - name: Install Terraform
-        id: install-terraform
-        uses: hashicorp/setup-terraform@v3
-        with: {
-          terraform_version: 1.10.5
-        }
-      - name: Create AWS test setup
-        id: create-aws-test-setup
+      - name: Run tests and build with Maven
+        id: matrix-build
         run: |
-          echo "owner = \"$OWNER\"" > cloudSetup/terraform.tfvars
-          echo "deputy = \"$DEPUTY\"" >> cloudSetup/terraform.tfvars
-          terraform -chdir=cloudSetup/ init
-          terraform -chdir=cloudSetup/ apply -auto-approve
-        env: {
-          AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}',
-          AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}',
-          OWNER: '${{ secrets.AWS_TAG_OWNER }}',
-          DEPUTY: '${{ secrets.AWS_TAG_DEPUTY }}'
-        }
+          # Exclude cloud tests
+          mvn --batch-mode clean verify -DexcludedGroups=cloudOnly \
+              -Dcom.exasol.dockerdb.image=${{ matrix.exasol_db_version }} \
+              -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+              -DtrimStackTrace=false
       - {
         name: Fix UDF VM Crashed error,
         id: fix-udf-vm-crash,
@@ -90,10 +80,14 @@ jobs:
         run: |
           mvn --batch-mode clean verify \
               -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
-              -DtrimStackTrace=false
+              -DtrimStackTrace=false \
+              -Dcom.exasol.dockerdb.image=${{ matrix.exasol_db_version }}
+        env: {
+          EXASOL_DB_VERSION: '${{ matrix.exasol_db_version }}'
+        }
       - name: Sonar analysis
         id: sonar-analysis
-        if: ${{ env.SONAR_TOKEN != null }}
+        if: ${{ env.SONAR_TOKEN != null && matrix.exasol_db_version == env.DEFAULT_EXASOL_DB_VERSION }}
         run: |
           mvn --batch-mode org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
               -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
@@ -102,14 +96,6 @@ jobs:
         env: {
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
           SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
-        }
-      - name: Destroy cluster
-        id: destroy-aws-test-setup
-        run: terraform -chdir=cloudSetup/ destroy -auto-approve
-        if: always()
-        env: {
-          AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}',
-          AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
         }
       - name: Verify Release Artifacts
         id: verify-release-artifacts
@@ -121,11 +107,11 @@ jobs:
         id: upload-artifacts
         uses: actions/upload-artifact@v4
         with: {
-          name: artifacts,
+          name: 'artifacts-exasol-${{ matrix.exasol_db_version }}',
           path: '${{ steps.build-pk-verify.outputs.release-artifacts }}',
           retention-days: 5
         }
-      - name: Configure link check
+      - name: Configure broken links checker
         id: configure-link-check
         run: |
           mkdir -p ./target
@@ -142,7 +128,6 @@ jobs:
           use-verbose-mode: yes,
           config-file: ./target/broken_links_checker.json
         }
-    environment: aws
   next-java-compatibility:
     runs-on: ubuntu-latest
     defaults:
@@ -178,7 +163,7 @@ jobs:
       }
   build:
     needs: [
-      build-and-test,
+      matrix-build,
       next-java-compatibility
     ]
     runs-on: ubuntu-latest

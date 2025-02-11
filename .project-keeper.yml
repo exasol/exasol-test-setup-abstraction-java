@@ -8,50 +8,28 @@ excludes:
   # Enable logging for Jsch
   - "E-PK-CORE-18: Outdated content: 'src/test/resources/logging.properties'"
 build:
+  exasolDbVersions:
+    - "8.32.0"
+    - "7.1.30"
   workflows:
     - name: ci-build.yml
-      environment: aws
       stepCustomizations:
         - action: INSERT_AFTER
-          job: build-and-test
+          job: matrix-build
           stepId: enable-testcontainer-reuse
           content:
             name: Fix UDF VM Crashed error
             id: fix-udf-vm-crash
             run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
-        - action: INSERT_AFTER
-          job: build-and-test
+        - action: REPLACE
+          job: matrix-build
           stepId: enable-testcontainer-reuse
           content:
-            name: Install Terraform
-            id: install-terraform
-            uses: hashicorp/setup-terraform@v3
-            with:
-              terraform_version: "1.10.5"
-        - action: INSERT_AFTER
-          job: build-and-test
-          stepId: install-terraform
-          content:
-            name: Create AWS test setup
-            id: create-aws-test-setup
+            name: Run tests and build with Maven
+            id: matrix-build
             run: |
-              echo "owner = \"$OWNER\"" > cloudSetup/terraform.tfvars
-              echo "deputy = \"$DEPUTY\"" >> cloudSetup/terraform.tfvars
-              terraform -chdir=cloudSetup/ init
-              terraform -chdir=cloudSetup/ apply -auto-approve
-            env:
-              AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-              AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-              OWNER: ${{ secrets.AWS_TAG_OWNER }}
-              DEPUTY: ${{ secrets.AWS_TAG_DEPUTY }}
-        - action: INSERT_AFTER
-          job: build-and-test
-          stepId: sonar-analysis
-          content:
-            name: Destroy cluster
-            id: destroy-aws-test-setup
-            run: terraform -chdir=cloudSetup/ destroy -auto-approve
-            if: always() # also run if tests failed
-            env:
-              AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-              AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              # Exclude cloud tests
+              mvn --batch-mode clean verify -DexcludedGroups=cloudOnly \
+                  -Dcom.exasol.dockerdb.image=${{ matrix.exasol_db_version }} \
+                  -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+                  -DtrimStackTrace=false
