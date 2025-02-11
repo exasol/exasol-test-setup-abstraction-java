@@ -67,24 +67,19 @@ jobs:
           key: '${{ runner.os }}-sonar',
           restore-keys: '${{ runner.os }}-sonar'
         }
+      - {
+        name: Enable testcontainer reuse,
+        id: enable-testcontainer-reuse,
+        run: echo 'testcontainers.reuse.enable=true' > "$HOME/.testcontainers.properties"
+      }
       - name: Run tests and build with Maven
-        id: matrix-build
+        id: build-pk-verify
         run: |
           # Exclude cloud tests
           mvn --batch-mode clean verify -DexcludedGroups=cloudOnly \
               -Dcom.exasol.dockerdb.image=${{ matrix.exasol_db_version }} \
               -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
               -DtrimStackTrace=false
-      - name: Run tests and build with Maven
-        id: build-pk-verify
-        run: |
-          mvn --batch-mode clean verify \
-              -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
-              -DtrimStackTrace=false \
-              -Dcom.exasol.dockerdb.image=${{ matrix.exasol_db_version }}
-        env: {
-          EXASOL_DB_VERSION: '${{ matrix.exasol_db_version }}'
-        }
       - name: Sonar analysis
         id: sonar-analysis
         if: ${{ env.SONAR_TOKEN != null && matrix.exasol_db_version == env.DEFAULT_EXASOL_DB_VERSION }}

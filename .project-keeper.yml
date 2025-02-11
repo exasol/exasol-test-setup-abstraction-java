@@ -23,10 +23,10 @@ build:
             run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
         - action: REPLACE
           job: matrix-build
-          stepId: enable-testcontainer-reuse
+          stepId: build-pk-verify
           content:
             name: Run tests and build with Maven
-            id: matrix-build
+            id: build-pk-verify
             run: |
               # Exclude cloud tests
               mvn --batch-mode clean verify -DexcludedGroups=cloudOnly \
