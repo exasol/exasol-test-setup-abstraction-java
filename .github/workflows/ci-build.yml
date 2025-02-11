@@ -74,6 +74,11 @@ jobs:
           OWNER: '${{ secrets.AWS_TAG_OWNER }}',
           DEPUTY: '${{ secrets.AWS_TAG_DEPUTY }}'
         }
+      - {
+        name: Fix UDF VM Crashed error,
+        id: fix-udf-vm-crash,
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      }
       - name: Run tests and build with Maven
         id: build-pk-verify
         run: |

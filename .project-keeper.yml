@@ -16,6 +16,13 @@ build:
           job: build-and-test
           stepId: enable-testcontainer-reuse
           content:
+            name: Fix UDF VM Crashed error
+            id: fix-udf-vm-crash
+            run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+        - action: INSERT_AFTER
+          job: build-and-test
+          stepId: enable-testcontainer-reuse
+          content:
             name: Create AWS test setup
             id: create-aws-test-setup
             run: |
