@@ -23,6 +23,15 @@ build:
           job: build-and-test
           stepId: enable-testcontainer-reuse
           content:
+            name: Install Terraform
+            id: install-terraform
+            uses: hashicorp/setup-terraform@v3
+            with:
+              terraform_version: "1.10.5"
+        - action: INSERT_AFTER
+          job: build-and-test
+          stepId: enable-testcontainer-reuse
+          content:
             name: Create AWS test setup
             id: create-aws-test-setup
             run: |

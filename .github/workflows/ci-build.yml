@@ -74,6 +74,12 @@ jobs:
           OWNER: '${{ secrets.AWS_TAG_OWNER }}',
           DEPUTY: '${{ secrets.AWS_TAG_DEPUTY }}'
         }
+      - name: Install Terraform
+        id: install-terraform
+        uses: hashicorp/setup-terraform@v3
+        with: {
+          terraform_version: 1.10.5
+        }
       - {
         name: Fix UDF VM Crashed error,
         id: fix-udf-vm-crash,
