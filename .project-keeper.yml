@@ -30,7 +30,7 @@ build:
               terraform_version: "1.10.5"
         - action: INSERT_AFTER
           job: build-and-test
-          stepId: enable-testcontainer-reuse
+          stepId: install-terraform
           content:
             name: Create AWS test setup
             id: create-aws-test-setup
