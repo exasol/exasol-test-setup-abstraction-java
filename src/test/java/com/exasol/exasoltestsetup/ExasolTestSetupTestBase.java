@@ -112,12 +112,9 @@ public abstract class ExasolTestSetupTestBase {
     }
 
     private void assertLocalServiceIsAvailableFromDatabase(final InetSocketAddress inDbAddress) throws SQLException {
-        final ExasolTestSetupTestBase.DummySocketServer dummySocketServer = new ExasolTestSetupTestBase.DummySocketServer();
-        try {
+        try (final ExasolTestSetupTestBase.DummySocketServer dummySocketServer = new ExasolTestSetupTestBase.DummySocketServer()) {
             pingFromUdf(inDbAddress);
             assertTrue(dummySocketServer.hasClient.get());
-        } finally {
-            dummySocketServer.shutdown();
         }
     }
 
@@ -208,24 +205,13 @@ public abstract class ExasolTestSetupTestBase {
         }
     }
 
-    private static class DummySocketServer extends Thread {
+    private static class DummySocketServer extends Thread implements AutoCloseable {
         private final AtomicBoolean hasClient = new AtomicBoolean(false);
         private ServerSocket serverSocket;
 
         private DummySocketServer() {
             LOGGER.info("Starting dummy socket server on part " + TEST_SOCKET_PORT);
             this.start();
-        }
-
-        public void shutdown() {
-            LOGGER.info("Shutting down dummy socket server");
-            if (this.serverSocket != null) {
-                try {
-                    this.serverSocket.close();
-                } catch (final IOException exception) {
-                    // ignore
-                }
-            }
         }
 
         @Override
@@ -247,6 +233,22 @@ public abstract class ExasolTestSetupTestBase {
                         ExaError.messageBuilder("E-ETAJ-11").message("Failed to start a socket server for testing.")
                                 .mitigation("Make sure that port {{port}} is free.", TEST_SOCKET_PORT).toString(),
                         exception);
+            }
+        }
+
+        @Override
+        public void close() {
+            shutdown();
+        }
+
+        private void shutdown() {
+            LOGGER.info("Shutting down dummy socket server");
+            if (this.serverSocket != null) {
+                try {
+                    this.serverSocket.close();
+                } catch (final IOException exception) {
+                    // ignore
+                }
             }
         }
     }
