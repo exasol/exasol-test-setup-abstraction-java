@@ -13,6 +13,7 @@ build:
       environment: aws
       stepCustomizations:
         - action: INSERT_AFTER
+          job: build-and-test
           stepId: enable-testcontainer-reuse
           content:
             name: Create AWS test setup
@@ -28,6 +29,7 @@ build:
               OWNER: ${{ secrets.AWS_TAG_OWNER }}
               DEPUTY: ${{ secrets.AWS_TAG_DEPUTY }}
         - action: INSERT_AFTER
+          job: build-and-test
           stepId: sonar-analysis
           content:
             name: Destroy cluster
