@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>exasol-test-setup-abstraction-java</artifactId>
-    <version>2.1.7</version>
+    <version>2.1.8</version>
     <name>exasol-test-setup-abstraction-java</name>
     <description>Common interface for testing with an exasol database local and on AWS using Java.</description>
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java/</url>
     <properties>
-        <junit.version>5.11.4</junit.version>
+        <junit.version>5.12.1</junit.version>
     </properties>
     <dependencies>
         <dependency>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>exasol-testcontainers</artifactId>
-            <version>7.1.3</version>
+            <version>7.1.4</version>
         </dependency>
         <!-- Required for ExaOperationGateway -->
         <dependency>
@@ -34,7 +34,7 @@
         <dependency>
             <groupId>com.github.mwiede</groupId>
             <artifactId>jsch</artifactId>
-            <version>0.2.23</version>
+            <version>0.2.24</version>
         </dependency>
         <dependency>
             <groupId>com.exasol</groupId>
@@ -74,7 +74,7 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <version>3.19</version>
+            <version>3.19.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -87,7 +87,7 @@
             <!-- Enable log output from testcontainers in integration tests -->
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.17</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -119,7 +119,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>4.5.0</version>
+                <version>5.0.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -158,7 +158,7 @@
     <parent>
         <artifactId>exasol-test-setup-abstraction-java-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>2.1.7</version>
+        <version>2.1.8</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>

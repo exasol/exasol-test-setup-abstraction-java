@@ -22,7 +22,7 @@
 | [Hamcrest][18]                             | [BSD-3-Clause][19]                |
 | [EqualsVerifier \| release normal jar][20] | [Apache License, Version 2.0][21] |
 | [System Lambda][22]                        | [MIT License][23]                 |
-| [SLF4J JDK14 Provider][24]                 | [MIT License][25]                 |
+| [SLF4J JDK14 Provider][24]                 | [MIT][25]                         |
 
 ## Runtime Dependencies
 
@@ -84,7 +84,7 @@
 [22]: https://github.com/stefanbirkner/system-lambda/
 [23]: http://opensource.org/licenses/MIT
 [24]: http://www.slf4j.org
-[25]: http://www.opensource.org/licenses/mit-license.php
+[25]: https://opensource.org/license/mit
 [26]: https://github.com/eclipse-ee4j/parsson
 [27]: https://maven.apache.org/plugins/maven-clean-plugin/
 [28]: https://maven.apache.org/plugins/maven-install-plugin/
