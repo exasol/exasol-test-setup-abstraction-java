@@ -18,6 +18,9 @@ This issue has been fixed quite a while back now, but the OSSIndex unfortunately
 ### Compile Dependency Updates
 
 * Updated `com.exasol:exasol-testcontainers:7.1.3` to `7.1.5`
+
+### Test Dependency Updates
+
 * Updated `org.slf4j:slf4j-jdk14:2.0.16` to `2.0.17`
 
 ### Plugin Dependency Updates
