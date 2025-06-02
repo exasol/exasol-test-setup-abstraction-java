@@ -11,7 +11,7 @@ This issue has been fixed quite a while back now, but the OSSIndex unfortunately
 
 ## Features
 
-#93: CVE-2024-55551: com.exasol:exasol-jdbc:jar:24.2.1:runtime
+* #93: Updated dependencies to fix vulnerabilities
 
 ## Dependency Updates
 
