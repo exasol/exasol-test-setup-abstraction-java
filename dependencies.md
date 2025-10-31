@@ -17,7 +17,6 @@
 
 | Dependency                                 | License                           |
 | ------------------------------------------ | --------------------------------- |
-| [JUnit Jupiter Engine][16]                 | [Eclipse Public License v2.0][17] |
 | [JUnit Jupiter Params][16]                 | [Eclipse Public License v2.0][17] |
 | [Hamcrest][18]                             | [BSD-3-Clause][19]                |
 | [EqualsVerifier \| release normal jar][20] | [Apache License, Version 2.0][21] |
@@ -42,7 +41,7 @@
 | [Apache Maven Toolchains Plugin][33]                    | [Apache-2.0][21]                            |
 | [Apache Maven Compiler Plugin][34]                      | [Apache-2.0][21]                            |
 | [Apache Maven Enforcer Plugin][35]                      | [Apache-2.0][21]                            |
-| [Maven Flatten Plugin][36]                              | [Apache Software Licenese][21]              |
+| [Maven Flatten Plugin][36]                              | [Apache Software License][21]               |
 | [org.sonatype.ossindex.maven:ossindex-maven-plugin][37] | [ASL2][38]                                  |
 | [Maven Surefire Plugin][39]                             | [Apache-2.0][21]                            |
 | [Versions Maven Plugin][40]                             | [Apache License, Version 2.0][21]           |
@@ -76,7 +75,7 @@
 [13]: https://github.com/eclipse-ee4j/jsonp
 [14]: https://projects.eclipse.org/license/epl-2.0
 [15]: https://projects.eclipse.org/license/secondary-gpl-2.0-cp
-[16]: https://junit.org/junit5/
+[16]: https://junit.org/
 [17]: https://www.eclipse.org/legal/epl-v20.html
 [18]: http://hamcrest.org/JavaHamcrest/
 [19]: https://raw.githubusercontent.com/hamcrest/JavaHamcrest/master/LICENSE

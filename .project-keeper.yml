@@ -9,7 +9,8 @@ excludes:
   - "E-PK-CORE-18: Outdated content: 'src/test/resources/logging.properties'"
 build:
   exasolDbVersions:
-    - "8.32.0"
+    - "2025.1.3"
+    - "8.29.12"
     - "7.1.30"
   workflows:
     - name: ci-build.yml
@@ -33,3 +34,6 @@ build:
                   -Dcom.exasol.dockerdb.image=${{ matrix.exasol_db_version }} \
                   -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
                   -DtrimStackTrace=false
+            env:
+              OSSINDEX_USERNAME: ${{ secrets.OSSINDEX_USERNAME }}
+              OSSINDEX_API_TOKEN: ${{ secrets.OSSINDEX_API_TOKEN }}
