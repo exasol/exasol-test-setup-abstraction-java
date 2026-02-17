@@ -9,8 +9,8 @@ excludes:
   - "E-PK-CORE-18: Outdated content: 'src/test/resources/logging.properties'"
 build:
   exasolDbVersions:
-    - "2025.1.3"
-    - "8.29.12"
+    - "2025.1.8"
+    - "8.29.13"
     - "7.1.30"
   workflows:
     - name: ci-build.yml

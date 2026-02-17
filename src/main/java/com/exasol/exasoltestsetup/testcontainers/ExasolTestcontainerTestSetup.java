@@ -21,7 +21,7 @@ import com.jcraft.jsch.*;
  * {@link ExasolTestSetup} implementation using test containers.
  */
 public class ExasolTestcontainerTestSetup implements ExasolTestSetup {
-    private static final String DEFAULT_EXASOL_VERSION = "8.27.0";
+    private static final String DEFAULT_EXASOL_VERSION = "2025.1.8";
     private static final int SSH_PORT_CLASSIC = 22;
     private static final int SSH_PORT_NEW = 20002;
     private final ExasolContainer<? extends ExasolContainer<?>> exasolContainer;
