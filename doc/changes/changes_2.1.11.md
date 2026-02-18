@@ -1,4 +1,4 @@
-# Exasol Test Setup Abstraction Java 2.1.11, released 2026-??-??
+# Exasol Test Setup Abstraction Java 2.1.11, released 2026-02-18
 
 Code name: Update default exasol db version to 2025.1.8
 
