@@ -106,6 +106,8 @@
                         <!-- Dependency fr.turri:aXMLRPC used for connecting to ExaOperation.
                         We accept this vulnerability (CWE-833: Deadlock) as we assume that we only connect to the known endpoint ExaOperations. -->
                         <exclude>CVE-2017-10355</exclude>
+                        <!-- Vulnerability in combination with JBoss EAP, which we don't use. -->
+                        <exclude>CVE-2017-7503</exclude>
                         <!-- False positive in OSS Index for Exasol's JDBC driver because the fix version is missing. -->
                         <exclude>CVE-2024-55551</exclude>
                     </excludeVulnerabilityIds>
