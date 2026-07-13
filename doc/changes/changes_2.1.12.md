@@ -40,7 +40,7 @@ In Eclipse Parsson published Maven Central artifacts before version 1.1.8, the J
 
 * Updated `com.exasol:database-cleaner:1.1.5` to `1.1.6`
 * Updated `com.exasol:exasol-testcontainers:7.2.2` to `7.3.0`
-* Updated `com.github.mwiede:jsch:2.27.5` to `2.28.3`
+* Updated `com.github.mwiede:jsch:2.27.5` to `2.28.4`
 
 ### Runtime Dependency Updates
 
@@ -48,8 +48,7 @@ In Eclipse Parsson published Maven Central artifacts before version 1.1.8, the J
 
 ### Test Dependency Updates
 
-* Updated `nl.jqno.equalsverifier:equalsverifier:3.19.4` to `4.5`
-* Updated `org.junit.jupiter:junit-jupiter-params:5.13.4` to `6.1.1`
+* Updated `org.junit.jupiter:junit-jupiter-params:5.13.4` to `5.14.4`
 * Updated `org.slf4j:slf4j-jdk14:2.0.17` to `2.0.18`
 
 ### Plugin Dependency Updates
