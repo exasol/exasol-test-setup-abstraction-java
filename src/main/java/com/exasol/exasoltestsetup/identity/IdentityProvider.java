@@ -13,7 +13,7 @@ public interface IdentityProvider {
      *
      * @return builder for {@link Builder}
      */
-    public static Builder builder() {
+    static Builder builder() {
         return new Builder();
     }
 
@@ -23,7 +23,7 @@ public interface IdentityProvider {
      * @param path path to file containing private key
      * @return IdentityProvider using private key from the specified file
      */
-    public static IdentityProvider fromPathToPrivateKey(final String path) {
+    static IdentityProvider fromPathToPrivateKey(final String path) {
         return jsch -> jsch.addIdentity(path);
     }
 
@@ -38,7 +38,7 @@ public interface IdentityProvider {
     /**
      * Builder for {@link IdentityProvider}
      */
-    public class Builder {
+    class Builder {
         private String identityName;
         private byte[] privateKey;
         private byte[] publicKey;
