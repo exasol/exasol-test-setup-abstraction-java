@@ -32,7 +32,7 @@ public abstract class ExasolTestSetupTestBase {
     private Connection connection;
     private Statement statement;
 
-    public ExasolTestSetupTestBase() {
+    protected ExasolTestSetupTestBase() {
     }
 
     protected abstract ExasolTestSetup getExasolTestSetup();
@@ -188,14 +188,13 @@ public abstract class ExasolTestSetupTestBase {
         public void run() {
             while (((System.currentTimeMillis() - this.start) < (1000 * 20)) && !this.success.get()) {
                 for (final Integer port : this.ports) {
-                    try {
-                        final Socket socket = new Socket("localhost", port);
+                    try(final Socket socket = new Socket("localhost", port))
+                    {
                         final String message = new String(socket.getInputStream().readAllBytes(),
                                 StandardCharsets.UTF_8);
                         if (message.equals("hallo")) {
                             this.success.set(true);
                         }
-                        socket.close();
                         break;
                     } catch (final IOException e) {
                         // ignore
