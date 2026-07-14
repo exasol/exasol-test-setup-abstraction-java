@@ -11,7 +11,7 @@ Future versions will probably add Exasol SaaS support instead.
 
 ## Features
 
-* ISSUE_NUMBER: description
+* #108: Removed AWS deployment option
 
 ## Dependency Updates
 

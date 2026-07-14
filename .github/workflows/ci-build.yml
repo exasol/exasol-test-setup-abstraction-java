@@ -84,7 +84,7 @@ jobs:
         id: build-pk-verify
         run: |
           # Exclude cloud tests
-          mvn --batch-mode clean verify -DexcludedGroups=cloudOnly \
+          mvn --batch-mode clean verify \
               -Dcom.exasol.dockerdb.image=${{ matrix.exasol_db_version }} \
               -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
               -DtrimStackTrace=false
