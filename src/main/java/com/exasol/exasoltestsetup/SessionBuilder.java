@@ -26,6 +26,8 @@ public class SessionBuilder {
     }
 
     /**
+     * Set the identity provider.
+     *
      * @param value identity provider to use for the session
      * @return instance of this for fluent programming
      */
@@ -35,6 +37,8 @@ public class SessionBuilder {
     }
 
     /**
+     * Set the SSH user.
+     *
      * @param value user to be used by the session
      * @return instance of this for fluent programming
      */
@@ -44,6 +48,8 @@ public class SessionBuilder {
     }
 
     /**
+     * Set the SSH host.
+     *
      * @param value host to be used by the session
      * @return instance of this for fluent programming
      */
@@ -53,6 +59,8 @@ public class SessionBuilder {
     }
 
     /**
+     * Set the SSH port.
+     *
      * @param value port to be used by the session
      * @return instance of this for fluent programming
      */
@@ -74,6 +82,8 @@ public class SessionBuilder {
     }
 
     /**
+     * Build the SSH session.
+     *
      * @return new instance of SSH {@link Session}
      * @throws JSchException if session creation fails
      */
@@ -90,6 +100,8 @@ public class SessionBuilder {
     }
 
     /**
+     * Get the configured SSH user.
+     *
      * @return user added to this {@link SessionBuilder}
      */
     public String getUser() {
@@ -97,6 +109,8 @@ public class SessionBuilder {
     }
 
     /**
+     * Get the configured SSH host.
+     *
      * @return host added to this {@link SessionBuilder}
      */
     public String getHost() {
@@ -104,6 +118,8 @@ public class SessionBuilder {
     }
 
     /**
+     * Get the configured SSH port.
+     *
      * @return port added to this {@link SessionBuilder}
      */
     public int getPort() {

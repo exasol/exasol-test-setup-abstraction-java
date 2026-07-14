@@ -15,6 +15,13 @@ public class JsonConnectionDetailsReader {
 
     /**
      * Create a new instance of {@link JsonConnectionDetailsReader}.
+     */
+    public JsonConnectionDetailsReader() {
+        // Empty by intention
+    }
+
+    /**
+     * Create a new instance of {@link JsonConnectionDetailsReader}.
      * 
      * @param configFile JSON test-config file
      * @return read {@link ConnectionDetails}

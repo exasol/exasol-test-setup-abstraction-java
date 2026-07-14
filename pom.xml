@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>exasol-test-setup-abstraction-java</artifactId>
-    <version>2.1.12</version>
+    <version>3.0.0</version>
     <name>exasol-test-setup-abstraction-java</name>
-    <description>Common interface for testing with an exasol database local and on AWS using Java.</description>
+    <description>Common interface for testing with an exasol database local other deployments using Java.</description>
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java/</url>
     <dependencies>
         <dependency>
@@ -16,12 +16,6 @@
             <groupId>com.exasol</groupId>
             <artifactId>exasol-testcontainers</artifactId>
             <version>7.3.0</version>
-        </dependency>
-        <!-- Required for ExaOperationGateway -->
-        <dependency>
-            <groupId>fr.turri</groupId>
-            <artifactId>aXMLRPC</artifactId>
-            <version>1.17.0</version>
         </dependency>
         <dependency>
             <groupId>com.exasol</groupId>
@@ -87,33 +81,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <compilerArgs>
-                        <!-- We turn off `path` to suppress warning
-                        "[path] bad path element "~/.m2/repository/fr/turri/aXMLRPC/1.14.0/jISO8601-0.2.jar": no such file or directory" -->
-                        <arg>-Xlint:all,-path</arg>
-                        <arg>-Werror</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.ossindex.maven</groupId>
-                <artifactId>ossindex-maven-plugin</artifactId>
-                <configuration>
-                    <excludeVulnerabilityIds>
-                        <!-- Dependency fr.turri:aXMLRPC used for connecting to ExaOperation.
-                        We accept this vulnerability (CWE-833: Deadlock) as we assume that we only connect to the known endpoint ExaOperations. -->
-                        <exclude>CVE-2017-10355</exclude>
-                        <!-- Vulnerability in combination with JBoss EAP, which we don't use. -->
-                        <exclude>CVE-2017-7503</exclude>
-                        <!-- False positive in OSS Index for Exasol's JDBC driver because the fix version is missing. -->
-                        <exclude>CVE-2024-55551</exclude>
-                    </excludeVulnerabilityIds>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
                 <version>5.7.3</version>
@@ -125,36 +92,12 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.basepom.maven</groupId>
-                <artifactId>duplicate-finder-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <printEqualFiles>true</printEqualFiles>
-                    <failBuildInCaseOfDifferentContentConflict>true</failBuildInCaseOfDifferentContentConflict>
-                    <failBuildInCaseOfEqualContentConflict>true</failBuildInCaseOfEqualContentConflict>
-                    <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
-                    <checkCompileClasspath>true</checkCompileClasspath>
-                    <checkRuntimeClasspath>true</checkRuntimeClasspath>
-                    <checkTestClasspath>false</checkTestClasspath>
-                    <preferLocal>true</preferLocal>
-                    <useResultFile>false</useResultFile>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
     <parent>
         <artifactId>exasol-test-setup-abstraction-java-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>2.1.12</version>
+        <version>3.0.0</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>

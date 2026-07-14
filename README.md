@@ -17,18 +17,21 @@
 
 This repository defines a standardized interface for accessing an Exasol database for testing.
 
-That allows you to write tests where you can switch the test-backend. For example you can switch between an Exasol cluster in the cloud or a local docker-db.
+That allows you to write tests where you can switch the test-backend.
+
+> [!ATTENTION]
+> Since version 3.0.0 only the local deployment works. The AWS mechanism this library was based on does not exist anymore.
+> Future versions will add SaaS and / or Exasol Personal support.
 
 In addition, it contains implementations for this interface for the following test-backends:
 
 * Local - Docker (via Testcontainers)
-* With an Exasol cluster on AWS
 
 ## Usage
 
 ```java
 class MyTest {
-    private static final ExasolTestSetup EXASOL = new ExasolTestSetupFactory("cloudSetup/generated/testConfig.json").getTestSetup();
+    private static final ExasolTestSetup EXASOL = new ExasolTestSetupFactory().getTestSetup();
 
     @Test
     void test() {
@@ -43,9 +46,7 @@ class MyTest {
 }
 ```
 
-The `ExasolTestSetupFactory` in the example returns a test setup for an AWS cluster if the specified config file (`cloudSetup/generated/testConfig.json`) exists. Otherwise, it returns a test setup based on a local running Exasol-Testcontainer.
-
-Usually you generate the `testConfig.json` using the Terraform module [terraform-aws-exasol-test-setup >= 1.0.0](https://github.com/exasol/terraform-aws-exasol-test-setup/). For details see the [guide for setting up a project with cloud resources](doc/user_guide/setup_project_with_cloud_resources.md).
+The `ExasolTestSetupFactory` in the example returns a test setup based on a local running Exasol-Testcontainer.
 
 You can also select a specific test-setup in code. For that simply replace `new ExasolTestSetupFactory().getTestSetup()` by `new ExasolTestcontainerTestSetup()`.
 
@@ -53,10 +54,8 @@ To change the Exasol Docker DB version being used you can define the `com.exasol
 
 ## Information for Users of This Library
 
-* [Guide for Setting up a Project With Cloud Resources](doc/user_guide/setup_project_with_cloud_resources.md)
 * [Changelog](doc/changes/changelog.md)
 
 ## Information for Developers of This Library
 
-* [Developer Guide](doc/developer_guide/developer_guide.md)
 * [Dependencies](dependencies.md)

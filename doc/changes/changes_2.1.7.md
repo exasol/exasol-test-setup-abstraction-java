@@ -11,7 +11,7 @@ NoSuchMethodError: 'com.exasol.bucketfs.ReadEnabledBucket$Builder
 com.exasol.bucketfs.WriteEnabledBucket$Builder.allowAlternativeHostName
 ```
 
-**Note:** This release deprecates support for the "cloudSetup" using Terraform (see [documentation](../user_guide/setup_project_with_cloud_resources.md)). The Exasol AMI image is not available any more in AWS so we deactivated the integration tests.
+**Note:** This release deprecates support for the "cloudSetup" using Terraform (see documentation). The Exasol AMI image is not available any more in AWS so we deactivated the integration tests.
 
 ## Security
 

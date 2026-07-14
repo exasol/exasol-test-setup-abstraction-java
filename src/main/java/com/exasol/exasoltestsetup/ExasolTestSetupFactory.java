@@ -1,14 +1,9 @@
 package com.exasol.exasoltestsetup;
 
-import static java.util.logging.Level.INFO;
-
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import com.exasol.errorreporting.ExaError;
-import com.exasol.exasoltestsetup.standalone.JsonConnectionDetailsReader;
-import com.exasol.exasoltestsetup.standalone.StandaloneExasolTestSetup;
 import com.exasol.exasoltestsetup.testcontainers.ExasolTestcontainerTestSetup;
 
 /**
@@ -108,18 +103,9 @@ public class ExasolTestSetupFactory {
             LOGGER.info(() -> "Using Exasol test container setup (forced container mode)");
             return ExasolTestcontainerTestSetup.start();
         case STANDALONE:
+        case AUTO: // Currently only test containers are supported
             LOGGER.info(() -> "Using Exasol standalone test setup (forced standalone mode)");
             return ExasolTestcontainerTestSetup.start();
-        case AUTO:
-            if (Files.exists(this.standaloneConfigurationPath)) {
-                LOGGER.info(() -> "Using Exasol standalone test setup (auto mode with configuration file present)");
-                return new StandaloneExasolTestSetup(
-                        new JsonConnectionDetailsReader().read(this.standaloneConfigurationPath));
-            } else {
-                LOGGER.log(INFO, "Using Exasol test container setup (auto mode with configuration file {0} missing)",
-                        this.standaloneConfigurationPath);
-                return ExasolTestcontainerTestSetup.start();
-            }
         default:
             throw new IllegalArgumentException(
                     "Unknown Dispatcher Mode '" + this.dispatchMode + "' trying to create test setup");

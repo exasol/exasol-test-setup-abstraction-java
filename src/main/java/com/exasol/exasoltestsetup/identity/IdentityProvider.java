@@ -9,17 +9,21 @@ import com.jcraft.jsch.JSchException;
 public interface IdentityProvider {
 
     /**
+     * Create a builder for an {@link IdentityProvider}.
+     *
      * @return builder for {@link Builder}
      */
-    public static Builder builder() {
+    static Builder builder() {
         return new Builder();
     }
 
     /**
+     * Create an {@link IdentityProvider} from a private key file path.
+     *
      * @param path path to file containing private key
      * @return IdentityProvider using private key from the specified file
      */
-    public static IdentityProvider fromPathToPrivateKey(final String path) {
+    static IdentityProvider fromPathToPrivateKey(final String path) {
         return jsch -> jsch.addIdentity(path);
     }
 
@@ -34,13 +38,22 @@ public interface IdentityProvider {
     /**
      * Builder for {@link IdentityProvider}
      */
-    public class Builder {
+    final class Builder {
         private String identityName;
         private byte[] privateKey;
         private byte[] publicKey;
         private byte[] passPhrase = null;
 
         /**
+         * Create a new builder.
+         */
+        private Builder() {
+            // Empty by intention
+        }
+
+        /**
+         * Set the identity name.
+         *
          * @param value identity to be used by the session
          * @return instance of this for fluent programming
          */
@@ -50,6 +63,8 @@ public interface IdentityProvider {
         }
 
         /**
+         * Set the public key.
+         *
          * @param value public key to be used by the session
          * @return instance of this for fluent programming
          */
@@ -59,6 +74,8 @@ public interface IdentityProvider {
         }
 
         /**
+         * Set the private key.
+         *
          * @param value private key to be used by the session
          * @return instance of this for fluent programming
          */
@@ -68,6 +85,8 @@ public interface IdentityProvider {
         }
 
         /**
+         * Set the passphrase.
+         *
          * @param value passphrase to be used by the session
          * @return instance of this for fluent programming
          */
@@ -77,6 +96,8 @@ public interface IdentityProvider {
         }
 
         /**
+         * Build an {@link IdentityProvider} from the configured values.
+         *
          * @return new instance of {@link IdentityProvider}
          */
         public IdentityProvider build() {

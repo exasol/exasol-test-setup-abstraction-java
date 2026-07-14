@@ -11,12 +11,13 @@ import com.jcraft.jsch.Session;
  * This class sets up a SSH port forwarding.
  */
 public class SshConnection implements AutoCloseable {
-    private static final String PORT_FINDER_PYTHON_SCRIPT = "import socket\n" + //
-            "from contextlib import closing\n" + //
-            "with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:\n" + //
-            "    s.bind(('', 0))\n" + //
-            "    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)\n" + //
-            "    print(s.getsockname()[1])\n\n";
+    private static final String LOCALHOST = "localhost";
+    private static final String PORT_FINDER_PYTHON_SCRIPT = "import socket\n"
+            + "from contextlib import closing\n"
+            + "with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:\n"
+            + "    s.bind(('', 0))\n"
+            + "    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)\n"
+            + "    print(s.getsockname()[1])\n\n";
     private final Session sshSession;
 
     /**
@@ -65,7 +66,7 @@ public class SshConnection implements AutoCloseable {
     public int addReversePortForwarding(final int localPort) {
         final int remotePort = findFreePortOnServer();
         try {
-            this.sshSession.setPortForwardingR("*", remotePort, "localhost", localPort);
+            this.sshSession.setPortForwardingR("*", remotePort, LOCALHOST, localPort);
             return remotePort;
         } catch (final JSchException exception) {
             throw new IllegalStateException(
@@ -81,7 +82,7 @@ public class SshConnection implements AutoCloseable {
      * @return local port
      */
     public int addForwardPortForwarding(final int remotePort) {
-        return addForwardPortForwarding(remotePort, "localhost");
+        return addForwardPortForwarding(remotePort, LOCALHOST);
     }
 
     /**
@@ -94,7 +95,7 @@ public class SshConnection implements AutoCloseable {
     public int addForwardPortForwarding(final int remotePort, final String targetHost) {
         final int localPort = findFreeLocalPort();
         try {
-            this.sshSession.setPortForwardingL("localhost", localPort, targetHost, remotePort);
+            this.sshSession.setPortForwardingL(LOCALHOST, localPort, targetHost, remotePort);
             return localPort;
         } catch (final JSchException exception) {
             throw new IllegalStateException(
@@ -145,7 +146,7 @@ public class SshConnection implements AutoCloseable {
     }
 
     private int findFreeLocalPort() {
-        try (final ServerSocket socket = new ServerSocket(0);) {
+        try (final ServerSocket socket = new ServerSocket(0)) {
             return socket.getLocalPort();
         } catch (final IOException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-23")
