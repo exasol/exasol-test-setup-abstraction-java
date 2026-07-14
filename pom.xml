@@ -4,7 +4,7 @@
     <artifactId>exasol-test-setup-abstraction-java</artifactId>
     <version>3.0.0</version>
     <name>exasol-test-setup-abstraction-java</name>
-    <description>Common interface for testing with an exasol database local and on AWS using Java.</description>
+    <description>Common interface for testing with an exasol database local other deployments using Java.</description>
     <url>https://github.com/exasol/exasol-test-setup-abstraction-java/</url>
     <dependencies>
         <dependency>
