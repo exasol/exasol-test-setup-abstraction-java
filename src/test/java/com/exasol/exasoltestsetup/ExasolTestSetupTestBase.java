@@ -74,7 +74,7 @@ public abstract class ExasolTestSetupTestBase {
                                 + ";validateservercertificate=0",
                         connectionInfo.getUser(), connectionInfo.getPassword());
                 final Statement stmt = conn.createStatement();
-                final ResultSet resultSet = stmt.executeQuery("SELECT 1 FROM DUAL");) {
+                final ResultSet resultSet = stmt.executeQuery("SELECT 1 FROM DUAL")) {
             resultSet.next();
             assertThat(resultSet.getInt(1), equalTo(1));
         }
@@ -120,13 +120,13 @@ public abstract class ExasolTestSetupTestBase {
 
     private void pingFromUdf(final InetSocketAddress inDbAddress) throws SQLException {
         this.statement.executeUpdate("CREATE SCHEMA TEST");
-        final String pingUdf = "CREATE OR REPLACE PYTHON3 SCALAR SCRIPT TEST.PING() RETURNS INT AS\n" + //
-                "def run(ctx):\n" + //
-                "  import socket\n" + //
-                "  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n" + //
-                "  s.connect((\"" + inDbAddress.getHostName() + "\", " + inDbAddress.getPort() + "))\n" + "" + //
-                "  return 1" + //
-                "\n/\n";
+        final String pingUdf = "CREATE OR REPLACE PYTHON3 SCALAR SCRIPT TEST.PING() RETURNS INT AS\n"
+                + "def run(ctx):\n"
+                + "  import socket\n"
+                + "  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n"
+                + "  s.connect((\"" + inDbAddress.getHostName() + "\", " + inDbAddress.getPort() + "))\n"
+                + "  return 1"
+                + "\n/\n";
         this.statement.executeUpdate(pingUdf);
         this.statement.executeQuery("SELECT TEST.PING();");
     }

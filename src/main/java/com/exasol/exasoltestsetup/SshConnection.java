@@ -12,12 +12,12 @@ import com.jcraft.jsch.Session;
  */
 public class SshConnection implements AutoCloseable {
     private static final String LOCALHOST = "localhost";
-    private static final String PORT_FINDER_PYTHON_SCRIPT = "import socket\n" + //
-            "from contextlib import closing\n" + //
-            "with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:\n" + //
-            "    s.bind(('', 0))\n" + //
-            "    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)\n" + //
-            "    print(s.getsockname()[1])\n\n";
+    private static final String PORT_FINDER_PYTHON_SCRIPT = "import socket\n"
+            + "from contextlib import closing\n"
+            + "with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:\n"
+            + "    s.bind(('', 0))\n"
+            + "    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)\n"
+            + "    print(s.getsockname()[1])\n\n";
     private final Session sshSession;
 
     /**
@@ -146,7 +146,7 @@ public class SshConnection implements AutoCloseable {
     }
 
     private int findFreeLocalPort() {
-        try (final ServerSocket socket = new ServerSocket(0);) {
+        try (final ServerSocket socket = new ServerSocket(0)) {
             return socket.getLocalPort();
         } catch (final IOException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("F-ETAJ-23")
