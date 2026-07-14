@@ -38,7 +38,7 @@ public interface IdentityProvider {
     /**
      * Builder for {@link IdentityProvider}
      */
-    class Builder {
+    final class Builder {
         private String identityName;
         private byte[] privateKey;
         private byte[] publicKey;
@@ -47,7 +47,7 @@ public interface IdentityProvider {
         /**
          * Create a new builder.
          */
-        public Builder() {
+        private Builder() {
             // Empty by intention
         }
 
