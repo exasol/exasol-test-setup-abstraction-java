@@ -60,7 +60,7 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
       - {
         name: Fix UDF VM Crashed error,
@@ -225,7 +225,7 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
           server-id: ossindex
           server-username: OSSINDEX_USERNAME
@@ -303,7 +303,7 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
       - name: Check if release is needed
         id: check-release
