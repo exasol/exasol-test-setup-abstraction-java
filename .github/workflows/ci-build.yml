@@ -33,11 +33,11 @@ jobs:
       fail-fast: false
       matrix:
         exasol_db_version: [
-          2026.1.0
+          2026.1.1
         ]
         
     env: {
-      DEFAULT_EXASOL_DB_VERSION: 2026.1.0
+      DEFAULT_EXASOL_DB_VERSION: 2026.1.1
     }
     steps:
       - name: Free Disk Space
@@ -60,7 +60,7 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
       - {
         name: Fix UDF VM Crashed error,
@@ -225,7 +225,7 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
           server-id: ossindex
           server-username: OSSINDEX_USERNAME
@@ -303,7 +303,7 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
       - name: Check if release is needed
         id: check-release
